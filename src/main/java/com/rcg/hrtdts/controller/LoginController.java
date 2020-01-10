@@ -36,7 +36,7 @@ public class LoginController{
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(false, 500, exceptionResponse);
+			response = new StatusResponse("failure", 500, exceptionResponse);
 		}
 		return response;
 	}

@@ -9,26 +9,24 @@
 package com.rcg.hrtdts.model;
 
 public class StatusResponse<T> {
-
 	
-	public Boolean status;
+	public String status;
 	public int statusCode;
 	public T data;
 	
-	public StatusResponse(Boolean status,int statusCode,T data){
+	public StatusResponse(String status,int statusCode,T data){
 		this.status = status;
 		this.statusCode = statusCode;
 		this.data = data;
-		
 	}
 	
 	public StatusResponse() {
 	}
 
-	public Boolean getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(Boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public int getStatusCode() {
