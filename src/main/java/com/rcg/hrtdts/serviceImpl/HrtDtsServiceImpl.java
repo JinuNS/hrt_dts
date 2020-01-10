@@ -11,8 +11,7 @@ public class HrtDtsServiceImpl implements HrtDtsService {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public StatusResponse getUserInfo(RequestDto requestDto) throws Exception{
 		StatusResponse response = new StatusResponse("success", 200, requestDto);
-		throw new Exception("Exception happend..");
-		//return response;
+		return response;
 	}
 	
 }
