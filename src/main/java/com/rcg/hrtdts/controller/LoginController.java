@@ -13,6 +13,10 @@ import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.HrtDtsService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value = { "/hrtdts" })
 public class LoginController{
@@ -27,6 +31,15 @@ public class LoginController{
 	 * @since   2020-01-10 
 	 * 
 	 **/
+	
+	@ApiOperation(value = "View user information")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successfully retrieved data"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	}
+			)
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping(value = ("/user-information"))
 	public StatusResponse getUserInformation(@RequestBody RequestDto requestDto){
