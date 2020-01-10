@@ -2,7 +2,7 @@ package com.rcg.hrtdts.serviceImpl;
 
 import org.springframework.stereotype.Service;
 import com.rcg.hrtdts.dto.RequestDto;
-import com.rcg.hrtdts.dto.StatusResponse;
+import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.HrtDtsService;
 
 @Service

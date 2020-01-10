@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rcg.hrtdts.dto.RequestDto;
-import com.rcg.hrtdts.dto.StatusResponse;
 import com.rcg.hrtdts.model.ExceptionResponse;
+import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.HrtDtsService;
 
 @RestController

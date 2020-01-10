@@ -1,19 +1,30 @@
 /**
-* Created for sending back error response
+* Created for sending back successful response
 *
 * @author  Jinu Shaji
 * @version 1.0
 * @since   2020-01-10 
 */
-package com.rcg.hrtdts.dto;
 
-import com.rcg.hrtdts.model.ExceptionResponse;
+package com.rcg.hrtdts.model;
 
-public class ErrorResponse<T> {
+public class StatusResponse<T> {
 
+	
 	public Boolean status;
 	public int statusCode;
-	public ExceptionResponse data;
+	public T data;
+	
+	public StatusResponse(Boolean status,int statusCode,T data){
+		this.status = status;
+		this.statusCode = statusCode;
+		this.data = data;
+		
+	}
+	
+	public StatusResponse() {
+	}
+
 	public Boolean getStatus() {
 		return status;
 	}
@@ -26,13 +37,11 @@ public class ErrorResponse<T> {
 	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
 	}
-	public ExceptionResponse getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(ExceptionResponse data) {
+	public void setData(T data) {
 		this.data = data;
 	}
-	
-	
 	
 }
