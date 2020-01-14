@@ -1,3 +1,8 @@
+/**
+* @author  Jinu Shaji
+* @version 1.0
+* @since   2020-01-10 
+*/
 package com.rcg.hrtdts.model;
 
 import javax.persistence.Column;
@@ -5,9 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-
 
 @Entity
 public class AdminDetails  {

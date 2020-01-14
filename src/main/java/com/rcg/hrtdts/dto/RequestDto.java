@@ -1,3 +1,9 @@
+/**
+* @author  Jinu Shaji
+* @version 1.0
+* @since   2020-01-10 
+*/
+
 package com.rcg.hrtdts.dto;
 
 public class RequestDto {

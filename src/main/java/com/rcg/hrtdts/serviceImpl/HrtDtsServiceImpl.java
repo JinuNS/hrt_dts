@@ -1,3 +1,9 @@
+/**
+* @author  Jinu Shaji
+* @version 1.0
+* @since   2020-01-10 
+*/
+
 package com.rcg.hrtdts.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +31,7 @@ public class HrtDtsServiceImpl implements HrtDtsService {
 	AdminRepository adminRepository;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public StatusResponse getUserInfo(RequestDto requestDto) throws Exception,PMSException,PMSNotFoundException{
+	public StatusResponse getUserInfo(RequestDto requestDto) throws PMSException,PMSNotFoundException{
 		StatusResponse response = new StatusResponse("success", 200, requestDto);
 		
 		if(true)
@@ -37,22 +43,21 @@ public class HrtDtsServiceImpl implements HrtDtsService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Transactional
-	public StatusResponse saveUserInfo(UserDto userDto) throws Exception,PMSException,PMSNotFoundException{
+	public StatusResponse saveUserInfo(UserDto userDto) throws PMSException,PMSNotFoundException{
 		
 		saveUser(userDto);
 		saveAdmin(userDto);		
 		StatusResponse response = new StatusResponse("success", 200, userDto);
 		return response;
 	}
-	private void saveUser(UserDto userDto) throws Exception,PMSException,PMSNotFoundException{
+	private void saveUser(UserDto userDto) throws PMSException,PMSNotFoundException{
 		UserDetails userDetails = new UserDetails();
 		userDetails.setName(userDto.getName());
 		userDetails.setAddress(userDto.getAddress());
 		userRepository.save(userDetails);
 		
-		
 	}
-	private void saveAdmin(UserDto userDto) throws Exception,PMSException,PMSNotFoundException{
+	private void saveAdmin(UserDto userDto) throws PMSException,PMSNotFoundException{
 		
 		AdminDetails adminDetails = new AdminDetails();
 		adminDetails.setName(userDto.getName());

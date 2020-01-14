@@ -1,3 +1,9 @@
+/**
+* @author  Jinu Shaji
+* @version 1.0
+* @since   2020-01-14 
+*/
+
 package com.rcg.hrtdts.exception;
 
 public class PMSException extends RuntimeException{

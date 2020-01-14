@@ -1,3 +1,9 @@
+/**
+* @author  Jinu Shaji
+* @version 1.0
+* @since   2020-01-10 
+*/
+
 package com.rcg.hrtdts.service;
 
 import com.rcg.hrtdts.dto.RequestDto;
@@ -10,8 +16,8 @@ import com.rcg.hrtdts.model.StatusResponse;
 public interface HrtDtsService {
 
 	@SuppressWarnings("rawtypes")
-	public StatusResponse getUserInfo(RequestDto requestDto) throws Exception,PMSException,PMSNotFoundException;
+	public StatusResponse getUserInfo(RequestDto requestDto) throws PMSException,PMSNotFoundException;
 
 	@SuppressWarnings("rawtypes")
-	public StatusResponse saveUserInfo(UserDto userDto) throws Exception,PMSException,PMSNotFoundException;
+	public StatusResponse saveUserInfo(UserDto userDto) throws PMSException,PMSNotFoundException;
 }
