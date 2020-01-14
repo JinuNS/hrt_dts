@@ -7,7 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
 @Entity
 public class UserHrtReferralModel {
 

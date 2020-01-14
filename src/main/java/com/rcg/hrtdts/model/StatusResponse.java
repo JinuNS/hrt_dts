@@ -7,7 +7,13 @@
 */
 
 package com.rcg.hrtdts.model;
-
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
 public class StatusResponse<T> {
 
 	public String status;

@@ -2,7 +2,13 @@ package com.rcg.hrtdts.dto;
 
 import java.util.Date;
 import java.util.List;
-
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
 public class UserHrtDto {
 
 	private String firstName;

@@ -15,6 +15,13 @@ import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.UserHrtService;
 
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
 @RestController
 @RequestMapping(value = { "/hrtdts" })
 public class UserHrtController {

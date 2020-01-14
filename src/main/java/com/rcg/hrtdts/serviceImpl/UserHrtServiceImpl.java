@@ -31,7 +31,13 @@ import com.rcg.hrtdts.repository.ReferralsRepository;
 import com.rcg.hrtdts.repository.SkillsModelrepository;
 import com.rcg.hrtdts.repository.UserHrtReferralsRepository;
 import com.rcg.hrtdts.service.UserHrtService;
-
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
 @Service
 public class UserHrtServiceImpl implements UserHrtService{
 	

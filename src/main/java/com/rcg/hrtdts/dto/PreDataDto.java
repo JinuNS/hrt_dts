@@ -5,6 +5,14 @@ import java.util.List;
 import com.rcg.hrtdts.model.ReferralsModel;
 import com.rcg.hrtdts.model.SkillsModel;
 
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
+
 public class PreDataDto {
 
 	private List<SkillsModel> skills;

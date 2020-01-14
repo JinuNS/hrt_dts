@@ -1,5 +1,11 @@
 package com.rcg.hrtdts.dto;
-
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
 public class UserSkillDto {
 
 	private long skillId;

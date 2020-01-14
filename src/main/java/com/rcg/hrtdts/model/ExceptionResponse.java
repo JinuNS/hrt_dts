@@ -9,7 +9,13 @@
 package com.rcg.hrtdts.model;
 
 import java.util.Date;
-
+/**
+ * 
+ * @author  neena
+ * @version 1.0
+ * @since   2020-01-14 
+ * 
+ **/
 public class ExceptionResponse {
 
 	public int errorCode;
