@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="adminDetails")
 public class AdminDetails  {
 	
 	@Id
