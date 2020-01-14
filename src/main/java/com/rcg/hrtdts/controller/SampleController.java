@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rcg.hrtdts.dto.RequestDto;
+import com.rcg.hrtdts.dto.UserDto;
 import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.HrtDtsService;
@@ -19,7 +20,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping(value = { "/hrtdts" })
-public class LoginController{
+public class SampleController{
 
 	@Autowired
 	HrtDtsService hrtDtsService;
@@ -54,4 +55,16 @@ public class LoginController{
 		return response;
 	}
 
+	@PostMapping(value = ("/save"))
+	public StatusResponse saveUserInformation(@RequestBody UserDto userDto){
+		StatusResponse response = new StatusResponse();
+		try {		
+			response = hrtDtsService.saveUserInfo(userDto);
+		}
+		catch (Exception e) {
+			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
+			response = new StatusResponse("failure", 500, exceptionResponse);
+		}
+		return response;
+	}
 }
