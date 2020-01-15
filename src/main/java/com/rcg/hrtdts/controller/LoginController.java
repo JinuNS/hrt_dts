@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rcg.hrtdts.dto.LoginDto;
-import com.rcg.hrtdts.dto.UserHrtDto;
 import com.rcg.hrtdts.model.StatusResponse;
 
 
