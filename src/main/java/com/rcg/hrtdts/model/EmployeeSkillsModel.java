@@ -5,24 +5,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
 @Entity
-public class UserHrtSkillsModel {
+public class EmployeeSkillsModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@ManyToOne
-	private UserHrtModel userHrtModel;
+	private EmployeeModel userHrtModel;
 	@ManyToOne
 	private SkillsModel skills;
-	private int skill_level;
+	private int skillLevel;
 
 	public long getId() {
 		return id;
@@ -32,11 +33,11 @@ public class UserHrtSkillsModel {
 		this.id = id;
 	}
 
-	public UserHrtModel getUserHrtModel() {
+	public EmployeeModel getUserHrtModel() {
 		return userHrtModel;
 	}
 
-	public void setUserHrtModel(UserHrtModel userHrtModel) {
+	public void setUserHrtModel(EmployeeModel userHrtModel) {
 		this.userHrtModel = userHrtModel;
 	}
 
@@ -48,12 +49,12 @@ public class UserHrtSkillsModel {
 		this.skills = skills;
 	}
 
-	public int getSkill_level() {
-		return skill_level;
+	public int getSkillLevel() {
+		return skillLevel;
 	}
 
-	public void setSkill_level(int skill_level) {
-		this.skill_level = skill_level;
+	public void setSkillLevel(int skillLevel) {
+		this.skillLevel = skillLevel;
 	}
 
 }

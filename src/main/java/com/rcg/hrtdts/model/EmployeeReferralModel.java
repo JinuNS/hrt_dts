@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
  * 
  **/
 @Entity
-public class UserHrtReferralModel {
+public class EmployeeReferralModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +27,7 @@ public class UserHrtReferralModel {
 	private double ratePerDay;
 	private double ratePerHour;
 	@ManyToOne
-	private UserHrtModel userHrtModel;
+	private EmployeeModel userHrtModel;
 	@ManyToOne
 	private ReferralsModel referralsModel;
 
@@ -87,11 +87,11 @@ public class UserHrtReferralModel {
 		this.ratePerHour = ratePerHour;
 	}
 
-	public UserHrtModel getUserHrtModel() {
+	public EmployeeModel getUserHrtModel() {
 		return userHrtModel;
 	}
 
-	public void setUserHrtModel(UserHrtModel userHrtModel) {
+	public void setUserHrtModel(EmployeeModel userHrtModel) {
 		this.userHrtModel = userHrtModel;
 	}
 

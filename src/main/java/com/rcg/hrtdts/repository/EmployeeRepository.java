@@ -2,7 +2,7 @@ package com.rcg.hrtdts.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.rcg.hrtdts.model.UserHrtModel;
+import com.rcg.hrtdts.model.EmployeeModel;
 /**
  * 
  * @author  neena
@@ -10,6 +10,6 @@ import com.rcg.hrtdts.model.UserHrtModel;
  * @since   2020-01-14 
  * 
  **/
-public interface UserHrtRepository extends JpaRepository<UserHrtModel, Long>{
+public interface EmployeeRepository extends JpaRepository<EmployeeModel, Long>{
 
 }

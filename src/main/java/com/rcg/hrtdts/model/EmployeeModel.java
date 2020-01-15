@@ -1,24 +1,33 @@
-package com.rcg.hrtdts.dto;
+package com.rcg.hrtdts.model;
 
 import java.util.Date;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
-public class UserHrtDto {
+@Entity
+public class EmployeeModel {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long eId;
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private long employeeNo;
 	private String personalEmail;
 	private Date hiredate;
-
-	private String employeeType;
+	@ManyToOne
+	private EmployeeTypeModel employeeType;
 	private String division;
 	private String assignmentBranch;
 	private String typeofAction;
@@ -30,6 +39,7 @@ public class UserHrtDto {
 	private long homePhone;
 	private long businessPhone;
 	private double hourlySalary;
+	private double annualSalary;
 	private double overtimeSalary;
 	private double fixedRatePay;
 	private double dailyPayRate;
@@ -49,27 +59,28 @@ public class UserHrtDto {
 	private boolean isHiretoBeach;
 	private boolean isRehiredEmployee;
 	private long socialSecurityNumber;
-
-	private String gender;
-
-	private String jobType;
-
-	private String maritalStatus;
-
-	private String race;
+	private String companyCodeForHR;
+	@ManyToOne
+	private GenderModel gender;
+	@ManyToOne
+	private JobTypeModel jobType;
+	@ManyToOne
+	private MaritalStatusModel maritalStatus;
+	@ManyToOne
+	private RaceModel race;
 	private Date dob;
 	private String hireCodes;
 	private String homeBranch;
 	private String CPPCareerLevel;
-	private List<UserSkillDto> userSkills;
-	private Long referralId;
-	private long RefLimit;
-	private Date startDate;
-	private Date endDate;
-	private String notes;
-	private double ratePerDay;
-	private double ratePerHour;
-	
+
+	public long geteId() {
+		return eId;
+	}
+
+	public void seteId(long eId) {
+		this.eId = eId;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -118,11 +129,11 @@ public class UserHrtDto {
 		this.hiredate = hiredate;
 	}
 
-	public String getEmployeeType() {
+	public EmployeeTypeModel getEmployeeType() {
 		return employeeType;
 	}
 
-	public void setEmployeeType(String employeeType) {
+	public void setEmployeeType(EmployeeTypeModel employeeType) {
 		this.employeeType = employeeType;
 	}
 
@@ -254,14 +265,6 @@ public class UserHrtDto {
 		this.isContractReceived = isContractReceived;
 	}
 
-	public boolean isHRRecievesContract() {
-		return isHRRecievesContract;
-	}
-
-	public void setHRRecievesContract(boolean isHRRecievesContract) {
-		this.isHRRecievesContract = isHRRecievesContract;
-	}
-
 	public String getWorkCity() {
 		return workCity;
 	}
@@ -366,35 +369,35 @@ public class UserHrtDto {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
-	public String getGender() {
+	public GenderModel getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(GenderModel gender) {
 		this.gender = gender;
 	}
 
-	public String getJobType() {
+	public JobTypeModel getJobType() {
 		return jobType;
 	}
 
-	public void setJobType(String jobType) {
+	public void setJobType(JobTypeModel jobType) {
 		this.jobType = jobType;
 	}
 
-	public String getMaritalStatus() {
+	public MaritalStatusModel getMaritalStatus() {
 		return maritalStatus;
 	}
 
-	public void setMaritalStatus(String maritalStatus) {
+	public void setMaritalStatus(MaritalStatusModel maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
 
-	public String getRace() {
+	public RaceModel getRace() {
 		return race;
 	}
 
-	public void setRace(String race) {
+	public void setRace(RaceModel race) {
 		this.race = race;
 	}
 
@@ -430,69 +433,28 @@ public class UserHrtDto {
 		CPPCareerLevel = cPPCareerLevel;
 	}
 
-	public List<UserSkillDto> getUserSkills() {
-		return userSkills;
+	public boolean isHRRecievesContract() {
+		return isHRRecievesContract;
 	}
 
-	public void setUserSkills(List<UserSkillDto> userSkills) {
-		this.userSkills = userSkills;
+	public void setHRRecievesContract(boolean isHRRecievesContract) {
+		this.isHRRecievesContract = isHRRecievesContract;
 	}
 
-	public Long getReferralId() {
-		return referralId;
+	public String getCompanyCodeForHR() {
+		return companyCodeForHR;
 	}
 
-	public void setReferralId(Long referralId) {
-		this.referralId = referralId;
+	public void setCompanyCodeForHR(String companyCodeForHR) {
+		this.companyCodeForHR = companyCodeForHR;
 	}
 
-	public long getRefLimit() {
-		return RefLimit;
+	public double getAnnualSalary() {
+		return annualSalary;
 	}
 
-	public void setRefLimit(long refLimit) {
-		RefLimit = refLimit;
+	public void setAnnualSalary(double annualSalary) {
+		this.annualSalary = annualSalary;
 	}
 
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	public double getRatePerDay() {
-		return ratePerDay;
-	}
-
-	public void setRatePerDay(double ratePerDay) {
-		this.ratePerDay = ratePerDay;
-	}
-
-	public double getRatePerHour() {
-		return ratePerHour;
-	}
-
-	public void setRatePerHour(double ratePerHour) {
-		this.ratePerHour = ratePerHour;
-	}
-	
-	
 }

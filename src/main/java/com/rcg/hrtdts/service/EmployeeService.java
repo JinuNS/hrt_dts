@@ -1,6 +1,6 @@
 package com.rcg.hrtdts.service;
 
-import com.rcg.hrtdts.dto.UserHrtDto;
+import com.rcg.hrtdts.dto.EmployeeDto;
 import com.rcg.hrtdts.model.StatusResponse;
 /**
  * 
@@ -9,11 +9,13 @@ import com.rcg.hrtdts.model.StatusResponse;
  * @since   2020-01-14 
  * 
  **/
-public interface UserHrtService {
+public interface EmployeeService {
 
-	StatusResponse saveNewHrt(UserHrtDto requestDto) throws Exception;
+	StatusResponse saveNewHrt(EmployeeDto requestDto) throws Exception;
 
 	StatusResponse getSkillsAndReferrals() throws Exception;
+
+	StatusResponse getUserHrtInfo(long id) throws Exception;
 
 }
 
