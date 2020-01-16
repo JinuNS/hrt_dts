@@ -127,7 +127,6 @@ public class DTSServiceImpl implements DTSService {
 			}
 		}
 		responseData.set("regionNames", regionData);
-		
 		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseData);
 
 		return response;
