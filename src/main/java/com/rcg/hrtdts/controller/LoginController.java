@@ -1,5 +1,6 @@
 package com.rcg.hrtdts.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rcg.hrtdts.dto.LoginDto;
 import com.rcg.hrtdts.model.StatusResponse;
+import com.rcg.hrtdts.service.LoginService;
 
 
 /**
@@ -20,11 +22,18 @@ import com.rcg.hrtdts.model.StatusResponse;
 @RequestMapping(value = { "/hrtdts" })
 public class LoginController {
 	
+	@Autowired
+	private LoginService loginService;
+	
 	
 	@PostMapping(value = ("/login"))
 	public StatusResponse getLoginCredentials(@RequestBody LoginDto requestDto){
-		requestDto.setPwd("");
-		StatusResponse response = new StatusResponse("success", 200, requestDto);
+		StatusResponse response = new StatusResponse();
+		try {
+			response = loginService.getLoginCredentials(requestDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return response;
 	}
 

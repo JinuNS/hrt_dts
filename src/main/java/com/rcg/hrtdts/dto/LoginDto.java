@@ -2,26 +2,28 @@ package com.rcg.hrtdts.dto;
 
 public class LoginDto {
 	
-	private String userName;
+	private String username;
 	
-	private String pwd;
+	private String password;
 	
 	private String role;
 
-	public String getUserName() {
-		return userName;
+	
+
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getRole() {
