@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rcg.hrtdts.dto.PreDataDto;
-import com.rcg.hrtdts.dto.EmployeeDto;
-import com.rcg.hrtdts.dto.UserSkillDto;
+import com.rcg.hrtdts.dto.EmployeeRequestDto;
+import com.rcg.hrtdts.dto.EmployeeResponseDto;
+import com.rcg.hrtdts.dto.UserSkillRequestDto;
+import com.rcg.hrtdts.dto.UserSkillResponseDto;
 import com.rcg.hrtdts.model.EmployeeTypeModel;
 import com.rcg.hrtdts.model.GenderModel;
 import com.rcg.hrtdts.model.EmployeeModel;
@@ -41,7 +43,6 @@ import com.rcg.hrtdts.service.EmployeeService;
  * 
  **/
 @Service
-@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
@@ -76,9 +77,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public StatusResponse saveNewHrt(EmployeeDto requestDto) throws Exception {
+	@Transactional
+	public StatusResponse saveEmployeeInfo(EmployeeRequestDto requestDto) throws Exception {
 		StatusResponse response = new StatusResponse();
 		EmployeeModel hrtModel = new EmployeeModel();
+		if(requestDto.geteId() != 0) {
+			hrtModel = employeeRepository.findById(requestDto.geteId()).orElse(new EmployeeModel());
+		}
 		hrtModel.setFirstName(requestDto.getFirstName());
 		hrtModel.setMiddleName(requestDto.getMiddleName());
 		hrtModel.setLastName(requestDto.getLastName());
@@ -140,19 +145,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 			RaceModel race = raceRepository.findByValue(requestDto.getRace());
 			hrtModel.setRace(race);
 		}
+		
+		
+
+		
 		employeeRepository.save(hrtModel);
 
 		// saving user skills
+		boolean isSkillsExists = userSkillsRepository.existsByEId(hrtModel.geteId());
+		if(isSkillsExists) {
+			userSkillsRepository.deleteByUserHrtModelEId(hrtModel.geteId());
+		}
 		saveUserhrtSkills(hrtModel, requestDto);
 
 		// saving userHrtReferrals
+		boolean isReferralsExists = userHrtReferralsRepository.existsByEId(hrtModel.geteId());
+		if(isReferralsExists) {
+			userHrtReferralsRepository.deleteByUserHrtModelEId(hrtModel.geteId());
+		}
 		saveUserHrtReferrals(hrtModel, requestDto);
 
 		response = new StatusResponse("success", 200, null);
 		return response;
 	}
 
-	private void saveUserHrtReferrals(EmployeeModel hrtModel, EmployeeDto requestDto) {
+	private void saveUserHrtReferrals(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
 
 		if (requestDto.getReferralId() != null) {
 			EmployeeReferralModel userHrtReferralModel = new EmployeeReferralModel();
@@ -170,12 +187,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	}
 
-	private void saveUserhrtSkills(EmployeeModel hrtModel, EmployeeDto requestDto) {
-
+	private void saveUserhrtSkills(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
+		
 		List<EmployeeSkillsModel> userSkillModelList = new ArrayList<EmployeeSkillsModel>();
 		if (requestDto.getUserSkills() != null && requestDto.getUserSkills().size() > 0) {
-			List<UserSkillDto> skills = requestDto.getUserSkills();
-			for (UserSkillDto dto : skills) {
+			List<UserSkillRequestDto> skills = requestDto.getUserSkills();
+			for (UserSkillRequestDto dto : skills) {
 				EmployeeSkillsModel userSkillModel = new EmployeeSkillsModel();
 				userSkillModel.setUserHrtModel(hrtModel);
 				SkillsModel skillsModel = skillsModelrepository.findBySkillId(dto.getSkillId());
@@ -202,14 +219,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return response;
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public StatusResponse getUserHrtInfo(long id) throws Exception {
 		StatusResponse response = new StatusResponse();
 		EmployeeModel hrtModel = employeeRepository.findById(id).orElse(null);
-		if (hrtModel != null) {
-			EmployeeDto responseDto = new EmployeeDto();
+		EmployeeResponseDto responseDto = new EmployeeResponseDto();
 
+		if (hrtModel != null) {
+			responseDto.seteId(hrtModel.geteId());
 			responseDto.setFirstName(hrtModel.getFirstName());
 			responseDto.setMiddleName(hrtModel.getMiddleName());
 			responseDto.setLastName(hrtModel.getLastName());
@@ -256,18 +274,104 @@ public class EmployeeServiceImpl implements EmployeeService {
 			responseDto.setMaritalStatus(hrtModel.getMaritalStatus().getValue());
 			responseDto.setRace(hrtModel.getRace().getValue());
 
-			List<UserSkillDto> skillDtoList = new ArrayList<UserSkillDto>();
+			List<UserSkillResponseDto> skillDtoList = new ArrayList<UserSkillResponseDto>();
 			List<EmployeeSkillsModel> skilsList = userSkillsRepository.findByEId(hrtModel.geteId());
-			UserSkillDto skillDto = new UserSkillDto();
-			skillDtoList.forEach((empSkills) -> {skillDto.setLevel(empSkills.getLevel());
-											  skillDto.setSkillId(empSkills.getSkillId());
+			UserSkillResponseDto skillDto = new UserSkillResponseDto();
+			skilsList.forEach((empSkills) -> {skillDto.setLevel(empSkills.getSkillLevel());
+											  skillDto.setSkill(empSkills.getSkills().getSkill());
 			                                  skillDtoList.add(skillDto);});
+			responseDto.setUserSkills(skillDtoList);
 			
-			System.out.println("success");
+	        EmployeeReferralModel empReferral = userHrtReferralsRepository.findByEId(id);
+	        responseDto.setType(empReferral.getReferralsModel().getType());
+	        responseDto.setRecipient(empReferral.getReferralsModel().getRecipient());
+	        responseDto.setRefCode(empReferral.getReferralsModel().getRefCode());
+	        responseDto.setRefLimit(empReferral.getRefLimit());
+	        responseDto.setStartDate(empReferral.getStartDate());
+	        responseDto.setEndDate(empReferral.getEndDate());
+	        responseDto.setNotes(empReferral.getNotes());
+	        responseDto.setRatePerDay(empReferral.getRatePerDay());
+	        responseDto.setRatePerHour(empReferral.getRatePerHour());
+	        
+	        			
 
 		}
+		response = new StatusResponse("success", 200, responseDto);
 
 		return response;
 	}
+
+//	@SuppressWarnings("rawtypes")
+//	@Override
+//	public StatusResponse updateEmployeeInfo(EmployeeRequestDto requestDto) throws Exception {
+//		
+//		StatusResponse response = new StatusResponse();
+//		EmployeeModel hrtModel = new EmployeeModel();
+//		hrtModel.seteId(requestDto.geteId());
+//		hrtModel.setFirstName(requestDto.getFirstName());
+//		hrtModel.setMiddleName(requestDto.getMiddleName());
+//		hrtModel.setLastName(requestDto.getLastName());
+//		hrtModel.setEmployeeNo(requestDto.getEmployeeNo());
+//		hrtModel.setPersonalEmail(requestDto.getPersonalEmail());
+//		hrtModel.setHiredate(requestDto.getHiredate());
+//		hrtModel.setDivision(requestDto.getDivision());
+//		hrtModel.setAssignmentBranch(requestDto.getAssignmentBranch());
+//		hrtModel.setTypeofAction(requestDto.getTypeofAction());
+//		hrtModel.setStreatAddress(requestDto.getStreatAddress());
+//		hrtModel.setApt(requestDto.getApt());
+//		hrtModel.setCity(requestDto.getCity());
+//		hrtModel.setStateorCountry(requestDto.getStateorCountry());
+//		hrtModel.setZip(requestDto.getZip());
+//		hrtModel.setHomePhone(requestDto.getHomePhone());
+//		hrtModel.setBusinessPhone(requestDto.getBusinessPhone());
+//		hrtModel.setHourlySalary(requestDto.getHourlySalary());
+//		hrtModel.setOvertimeSalary(requestDto.getOvertimeSalary());
+//		hrtModel.setFixedRatePay(requestDto.getFixedRatePay());
+//		hrtModel.setDailyPayRate(requestDto.getDailyPayRate());
+//		hrtModel.setPerdiemAllowence(requestDto.getPerdiemAllowence());
+//		hrtModel.setContractReceived(requestDto.isContractReceived());
+//		hrtModel.setHRRecievesContract(requestDto.isHRRecievesContract());
+//		hrtModel.setWorkCity(requestDto.getWorkCity());
+//		hrtModel.setWorkState(requestDto.getWorkState());
+//		hrtModel.setHoursWorkedPerDay(requestDto.getHoursWorkedPerDay());
+//		hrtModel.setNextReviewDate(requestDto.getNextReviewDate());
+//		hrtModel.setComments(requestDto.getComments());
+//		hrtModel.setCompanyName(requestDto.getCompanyName());
+//		hrtModel.setCompanyIsAllianceMember(requestDto.isCompanyIsAllianceMember());
+//		hrtModel.setFederalId(requestDto.getFederalId());
+//		hrtModel.setSubmissionGuidlineRecieved(requestDto.isSubmissionGuidlineRecieved());
+//		hrtModel.setRcgEmail(requestDto.getRcgEmail());
+//		hrtModel.setHiretoBeach(requestDto.isHiretoBeach());
+//		hrtModel.setRehiredEmployee(requestDto.isRehiredEmployee());
+//		hrtModel.setSocialSecurityNumber(requestDto.getSocialSecurityNumber());
+//		hrtModel.setDob(requestDto.getDob());
+//		hrtModel.setHireCodes(requestDto.getHireCodes());
+//		hrtModel.setHomeBranch(requestDto.getHomeBranch());
+//		hrtModel.setCPPCareerLevel(requestDto.getCPPCareerLevel());
+//
+//		if (requestDto.getEmployeeType() != null) {
+//			EmployeeTypeModel employeeType = employeeTypeRepository.findByValue(requestDto.getEmployeeType());
+//			hrtModel.setEmployeeType(employeeType);
+//		}
+//		if (requestDto.getGender() != null) {
+//			GenderModel gender = genderRepository.findByValue(requestDto.getGender());
+//			hrtModel.setGender(gender);
+//		}
+//		if (requestDto.getJobType() != null) {
+//			JobTypeModel jobType = jobTypeRepository.findByValue(requestDto.getJobType());
+//			hrtModel.setJobType(jobType);
+//		}
+//		if (requestDto.getMaritalStatus() != null) {
+//			MaritalStatusModel maritalStatus = maritalStatusRepository.findByValue(requestDto.getMaritalStatus());
+//			hrtModel.setMaritalStatus(maritalStatus);
+//		}
+//		if (requestDto.getRace() != null) {
+//			RaceModel race = raceRepository.findByValue(requestDto.getRace());
+//			hrtModel.setRace(race);
+//		}
+//		
+//		employeeRepository.save(hrtModel);	
+//		return response;
+//	}
 
 }

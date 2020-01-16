@@ -2,22 +2,23 @@ package com.rcg.hrtdts.dto;
 
 import java.util.Date;
 import java.util.List;
+
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
-public class EmployeeDto {
+public class EmployeeRequestDto {
 
+	private long eId;
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private long employeeNo;
 	private String personalEmail;
 	private Date hiredate;
-
 	private String employeeType;
 	private String division;
 	private String assignmentBranch;
@@ -49,19 +50,15 @@ public class EmployeeDto {
 	private boolean isHiretoBeach;
 	private boolean isRehiredEmployee;
 	private long socialSecurityNumber;
-
 	private String gender;
-
 	private String jobType;
-
 	private String maritalStatus;
-
 	private String race;
 	private Date dob;
 	private String hireCodes;
 	private String homeBranch;
 	private String CPPCareerLevel;
-	private List<UserSkillDto> userSkills;
+	private List<UserSkillRequestDto> userSkills;
 	private Long referralId;
 	private long RefLimit;
 	private Date startDate;
@@ -69,7 +66,15 @@ public class EmployeeDto {
 	private String notes;
 	private double ratePerDay;
 	private double ratePerHour;
-	
+
+	public long geteId() {
+		return eId;
+	}
+
+	public void seteId(long eId) {
+		this.eId = eId;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -430,11 +435,11 @@ public class EmployeeDto {
 		CPPCareerLevel = cPPCareerLevel;
 	}
 
-	public List<UserSkillDto> getUserSkills() {
+	public List<UserSkillRequestDto> getUserSkills() {
 		return userSkills;
 	}
 
-	public void setUserSkills(List<UserSkillDto> userSkills) {
+	public void setUserSkills(List<UserSkillRequestDto> userSkills) {
 		this.userSkills = userSkills;
 	}
 
@@ -493,6 +498,5 @@ public class EmployeeDto {
 	public void setRatePerHour(double ratePerHour) {
 		this.ratePerHour = ratePerHour;
 	}
-	
-	
+
 }
