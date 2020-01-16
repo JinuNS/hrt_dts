@@ -3,6 +3,7 @@ package com.rcg.hrtdts.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +39,11 @@ public class LoginServiceImpl implements LoginService {
 		StatusResponse result = new StatusResponse();
 		UserModel user = null;
 		List<PageRule> pageRule = null;
-		LoginResponseDto loginResponseDto = new LoginResponseDto();
+		LoginResponseDto loginResponseDto = null;
 		if (requestDto != null) {
 			if (requestDto.getUsername() != null && !requestDto.getUsername().isEmpty()) {
 				user = userRepository.findByuserName(requestDto.getUsername());
-				if (user.getRole() != null && user.getRole().getRoleId() != null) {
+				if (user != null && user.getRole() != null && user.getRole().getRoleId() != null) {
 					pageRule = pageRuleRepository.findByroleId(user.getRole().getRoleId());
 
 				}
@@ -51,7 +52,11 @@ public class LoginServiceImpl implements LoginService {
 			if (user != null && pageRule != null) {
 				loginResponseDto = createLoginResponse(loginResponseDto, user, pageRule);
 			}
-			result = new StatusResponse(Constants.SUCCESS, Constants.SUCCESS_CODE, loginResponseDto);
+			if(loginResponseDto!=null)
+				result = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, loginResponseDto);
+			else
+				result = new StatusResponse(Constants.FAILURE, HttpStatus.OK, loginResponseDto);
+			
 		}
 
 		return result;
@@ -59,6 +64,7 @@ public class LoginServiceImpl implements LoginService {
 
 	private LoginResponseDto createLoginResponse(LoginResponseDto loginResponseDto, UserModel user,
 			List<PageRule> pageRule) {
+		loginResponseDto = new LoginResponseDto();
 		loginResponseDto.seteId(user.geteId());
 		loginResponseDto.setUserId(user.getUserId());
 		loginResponseDto.setEmail(user.getEmail());
