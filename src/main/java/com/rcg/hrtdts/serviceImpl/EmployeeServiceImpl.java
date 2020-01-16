@@ -34,6 +34,7 @@ import com.rcg.hrtdts.repository.ReferralsRepository;
 import com.rcg.hrtdts.repository.SkillsModelrepository;
 import com.rcg.hrtdts.repository.EmployeeReferralsRepository;
 import com.rcg.hrtdts.service.EmployeeService;
+import com.rcg.hrtdts.utility.Constants;
 
 /**
  * 
@@ -165,7 +166,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		saveUserHrtReferrals(hrtModel, requestDto);
 
-		response = new StatusResponse("success", 200, null);
+		response = new StatusResponse(Constants.SUCCESS, Constants.SUCCESS_CODE, null);
 		return response;
 	}
 
@@ -215,7 +216,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		preDataDto.setReferrals(referrals);
 		preDataDto.setSkills(skills);
 
-		response = new StatusResponse("success", 200, preDataDto);
+		response = new StatusResponse(Constants.SUCCESS, Constants.SUCCESS_CODE, preDataDto);
 		return response;
 	}
 
@@ -296,82 +297,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	        			
 
 		}
-		response = new StatusResponse("success", 200, responseDto);
+		response = new StatusResponse(Constants.SUCCESS, Constants.SUCCESS_CODE, responseDto);
 
 		return response;
 	}
 
-//	@SuppressWarnings("rawtypes")
-//	@Override
-//	public StatusResponse updateEmployeeInfo(EmployeeRequestDto requestDto) throws Exception {
-//		
-//		StatusResponse response = new StatusResponse();
-//		EmployeeModel hrtModel = new EmployeeModel();
-//		hrtModel.seteId(requestDto.geteId());
-//		hrtModel.setFirstName(requestDto.getFirstName());
-//		hrtModel.setMiddleName(requestDto.getMiddleName());
-//		hrtModel.setLastName(requestDto.getLastName());
-//		hrtModel.setEmployeeNo(requestDto.getEmployeeNo());
-//		hrtModel.setPersonalEmail(requestDto.getPersonalEmail());
-//		hrtModel.setHiredate(requestDto.getHiredate());
-//		hrtModel.setDivision(requestDto.getDivision());
-//		hrtModel.setAssignmentBranch(requestDto.getAssignmentBranch());
-//		hrtModel.setTypeofAction(requestDto.getTypeofAction());
-//		hrtModel.setStreatAddress(requestDto.getStreatAddress());
-//		hrtModel.setApt(requestDto.getApt());
-//		hrtModel.setCity(requestDto.getCity());
-//		hrtModel.setStateorCountry(requestDto.getStateorCountry());
-//		hrtModel.setZip(requestDto.getZip());
-//		hrtModel.setHomePhone(requestDto.getHomePhone());
-//		hrtModel.setBusinessPhone(requestDto.getBusinessPhone());
-//		hrtModel.setHourlySalary(requestDto.getHourlySalary());
-//		hrtModel.setOvertimeSalary(requestDto.getOvertimeSalary());
-//		hrtModel.setFixedRatePay(requestDto.getFixedRatePay());
-//		hrtModel.setDailyPayRate(requestDto.getDailyPayRate());
-//		hrtModel.setPerdiemAllowence(requestDto.getPerdiemAllowence());
-//		hrtModel.setContractReceived(requestDto.isContractReceived());
-//		hrtModel.setHRRecievesContract(requestDto.isHRRecievesContract());
-//		hrtModel.setWorkCity(requestDto.getWorkCity());
-//		hrtModel.setWorkState(requestDto.getWorkState());
-//		hrtModel.setHoursWorkedPerDay(requestDto.getHoursWorkedPerDay());
-//		hrtModel.setNextReviewDate(requestDto.getNextReviewDate());
-//		hrtModel.setComments(requestDto.getComments());
-//		hrtModel.setCompanyName(requestDto.getCompanyName());
-//		hrtModel.setCompanyIsAllianceMember(requestDto.isCompanyIsAllianceMember());
-//		hrtModel.setFederalId(requestDto.getFederalId());
-//		hrtModel.setSubmissionGuidlineRecieved(requestDto.isSubmissionGuidlineRecieved());
-//		hrtModel.setRcgEmail(requestDto.getRcgEmail());
-//		hrtModel.setHiretoBeach(requestDto.isHiretoBeach());
-//		hrtModel.setRehiredEmployee(requestDto.isRehiredEmployee());
-//		hrtModel.setSocialSecurityNumber(requestDto.getSocialSecurityNumber());
-//		hrtModel.setDob(requestDto.getDob());
-//		hrtModel.setHireCodes(requestDto.getHireCodes());
-//		hrtModel.setHomeBranch(requestDto.getHomeBranch());
-//		hrtModel.setCPPCareerLevel(requestDto.getCPPCareerLevel());
-//
-//		if (requestDto.getEmployeeType() != null) {
-//			EmployeeTypeModel employeeType = employeeTypeRepository.findByValue(requestDto.getEmployeeType());
-//			hrtModel.setEmployeeType(employeeType);
-//		}
-//		if (requestDto.getGender() != null) {
-//			GenderModel gender = genderRepository.findByValue(requestDto.getGender());
-//			hrtModel.setGender(gender);
-//		}
-//		if (requestDto.getJobType() != null) {
-//			JobTypeModel jobType = jobTypeRepository.findByValue(requestDto.getJobType());
-//			hrtModel.setJobType(jobType);
-//		}
-//		if (requestDto.getMaritalStatus() != null) {
-//			MaritalStatusModel maritalStatus = maritalStatusRepository.findByValue(requestDto.getMaritalStatus());
-//			hrtModel.setMaritalStatus(maritalStatus);
-//		}
-//		if (requestDto.getRace() != null) {
-//			RaceModel race = raceRepository.findByValue(requestDto.getRace());
-//			hrtModel.setRace(race);
-//		}
-//		
-//		employeeRepository.save(hrtModel);	
-//		return response;
-//	}
+
 
 }
