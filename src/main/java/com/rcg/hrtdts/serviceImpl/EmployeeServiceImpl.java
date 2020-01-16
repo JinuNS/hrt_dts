@@ -277,7 +277,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<EmployeeTechnologyModel> userSkillModelList = new ArrayList<EmployeeTechnologyModel>();
 		if (requestDto.getUserSkills() != null && requestDto.getUserSkills().size() > 0) {
 			List<UserSkillRequestDto> skills = requestDto.getUserSkills();
-			for (UserSkillRequestDto dto : skills) {
+			for (UserSkillRequestDto dto : skills) { 
 				EmployeeTechnologyModel userSkillModel = new EmployeeTechnologyModel();
 				userSkillModel.setUserHrtModel(hrtModel);
 				TechnologyModel skillsModel = technologyRepository.findById(dto.getSkillId()).orElse(new TechnologyModel());
