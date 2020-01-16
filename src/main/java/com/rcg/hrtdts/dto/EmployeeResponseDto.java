@@ -69,6 +69,21 @@ public class EmployeeResponseDto {
 	private String notes;
 	private Double ratePerDay;
 	private Double ratePerHour;
+	
+	private String department;
+	private String region;
+	private String timeZone;
+	private Date terminationDate;
+	private String bloodGroup;
+	private String qualification;
+	private String homeAddress;
+	private String recruiter;
+	private String taxId;
+	private String terminationType;
+	private String employeeContractors;
+    private Long role;
+    private String userName;
+	private String password;
 
 	public Long geteId() {
 		return eId;
@@ -518,4 +533,117 @@ public class EmployeeResponseDto {
 		this.ratePerHour = ratePerHour;
 	}
 
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	public Date getTerminationDate() {
+		return terminationDate;
+	}
+
+	public void setTerminationDate(Date terminationDate) {
+		this.terminationDate = terminationDate;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+
+	public String getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+
+	public String getRecruiter() {
+		return recruiter;
+	}
+
+	public void setRecruiter(String recruiter) {
+		this.recruiter = recruiter;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	public String getTerminationType() {
+		return terminationType;
+	}
+
+	public void setTerminationType(String terminationType) {
+		this.terminationType = terminationType;
+	}
+
+	public String getEmployeeContractors() {
+		return employeeContractors;
+	}
+
+	public void setEmployeeContractors(String employeeContractors) {
+		this.employeeContractors = employeeContractors;
+	}
+
+	public Long getRole() {
+		return role;
+	}
+
+	public void setRole(Long role) {
+		this.role = role;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	
 }

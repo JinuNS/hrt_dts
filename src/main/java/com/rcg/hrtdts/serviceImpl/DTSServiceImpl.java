@@ -120,7 +120,7 @@ public class DTSServiceImpl implements DTSService {
 		if (!regionModel.isEmpty()) {
 			for (RegionModel obj : regionModel) {
 				ObjectNode data=objectMapper.createObjectNode();
-				data.put("regionId", obj.getRegionId());
+				data.put("regionId", obj.getId());
 				data.put("regionName", obj.getRegionName());
 				regionData.add(data);
 				

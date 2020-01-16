@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
  * 
  **/
 @Entity
-public class EmployeeSkillsModel {
+public class EmployeeTechnologyModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class EmployeeSkillsModel {
 	@ManyToOne
 	private EmployeeModel userHrtModel;
 	@ManyToOne
-	private SkillsModel skills;
+	private TechnologyModel skills;
 	private Integer skillLevel;
 	private Double experience;
 	private String comment;
@@ -43,11 +43,11 @@ public class EmployeeSkillsModel {
 		this.userHrtModel = userHrtModel;
 	}
 
-	public SkillsModel getSkills() {
+	public TechnologyModel getSkills() {
 		return skills;
 	}
 
-	public void setSkills(SkillsModel skills) {
+	public void setSkills(TechnologyModel skills) {
 		this.skills = skills;
 	}
 

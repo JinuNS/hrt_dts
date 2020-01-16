@@ -9,17 +9,18 @@ import javax.persistence.Id;
 public class RegionModel {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long regionId;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String regionName;
+	private String regionCode;
+	private Boolean isDeleted;
 
-	public Long getRegionId() {
-		return regionId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setRegionId(Long regionId) {
-		this.regionId = regionId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getRegionName() {
@@ -30,5 +31,25 @@ public class RegionModel {
 		this.regionName = regionName;
 	}
 
+	public String getRegionCode() {
+		return regionCode;
+	}
+
+	public void setRegionCode(String regionCode) {
+		this.regionCode = regionCode;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	
+
+	
+
 }
+
