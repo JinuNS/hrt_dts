@@ -1,4 +1,4 @@
-## Sampe Spring Boot Application
+## Sample Spring Boot Application
 #####	VERSION : 0.1
 
 - To view swagger api docs, please check http://ip:port/v2/api-docs
