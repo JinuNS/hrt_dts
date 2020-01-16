@@ -1,29 +1,30 @@
 package com.rcg.hrtdts.dto;
+
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
 public class UserSkillRequestDto {
 
-	private long skillId;
-	private int level;
+	private Long skillId;
+	private Integer level;
 
-	public long getSkillId() {
+	public Long getSkillId() {
 		return skillId;
 	}
 
-	public void setSkillId(long skillId) {
+	public void setSkillId(Long skillId) {
 		this.skillId = skillId;
 	}
 
-	public int getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 

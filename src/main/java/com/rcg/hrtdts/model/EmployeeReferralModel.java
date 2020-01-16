@@ -7,11 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
 @Entity
@@ -19,31 +20,31 @@ public class EmployeeReferralModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	private long refLimit;
+	private Long id;
+	private Long refLimit;
 	private Date startDate;
 	private Date endDate;
 	private String notes;
-	private double ratePerDay;
-	private double ratePerHour;
+	private Double ratePerDay;
+	private Double ratePerHour;
 	@ManyToOne
 	private EmployeeModel userHrtModel;
 	@ManyToOne
 	private ReferralsModel referralsModel;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getRefLimit() {
+	public Long getRefLimit() {
 		return refLimit;
 	}
 
-	public void setRefLimit(long refLimit) {
+	public void setRefLimit(Long refLimit) {
 		this.refLimit = refLimit;
 	}
 
@@ -71,19 +72,19 @@ public class EmployeeReferralModel {
 		this.notes = notes;
 	}
 
-	public double getRatePerDay() {
+	public Double getRatePerDay() {
 		return ratePerDay;
 	}
 
-	public void setRatePerDay(double ratePerDay) {
+	public void setRatePerDay(Double ratePerDay) {
 		this.ratePerDay = ratePerDay;
 	}
 
-	public double getRatePerHour() {
+	public Double getRatePerHour() {
 		return ratePerHour;
 	}
 
-	public void setRatePerHour(double ratePerHour) {
+	public void setRatePerHour(Double ratePerHour) {
 		this.ratePerHour = ratePerHour;
 	}
 

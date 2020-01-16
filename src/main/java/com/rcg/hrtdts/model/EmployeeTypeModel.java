@@ -4,27 +4,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
 @Entity
 public class EmployeeTypeModel {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String value;
-	
-	
-	public long getId() {
+
+	public Long getId() {
 		return id;
 	}
-	
-	public void setId(long id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -35,9 +35,5 @@ public class EmployeeTypeModel {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	
-	
-	
 
 }

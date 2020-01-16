@@ -10,34 +10,24 @@ public class CppLevelModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long levelId;
-	
-	
+	private Long levelId;
+
 	private String levelName;
 
-
-	public long getLevelId() {
+	public Long getLevelId() {
 		return levelId;
 	}
 
-
-	public void setLevelId(long levelId) {
+	public void setLevelId(Long levelId) {
 		this.levelId = levelId;
 	}
-
 
 	public String getLevelName() {
 		return levelName;
 	}
 
-
 	public void setLevelName(String levelName) {
 		this.levelName = levelName;
 	}
 
-
-
-	
-	
-	
 }

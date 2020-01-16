@@ -18,20 +18,20 @@ public class EmployeeSkillsModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	@ManyToOne
 	private EmployeeModel userHrtModel;
 	@ManyToOne
 	private SkillsModel skills;
-	private int skillLevel;
+	private Integer skillLevel;
 	private Double experience;
 	private String comment;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -51,11 +51,11 @@ public class EmployeeSkillsModel {
 		this.skills = skills;
 	}
 
-	public int getSkillLevel() {
+	public Integer getSkillLevel() {
 		return skillLevel;
 	}
 
-	public void setSkillLevel(int skillLevel) {
+	public void setSkillLevel(Integer skillLevel) {
 		this.skillLevel = skillLevel;
 	}
 
@@ -75,5 +75,4 @@ public class EmployeeSkillsModel {
 		this.comment = comment;
 	}
 
-	
 }

@@ -12,11 +12,11 @@ import java.util.List;
  **/
 public class EmployeeRequestDto {
 
-	private long eId;
+	private Long eId;
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private long employeeNo;
+	private Long employeeNo;
 	private String personalEmail;
 	private Date hiredate;
 	private String employeeType;
@@ -27,29 +27,29 @@ public class EmployeeRequestDto {
 	private String apt;
 	private String city;
 	private String stateorCountry;
-	private long zip;
-	private long homePhone;
-	private long businessPhone;
-	private double hourlySalary;
-	private double overtimeSalary;
-	private double fixedRatePay;
-	private double dailyPayRate;
-	private double perdiemAllowence;
-	private boolean isContractReceived;
-	private boolean isHRRecievesContract;
+	private Long zip;
+	private Long homePhone;
+	private Long businessPhone;
+	private Double hourlySalary;
+	private Double overtimeSalary;
+	private Double fixedRatePay;
+	private Double dailyPayRate;
+	private Double perdiemAllowence;
+	private Boolean isContractReceived;
+	private Boolean isHRRecievesContract;
 	private String workCity;
 	private String workState;
-	private int hoursWorkedPerDay;
+	private Integer hoursWorkedPerDay;
 	private Date nextReviewDate;
 	private String comments;
 	private String companyName;
-	private boolean isCompanyIsAllianceMember;
+	private Boolean isCompanyIsAllianceMember;
 	private String federalId;
-	private boolean isSubmissionGuidlineRecieved;
+	private Boolean isSubmissionGuidlineRecieved;
 	private String rcgEmail;
-	private boolean isHiretoBeach;
-	private boolean isRehiredEmployee;
-	private long socialSecurityNumber;
+	private Boolean isHiretoBeach;
+	private Boolean isRehiredEmployee;
+	private Long socialSecurityNumber;
 	private String gender;
 	private String jobType;
 	private String maritalStatus;
@@ -60,18 +60,18 @@ public class EmployeeRequestDto {
 	private String CPPCareerLevel;
 	private List<UserSkillRequestDto> userSkills;
 	private Long referralId;
-	private long RefLimit;
+	private Long RefLimit;
 	private Date startDate;
 	private Date endDate;
 	private String notes;
-	private double ratePerDay;
-	private double ratePerHour;
+	private Double ratePerDay;
+	private Double ratePerHour;
 
-	public long geteId() {
+	public Long geteId() {
 		return eId;
 	}
 
-	public void seteId(long eId) {
+	public void seteId(Long eId) {
 		this.eId = eId;
 	}
 
@@ -99,11 +99,11 @@ public class EmployeeRequestDto {
 		this.lastName = lastName;
 	}
 
-	public long getEmployeeNo() {
+	public Long getEmployeeNo() {
 		return employeeNo;
 	}
 
-	public void setEmployeeNo(long employeeNo) {
+	public void setEmployeeNo(Long employeeNo) {
 		this.employeeNo = employeeNo;
 	}
 
@@ -187,83 +187,83 @@ public class EmployeeRequestDto {
 		this.stateorCountry = stateorCountry;
 	}
 
-	public long getZip() {
+	public Long getZip() {
 		return zip;
 	}
 
-	public void setZip(long zip) {
+	public void setZip(Long zip) {
 		this.zip = zip;
 	}
 
-	public long getHomePhone() {
+	public Long getHomePhone() {
 		return homePhone;
 	}
 
-	public void setHomePhone(long homePhone) {
+	public void setHomePhone(Long homePhone) {
 		this.homePhone = homePhone;
 	}
 
-	public long getBusinessPhone() {
+	public Long getBusinessPhone() {
 		return businessPhone;
 	}
 
-	public void setBusinessPhone(long businessPhone) {
+	public void setBusinessPhone(Long businessPhone) {
 		this.businessPhone = businessPhone;
 	}
 
-	public double getHourlySalary() {
+	public Double getHourlySalary() {
 		return hourlySalary;
 	}
 
-	public void setHourlySalary(double hourlySalary) {
+	public void setHourlySalary(Double hourlySalary) {
 		this.hourlySalary = hourlySalary;
 	}
 
-	public double getOvertimeSalary() {
+	public Double getOvertimeSalary() {
 		return overtimeSalary;
 	}
 
-	public void setOvertimeSalary(double overtimeSalary) {
+	public void setOvertimeSalary(Double overtimeSalary) {
 		this.overtimeSalary = overtimeSalary;
 	}
 
-	public double getFixedRatePay() {
+	public Double getFixedRatePay() {
 		return fixedRatePay;
 	}
 
-	public void setFixedRatePay(double fixedRatePay) {
+	public void setFixedRatePay(Double fixedRatePay) {
 		this.fixedRatePay = fixedRatePay;
 	}
 
-	public double getDailyPayRate() {
+	public Double getDailyPayRate() {
 		return dailyPayRate;
 	}
 
-	public void setDailyPayRate(double dailyPayRate) {
+	public void setDailyPayRate(Double dailyPayRate) {
 		this.dailyPayRate = dailyPayRate;
 	}
 
-	public double getPerdiemAllowence() {
+	public Double getPerdiemAllowence() {
 		return perdiemAllowence;
 	}
 
-	public void setPerdiemAllowence(double perdiemAllowence) {
+	public void setPerdiemAllowence(Double perdiemAllowence) {
 		this.perdiemAllowence = perdiemAllowence;
 	}
 
-	public boolean isContractReceived() {
+	public Boolean getIsContractReceived() {
 		return isContractReceived;
 	}
 
-	public void setContractReceived(boolean isContractReceived) {
+	public void setIsContractReceived(Boolean isContractReceived) {
 		this.isContractReceived = isContractReceived;
 	}
 
-	public boolean isHRRecievesContract() {
+	public Boolean getIsHRRecievesContract() {
 		return isHRRecievesContract;
 	}
 
-	public void setHRRecievesContract(boolean isHRRecievesContract) {
+	public void setIsHRRecievesContract(Boolean isHRRecievesContract) {
 		this.isHRRecievesContract = isHRRecievesContract;
 	}
 
@@ -283,11 +283,11 @@ public class EmployeeRequestDto {
 		this.workState = workState;
 	}
 
-	public int getHoursWorkedPerDay() {
+	public Integer getHoursWorkedPerDay() {
 		return hoursWorkedPerDay;
 	}
 
-	public void setHoursWorkedPerDay(int hoursWorkedPerDay) {
+	public void setHoursWorkedPerDay(Integer hoursWorkedPerDay) {
 		this.hoursWorkedPerDay = hoursWorkedPerDay;
 	}
 
@@ -315,11 +315,11 @@ public class EmployeeRequestDto {
 		this.companyName = companyName;
 	}
 
-	public boolean isCompanyIsAllianceMember() {
+	public Boolean getIsCompanyIsAllianceMember() {
 		return isCompanyIsAllianceMember;
 	}
 
-	public void setCompanyIsAllianceMember(boolean isCompanyIsAllianceMember) {
+	public void setIsCompanyIsAllianceMember(Boolean isCompanyIsAllianceMember) {
 		this.isCompanyIsAllianceMember = isCompanyIsAllianceMember;
 	}
 
@@ -331,11 +331,11 @@ public class EmployeeRequestDto {
 		this.federalId = federalId;
 	}
 
-	public boolean isSubmissionGuidlineRecieved() {
+	public Boolean getIsSubmissionGuidlineRecieved() {
 		return isSubmissionGuidlineRecieved;
 	}
 
-	public void setSubmissionGuidlineRecieved(boolean isSubmissionGuidlineRecieved) {
+	public void setIsSubmissionGuidlineRecieved(Boolean isSubmissionGuidlineRecieved) {
 		this.isSubmissionGuidlineRecieved = isSubmissionGuidlineRecieved;
 	}
 
@@ -347,27 +347,27 @@ public class EmployeeRequestDto {
 		this.rcgEmail = rcgEmail;
 	}
 
-	public boolean isHiretoBeach() {
+	public Boolean getIsHiretoBeach() {
 		return isHiretoBeach;
 	}
 
-	public void setHiretoBeach(boolean isHiretoBeach) {
+	public void setIsHiretoBeach(Boolean isHiretoBeach) {
 		this.isHiretoBeach = isHiretoBeach;
 	}
 
-	public boolean isRehiredEmployee() {
+	public Boolean getIsRehiredEmployee() {
 		return isRehiredEmployee;
 	}
 
-	public void setRehiredEmployee(boolean isRehiredEmployee) {
+	public void setIsRehiredEmployee(Boolean isRehiredEmployee) {
 		this.isRehiredEmployee = isRehiredEmployee;
 	}
 
-	public long getSocialSecurityNumber() {
+	public Long getSocialSecurityNumber() {
 		return socialSecurityNumber;
 	}
 
-	public void setSocialSecurityNumber(long socialSecurityNumber) {
+	public void setSocialSecurityNumber(Long socialSecurityNumber) {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
@@ -451,11 +451,11 @@ public class EmployeeRequestDto {
 		this.referralId = referralId;
 	}
 
-	public long getRefLimit() {
+	public Long getRefLimit() {
 		return RefLimit;
 	}
 
-	public void setRefLimit(long refLimit) {
+	public void setRefLimit(Long refLimit) {
 		RefLimit = refLimit;
 	}
 
@@ -483,19 +483,19 @@ public class EmployeeRequestDto {
 		this.notes = notes;
 	}
 
-	public double getRatePerDay() {
+	public Double getRatePerDay() {
 		return ratePerDay;
 	}
 
-	public void setRatePerDay(double ratePerDay) {
+	public void setRatePerDay(Double ratePerDay) {
 		this.ratePerDay = ratePerDay;
 	}
 
-	public double getRatePerHour() {
+	public Double getRatePerHour() {
 		return ratePerHour;
 	}
 
-	public void setRatePerHour(double ratePerHour) {
+	public void setRatePerHour(Double ratePerHour) {
 		this.ratePerHour = ratePerHour;
 	}
 

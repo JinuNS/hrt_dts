@@ -19,11 +19,11 @@ public class EmployeeModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long eId;
+	private Long eId;
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private long employeeNo;
+	private Long employeeNo;
 	private String personalEmail;
 	private Date hiredate;
 	@ManyToOne
@@ -35,30 +35,30 @@ public class EmployeeModel {
 	private String apt;
 	private String city;
 	private String stateorCountry;
-	private long zip;
-	private long homePhone;
-	private long businessPhone;
-	private double hourlySalary;
-	private double annualSalary;
-	private double overtimeSalary;
-	private double fixedRatePay;
-	private double dailyPayRate;
-	private double perdiemAllowence;
-	private boolean isContractReceived;
-	private boolean isHRRecievesContract;
+	private Long zip;
+	private Long homePhone;
+	private Long businessPhone;
+	private Double hourlySalary;
+	private Double annualSalary;
+	private Double overtimeSalary;
+	private Double fixedRatePay;
+	private Double dailyPayRate;
+	private Double perdiemAllowence;
+	private Boolean isContractReceived;
+	private Boolean isHRRecievesContract;
 	private String workCity;
 	private String workState;
-	private int hoursWorkedPerDay;
+	private Integer hoursWorkedPerDay;
 	private Date nextReviewDate;
 	private String comments;
 	private String companyName;
-	private boolean isCompanyIsAllianceMember;
+	private Boolean isCompanyIsAllianceMember;
 	private String federalId;
-	private boolean isSubmissionGuidlineRecieved;
+	private Boolean isSubmissionGuidlineRecieved;
 	private String rcgEmail;
-	private boolean isHiretoBeach;
-	private boolean isRehiredEmployee;
-	private long socialSecurityNumber;
+	private Boolean isHiretoBeach;
+	private Boolean isRehiredEmployee;
+	private Long socialSecurityNumber;
 	private String companyCodeForHR;
 	@ManyToOne
 	private GenderModel gender;
@@ -73,11 +73,11 @@ public class EmployeeModel {
 	private String homeBranch;
 	private String CPPCareerLevel;
 
-	public long geteId() {
+	public Long geteId() {
 		return eId;
 	}
 
-	public void seteId(long eId) {
+	public void seteId(Long eId) {
 		this.eId = eId;
 	}
 
@@ -105,11 +105,11 @@ public class EmployeeModel {
 		this.lastName = lastName;
 	}
 
-	public long getEmployeeNo() {
+	public Long getEmployeeNo() {
 		return employeeNo;
 	}
 
-	public void setEmployeeNo(long employeeNo) {
+	public void setEmployeeNo(Long employeeNo) {
 		this.employeeNo = employeeNo;
 	}
 
@@ -193,76 +193,92 @@ public class EmployeeModel {
 		this.stateorCountry = stateorCountry;
 	}
 
-	public long getZip() {
+	public Long getZip() {
 		return zip;
 	}
 
-	public void setZip(long zip) {
+	public void setZip(Long zip) {
 		this.zip = zip;
 	}
 
-	public long getHomePhone() {
+	public Long getHomePhone() {
 		return homePhone;
 	}
 
-	public void setHomePhone(long homePhone) {
+	public void setHomePhone(Long homePhone) {
 		this.homePhone = homePhone;
 	}
 
-	public long getBusinessPhone() {
+	public Long getBusinessPhone() {
 		return businessPhone;
 	}
 
-	public void setBusinessPhone(long businessPhone) {
+	public void setBusinessPhone(Long businessPhone) {
 		this.businessPhone = businessPhone;
 	}
 
-	public double getHourlySalary() {
+	public Double getHourlySalary() {
 		return hourlySalary;
 	}
 
-	public void setHourlySalary(double hourlySalary) {
+	public void setHourlySalary(Double hourlySalary) {
 		this.hourlySalary = hourlySalary;
 	}
 
-	public double getOvertimeSalary() {
+	public Double getAnnualSalary() {
+		return annualSalary;
+	}
+
+	public void setAnnualSalary(Double annualSalary) {
+		this.annualSalary = annualSalary;
+	}
+
+	public Double getOvertimeSalary() {
 		return overtimeSalary;
 	}
 
-	public void setOvertimeSalary(double overtimeSalary) {
+	public void setOvertimeSalary(Double overtimeSalary) {
 		this.overtimeSalary = overtimeSalary;
 	}
 
-	public double getFixedRatePay() {
+	public Double getFixedRatePay() {
 		return fixedRatePay;
 	}
 
-	public void setFixedRatePay(double fixedRatePay) {
+	public void setFixedRatePay(Double fixedRatePay) {
 		this.fixedRatePay = fixedRatePay;
 	}
 
-	public double getDailyPayRate() {
+	public Double getDailyPayRate() {
 		return dailyPayRate;
 	}
 
-	public void setDailyPayRate(double dailyPayRate) {
+	public void setDailyPayRate(Double dailyPayRate) {
 		this.dailyPayRate = dailyPayRate;
 	}
 
-	public double getPerdiemAllowence() {
+	public Double getPerdiemAllowence() {
 		return perdiemAllowence;
 	}
 
-	public void setPerdiemAllowence(double perdiemAllowence) {
+	public void setPerdiemAllowence(Double perdiemAllowence) {
 		this.perdiemAllowence = perdiemAllowence;
 	}
 
-	public boolean isContractReceived() {
+	public Boolean getIsContractReceived() {
 		return isContractReceived;
 	}
 
-	public void setContractReceived(boolean isContractReceived) {
+	public void setIsContractReceived(Boolean isContractReceived) {
 		this.isContractReceived = isContractReceived;
+	}
+
+	public Boolean getIsHRRecievesContract() {
+		return isHRRecievesContract;
+	}
+
+	public void setIsHRRecievesContract(Boolean isHRRecievesContract) {
+		this.isHRRecievesContract = isHRRecievesContract;
 	}
 
 	public String getWorkCity() {
@@ -281,11 +297,11 @@ public class EmployeeModel {
 		this.workState = workState;
 	}
 
-	public int getHoursWorkedPerDay() {
+	public Integer getHoursWorkedPerDay() {
 		return hoursWorkedPerDay;
 	}
 
-	public void setHoursWorkedPerDay(int hoursWorkedPerDay) {
+	public void setHoursWorkedPerDay(Integer hoursWorkedPerDay) {
 		this.hoursWorkedPerDay = hoursWorkedPerDay;
 	}
 
@@ -313,11 +329,11 @@ public class EmployeeModel {
 		this.companyName = companyName;
 	}
 
-	public boolean isCompanyIsAllianceMember() {
+	public Boolean getIsCompanyIsAllianceMember() {
 		return isCompanyIsAllianceMember;
 	}
 
-	public void setCompanyIsAllianceMember(boolean isCompanyIsAllianceMember) {
+	public void setIsCompanyIsAllianceMember(Boolean isCompanyIsAllianceMember) {
 		this.isCompanyIsAllianceMember = isCompanyIsAllianceMember;
 	}
 
@@ -329,11 +345,11 @@ public class EmployeeModel {
 		this.federalId = federalId;
 	}
 
-	public boolean isSubmissionGuidlineRecieved() {
+	public Boolean getIsSubmissionGuidlineRecieved() {
 		return isSubmissionGuidlineRecieved;
 	}
 
-	public void setSubmissionGuidlineRecieved(boolean isSubmissionGuidlineRecieved) {
+	public void setIsSubmissionGuidlineRecieved(Boolean isSubmissionGuidlineRecieved) {
 		this.isSubmissionGuidlineRecieved = isSubmissionGuidlineRecieved;
 	}
 
@@ -345,28 +361,36 @@ public class EmployeeModel {
 		this.rcgEmail = rcgEmail;
 	}
 
-	public boolean isHiretoBeach() {
+	public Boolean getIsHiretoBeach() {
 		return isHiretoBeach;
 	}
 
-	public void setHiretoBeach(boolean isHiretoBeach) {
+	public void setIsHiretoBeach(Boolean isHiretoBeach) {
 		this.isHiretoBeach = isHiretoBeach;
 	}
 
-	public boolean isRehiredEmployee() {
+	public Boolean getIsRehiredEmployee() {
 		return isRehiredEmployee;
 	}
 
-	public void setRehiredEmployee(boolean isRehiredEmployee) {
+	public void setIsRehiredEmployee(Boolean isRehiredEmployee) {
 		this.isRehiredEmployee = isRehiredEmployee;
 	}
 
-	public long getSocialSecurityNumber() {
+	public Long getSocialSecurityNumber() {
 		return socialSecurityNumber;
 	}
 
-	public void setSocialSecurityNumber(long socialSecurityNumber) {
+	public void setSocialSecurityNumber(Long socialSecurityNumber) {
 		this.socialSecurityNumber = socialSecurityNumber;
+	}
+
+	public String getCompanyCodeForHR() {
+		return companyCodeForHR;
+	}
+
+	public void setCompanyCodeForHR(String companyCodeForHR) {
+		this.companyCodeForHR = companyCodeForHR;
 	}
 
 	public GenderModel getGender() {
@@ -431,30 +455,6 @@ public class EmployeeModel {
 
 	public void setCPPCareerLevel(String cPPCareerLevel) {
 		CPPCareerLevel = cPPCareerLevel;
-	}
-
-	public boolean isHRRecievesContract() {
-		return isHRRecievesContract;
-	}
-
-	public void setHRRecievesContract(boolean isHRRecievesContract) {
-		this.isHRRecievesContract = isHRRecievesContract;
-	}
-
-	public String getCompanyCodeForHR() {
-		return companyCodeForHR;
-	}
-
-	public void setCompanyCodeForHR(String companyCodeForHR) {
-		this.companyCodeForHR = companyCodeForHR;
-	}
-
-	public double getAnnualSalary() {
-		return annualSalary;
-	}
-
-	public void setAnnualSalary(double annualSalary) {
-		this.annualSalary = annualSalary;
 	}
 
 }

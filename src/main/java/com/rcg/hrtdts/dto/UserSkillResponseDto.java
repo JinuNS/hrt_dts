@@ -10,7 +10,7 @@ package com.rcg.hrtdts.dto;
 public class UserSkillResponseDto {
 
 	private String skill;
-	private int level;
+	private Integer level;
 
 	public String getSkill() {
 		return skill;
@@ -20,11 +20,11 @@ public class UserSkillResponseDto {
 		this.skill = skill;
 	}
 
-	public int getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 

@@ -5,14 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 @Entity
 public class ClientModel {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long clientId;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long clientId;
+
 	private String clientName;
 	private String clientLocation;
 	private String clientCountry;
@@ -20,11 +19,11 @@ public class ClientModel {
 	private String consultantName;
 	private String consultantLocation;
 	private int clientType;
-	
+
 	public ClientModel() {
-		
-	}	
-	
+
+	}
+
 	public ClientModel(long clientId, String clientName, String clientLocation, String clientCountry, String timeZone,
 			String consultantName, String consultantLocation, int clientType) {
 		super();
@@ -37,21 +36,23 @@ public class ClientModel {
 		this.consultantLocation = consultantLocation;
 		this.clientType = clientType;
 	}
-	public long getClientId() {
+
+	public Long getClientId() {
 		return clientId;
 	}
-	public void setClientId(long clientId) {
+
+	public void setClientId(Long clientId) {
 		this.clientId = clientId;
 	}
+
 	public String getClientName() {
 		return clientName;
 	}
+
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
 	}
-	
-	
-	
+
 	public String getClientLocation() {
 		return clientLocation;
 	}
@@ -71,28 +72,33 @@ public class ClientModel {
 	public String getTimeZone() {
 		return timeZone;
 	}
+
 	public void setTimeZone(String timeZone) {
 		this.timeZone = timeZone;
 	}
+
 	public String getConsultantName() {
 		return consultantName;
 	}
+
 	public void setConsultantName(String consultantName) {
 		this.consultantName = consultantName;
 	}
+
 	public String getConsultantLocation() {
 		return consultantLocation;
 	}
+
 	public void setConsultantLocation(String consultantLocation) {
 		this.consultantLocation = consultantLocation;
 	}
+
 	public int getClientType() {
 		return clientType;
 	}
+
 	public void setClientType(int clientType) {
 		this.clientType = clientType;
 	}
-	
-	
-	
+
 }
