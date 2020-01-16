@@ -3,6 +3,14 @@ package com.rcg.hrtdts.dto;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ManyToOne;
+
+import com.rcg.hrtdts.model.DepartmentModel;
+import com.rcg.hrtdts.model.EmployeeContractorsModel;
+import com.rcg.hrtdts.model.RegionModel;
+import com.rcg.hrtdts.model.TerminationTypeModel;
+import com.rcg.hrtdts.model.TimeZoneModel;
+
 /**
  * 
  * @author neena
@@ -66,6 +74,24 @@ public class EmployeeRequestDto {
 	private String notes;
 	private Double ratePerDay;
 	private Double ratePerHour;
+
+	private Long department;
+
+	private Long region;
+
+	private Long timeZone;
+	private Date terminationDate;
+	private String bloodGroup;
+	private String qualification;
+	private String homeAddress;
+	private String recruiter;
+	private String taxId;
+
+	private Long terminationType;
+	private Long employeeContractors;
+	private String userName;
+	private String password;
+    private Long role;
 
 	public Long geteId() {
 		return eId;
@@ -499,4 +525,117 @@ public class EmployeeRequestDto {
 		this.ratePerHour = ratePerHour;
 	}
 
+	public Long getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Long department) {
+		this.department = department;
+	}
+
+	public Long getRegion() {
+		return region;
+	}
+
+	public void setRegion(Long region) {
+		this.region = region;
+	}
+
+	public Long getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(Long timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	public Date getTerminationDate() {
+		return terminationDate;
+	}
+
+	public void setTerminationDate(Date terminationDate) {
+		this.terminationDate = terminationDate;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+
+	public String getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+
+	public String getRecruiter() {
+		return recruiter;
+	}
+
+	public void setRecruiter(String recruiter) {
+		this.recruiter = recruiter;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	public Long getTerminationType() {
+		return terminationType;
+	}
+
+	public void setTerminationType(Long terminationType) {
+		this.terminationType = terminationType;
+	}
+
+	public Long getEmployeeContractors() {
+		return employeeContractors;
+	}
+
+	public void setEmployeeContractors(Long employeeContractors) {
+		this.employeeContractors = employeeContractors;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Long getRole() {
+		return role;
+	}
+
+	public void setRole(Long role) {
+		this.role = role;
+	}
+
+	
 }
