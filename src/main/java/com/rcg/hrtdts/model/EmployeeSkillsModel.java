@@ -24,6 +24,8 @@ public class EmployeeSkillsModel {
 	@ManyToOne
 	private SkillsModel skills;
 	private int skillLevel;
+	private Double experience;
+	private String comment;
 
 	public long getId() {
 		return id;
@@ -57,4 +59,21 @@ public class EmployeeSkillsModel {
 		this.skillLevel = skillLevel;
 	}
 
+	public Double getExperience() {
+		return experience;
+	}
+
+	public void setExperience(Double experience) {
+		this.experience = experience;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	
 }

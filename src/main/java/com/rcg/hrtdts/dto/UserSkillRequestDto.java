@@ -6,7 +6,7 @@ package com.rcg.hrtdts.dto;
  * @since   2020-01-14 
  * 
  **/
-public class UserSkillDto {
+public class UserSkillRequestDto {
 
 	private long skillId;
 	private int level;

@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 public class EmployeeReferralModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private long refLimit;
 	private Date startDate;
