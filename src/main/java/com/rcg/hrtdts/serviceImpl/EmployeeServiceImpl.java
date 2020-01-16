@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.rcg.hrtdts.dto.PreDataDto;
@@ -166,7 +167,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		saveUserHrtReferrals(hrtModel, requestDto);
 
-		response = new StatusResponse(Constants.SUCCESS, Constants.SUCCESS_CODE, null);
+		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, null);
 		return response;
 	}
 
@@ -216,7 +217,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		preDataDto.setReferrals(referrals);
 		preDataDto.setSkills(skills);
 
-		response = new StatusResponse(Constants.SUCCESS, Constants.SUCCESS_CODE, preDataDto);
+		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preDataDto);
 		return response;
 	}
 
@@ -297,7 +298,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	        			
 
 		}
-		response = new StatusResponse(Constants.SUCCESS, Constants.SUCCESS_CODE, responseDto);
+		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseDto);
 
 		return response;
 	}

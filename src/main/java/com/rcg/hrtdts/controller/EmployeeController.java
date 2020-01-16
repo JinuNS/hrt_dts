@@ -3,6 +3,7 @@ package com.rcg.hrtdts.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ import com.rcg.hrtdts.utility.Constants;
  * 
  **/
 @RestController
-@RequestMapping(value = { "/hrtdts" })
+@RequestMapping(value = { "/employee" })
 public class EmployeeController {
 	
 	@Autowired
@@ -42,7 +43,7 @@ public class EmployeeController {
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, Constants.ERROR_CODE, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
 		}
 		return response;
 	}
@@ -59,7 +60,7 @@ public class EmployeeController {
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, Constants.ERROR_CODE, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
 		}
 		return response;
 	}
@@ -76,7 +77,7 @@ public class EmployeeController {
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, Constants.ERROR_CODE, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
 		}
 		return response;
 	}
