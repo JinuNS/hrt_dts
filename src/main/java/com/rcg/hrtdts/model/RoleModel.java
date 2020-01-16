@@ -10,14 +10,15 @@ public class RoleModel {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long roleId;
+	private Long roleId;
 	private String roleName;
 	
 	
-	public long getRoleId() {
+	
+	public Long getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(long roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 	public String getRoleName() {

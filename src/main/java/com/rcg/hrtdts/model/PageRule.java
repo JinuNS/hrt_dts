@@ -1,6 +1,5 @@
 package com.rcg.hrtdts.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,15 +10,15 @@ public class PageRule {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long pageId;
+	private Long pageId;
 
 	private String pageKey;
 
-	private long roleId;
+	private Long roleId;
 
-	private long parentId;
+	private Long parentId;
 	
-	private long levelId;
+	private Long levelId;
 	
 	private String path;
 	
@@ -27,15 +26,15 @@ public class PageRule {
 	
 	private String label;
 	
-	private int sort;
+	private Integer sort;
 	
-	private boolean menu;
+	private Boolean menu;
 
-	public long getPageId() {
+	public Long getPageId() {
 		return pageId;
 	}
 
-	public void setPageId(long pageId) {
+	public void setPageId(Long pageId) {
 		this.pageId = pageId;
 	}
 
@@ -47,29 +46,27 @@ public class PageRule {
 		this.pageKey = pageKey;
 	}
 
-	public long getRoleId() {
+	public Long getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(long roleId) {
+	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
 	}
 
-
-
-	public long getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(long parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 
-	public long getLevelId() {
+	public Long getLevelId() {
 		return levelId;
 	}
 
-	public void setLevelId(long levelId) {
+	public void setLevelId(Long levelId) {
 		this.levelId = levelId;
 	}
 
@@ -97,21 +94,23 @@ public class PageRule {
 		this.label = label;
 	}
 
-	public int getSort() {
+	public Integer getSort() {
 		return sort;
 	}
 
-	public void setSort(int sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
 
-	public boolean isMenu() {
+	public Boolean getMenu() {
 		return menu;
 	}
 
-	public void setMenu(boolean menu) {
+	public void setMenu(Boolean menu) {
 		this.menu = menu;
 	}
+
+	
 	
 	
 
