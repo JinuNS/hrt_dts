@@ -16,6 +16,7 @@ import com.rcg.hrtdts.dto.EmployeeRequestDto;
 import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.EmployeeService;
+import com.rcg.hrtdts.utility.Constants;
 
 /**
  * 
@@ -41,7 +42,7 @@ public class EmployeeController {
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse("Failed", 500, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, Constants.ERROR_CODE, exceptionResponse);
 		}
 		return response;
 	}
@@ -58,7 +59,7 @@ public class EmployeeController {
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse("Failed", 500, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, Constants.ERROR_CODE, exceptionResponse);
 		}
 		return response;
 	}
@@ -75,25 +76,11 @@ public class EmployeeController {
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse("Failed", 500, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, Constants.ERROR_CODE, exceptionResponse);
 		}
 		return response;
 	}
 	
-	
-//	@SuppressWarnings({ "rawtypes", "unchecked" })
-//	@PutMapping(value = ("/user-hrt-information/{id}"))
-//	@ResponseBody
-//	public StatusResponse editUserHrtInformation(@RequestBody EmployeeRequestDto requestDto){
-//		StatusResponse response = new StatusResponse();
-//		try {		
-//			response = employeeService.updateEmployeeInfo(requestDto);
-//		}
-//		catch (Exception e) {
-//			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-//			response = new StatusResponse("Failed", 500, exceptionResponse);
-//		}
-//		return response;
-//	}
+
 	
 }
