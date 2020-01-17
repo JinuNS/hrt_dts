@@ -92,6 +92,7 @@ public class EmployeeRequestDto {
 	private String userName;
 	private String password;
     private Long role;
+    private Boolean isActive;
 
 	public Long geteId() {
 		return eId;
@@ -635,6 +636,14 @@ public class EmployeeRequestDto {
 
 	public void setRole(Long role) {
 		this.role = role;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	

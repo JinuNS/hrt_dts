@@ -251,6 +251,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		user.setUserName(requestDto.getUserName());
 		user.setPassword(requestDto.getPassword());
+		
 		userRepository.save(user);
 	}
 
