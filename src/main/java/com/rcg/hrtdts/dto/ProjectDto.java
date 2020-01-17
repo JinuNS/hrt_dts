@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ProjectDto {
 	
-	private Long  approver_level_1;
-	private Long  approver_level_2;
+	private Long  approverLevel1;
+	private Long  approverLevel2;
 	private Long  clientId;
 	private Long  sessionId;
 	private String  clientPointOfContact;
@@ -27,17 +27,18 @@ public class ProjectDto {
 	private Date releasingDate;
 	private Date startDate;
 	private Integer workflowType;
-	public Long getApprover_level_1() {
-		return approver_level_1;
+
+	public Long getApproverLevel1() {
+		return approverLevel1;
 	}
-	public void setApprover_level_1(Long approver_level_1) {
-		this.approver_level_1 = approver_level_1;
+	public void setApproverLevel1(Long approverLevel1) {
+		this.approverLevel1 = approverLevel1;
 	}
-	public Long getApprover_level_2() {
-		return approver_level_2;
+	public Long getApproverLevel2() {
+		return approverLevel2;
 	}
-	public void setApprover_level_2(Long approver_level_2) {
-		this.approver_level_2 = approver_level_2;
+	public void setApproverLevel2(Long approverLevel2) {
+		this.approverLevel2 = approverLevel2;
 	}
 	public Long getClientId() {
 		return clientId;

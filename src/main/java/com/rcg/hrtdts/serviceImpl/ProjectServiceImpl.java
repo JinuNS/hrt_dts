@@ -87,7 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Long userid = null;
 
 		if (projectDto.getProjectTier() == 1) {
-			userid = projectDto.getApprover_level_1();
+			userid = projectDto.getApproverLevel1();
 			EmployeeModel pro_owner = new EmployeeModel();
 			if (userid != null)
 				pro_owner = employeeService.getUserDetailsById(userid);
@@ -97,13 +97,13 @@ public class ProjectServiceImpl implements ProjectService {
 			project.setOnsiteLead(null);
 		}
 		else if (projectDto.getProjectTier() == 2) {
-			userid = projectDto.getApprover_level_1();
+			userid = projectDto.getApproverLevel1();
 			EmployeeModel pro_owner = new EmployeeModel();
 			if (userid != null)
 				pro_owner = employeeService.getUserDetailsById(userid);
 			if (pro_owner != null)
 				project.setProjectOwner(pro_owner);
-			Long onsite_lead = projectDto.getApprover_level_2();
+			Long onsite_lead = projectDto.getApproverLevel2();
 			EmployeeModel pro_onsite_lead = new EmployeeModel();
 			if (onsite_lead != null) {
 				pro_onsite_lead = employeeService.getUserDetailsById(onsite_lead);
