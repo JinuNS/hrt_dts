@@ -73,4 +73,26 @@ public class DTSController {
 		
 	}
 	
+	
+	/**
+	 * 
+	 * @author  Haritha
+	 * @version 1.0
+	 * @since   2020-01-16 
+	 * 
+	 **/
+	@GetMapping("/getDTSData")
+	public StatusResponse getDTSData(@RequestBody DtsRequestBody requestBody) {
+		StatusResponse response=new StatusResponse();
+		
+		try {
+			response=dtsService.getDTSData();
+		}catch(Exception e) {
+			e.printStackTrace();
+			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+		}
+		return response;
+		
+	}
 }

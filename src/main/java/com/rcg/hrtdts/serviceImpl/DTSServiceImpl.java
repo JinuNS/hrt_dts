@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rcg.hrtdts.dto.DtsRequestBody;
 import com.rcg.hrtdts.model.BillingType;
 import com.rcg.hrtdts.model.DTSModel;
+import com.rcg.hrtdts.model.EmployeeModel;
 import com.rcg.hrtdts.model.ProjectManager;
 import com.rcg.hrtdts.model.RegionModel;
 import com.rcg.hrtdts.model.RevenueType;
@@ -20,6 +21,7 @@ import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.repository.BillingTypeRepository;
 import com.rcg.hrtdts.repository.ClientRepository;
 import com.rcg.hrtdts.repository.DTSRepository;
+import com.rcg.hrtdts.repository.EmployeeRepository;
 import com.rcg.hrtdts.repository.ProjectManagerRepository;
 import com.rcg.hrtdts.repository.ProjectRepository;
 import com.rcg.hrtdts.repository.RegionRepository;
@@ -50,6 +52,9 @@ public class DTSServiceImpl implements DTSService {
 	
 	@Autowired
 	private BillingTypeRepository billingRepository;
+	
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	
 	@Autowired
 	private RegionRepository regionRepository;
@@ -138,6 +143,10 @@ public class DTSServiceImpl implements DTSService {
 		StatusResponse response=new StatusResponse();
 		
 		DTSModel dtsmodel=new DTSModel();
+		
+		EmployeeModel empModel=employeeRepository.getNonActiveUser(requestBody.getEmpId());
+		dtsmodel.setEmpId(empModel);
+	
 		dtsmodel.setDtsNo(requestBody.getDtsNo());
 		dtsmodel.setClientName(requestBody.getClientName());
 		dtsmodel.setProjectName(requestBody.getProjectName());
@@ -162,6 +171,27 @@ public class DTSServiceImpl implements DTSService {
 		dtsRepository.save(dtsmodel);
 		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, "Insertion completed");
 		
+		return response;
+	}
+
+	@Override
+	public StatusResponse getDTSData() throws Exception {
+
+		StatusResponse response =new StatusResponse();
+		ArrayNode responseData=objectMapper.createArrayNode();
+		
+		List<Object[]> dtsList=dtsRepository.getAllDtsInformation();
+		for(Object[] obj: dtsList) {
+			ObjectNode node=objectMapper.createObjectNode();
+			node.put("id", Long.parseLong(obj[0].toString()));
+			node.put("dtsNo", Long.parseLong(obj[1].toString()));
+			node.put("projectName", obj[2].toString());
+			node.put("projectManager", Long.parseLong(obj[3].toString()));
+			node.put("workLocation", obj[4].toString());
+			
+			responseData.add(node);
+		}
+		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseData);
 		return response;
 	}
 
