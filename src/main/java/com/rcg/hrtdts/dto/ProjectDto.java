@@ -27,7 +27,15 @@ public class ProjectDto {
 	private Date releasingDate;
 	private Date startDate;
 	private Integer workflowType;
+	private Long projectId;
 
+	
+	public Long getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
+	}
 	public Long getApproverLevel1() {
 		return approverLevel1;
 	}

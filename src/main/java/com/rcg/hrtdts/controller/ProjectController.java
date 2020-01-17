@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,5 +57,27 @@ public class ProjectController {
 		return response;
 	}
 
+	/**
+	 * To edit project
+	 * @author  Jinu Shaji
+	 * @version 1.0
+	 * @since   2020-01-17
+	 **/
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PutMapping("/edit")
+	public StatusResponse updateProject(@RequestBody ProjectDto projectDto) {
+		StatusResponse response = new StatusResponse();
+		JSONObject projectDetails = new JSONObject();
+		try {		
+			projectDetails = projectservice.updateProject(projectDto);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, "Project updated successfully");
+		}
+		catch (HRTDTSException e) {
+			throw new HRTDTSException("Updation Failed");
+		} catch (ParseException e) {
+			throw new HRTDTSDateFormatException("Updation Failed due to invalid date format");
+		}
+		return response;
+	}
 	
 }
