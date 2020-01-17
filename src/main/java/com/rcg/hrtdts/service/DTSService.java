@@ -9,4 +9,6 @@ public interface DTSService {
 
 	StatusResponse addNewDTSData(DtsRequestBody requestBody) throws Exception;
 
+	StatusResponse getDTSData() throws Exception;
+
 }
