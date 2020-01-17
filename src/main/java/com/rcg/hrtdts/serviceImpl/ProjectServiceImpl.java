@@ -94,7 +94,7 @@ public class ProjectServiceImpl implements ProjectService {
 			if (pro_owner != null)
 				project.setProjectOwner(pro_owner);
 			project.setProjectTier(1);
-			project.setOnsite_lead(null);
+			project.setOnsiteLead(null);
 		}
 		else if (projectDto.getProjectTier() == 2) {
 			userid = projectDto.getApprover_level_1();
@@ -109,7 +109,7 @@ public class ProjectServiceImpl implements ProjectService {
 				pro_onsite_lead = employeeService.getUserDetailsById(onsite_lead);
 			}
 			if (pro_onsite_lead != null) {
-				project.setOnsite_lead(pro_onsite_lead);
+				project.setOnsiteLead(pro_onsite_lead);
 			}
 			project.setProjectTier(2);
 		}
@@ -133,7 +133,7 @@ public class ProjectServiceImpl implements ProjectService {
 				&& (project.getProjectName().length() > 0) && (project.getProjectCode() != null)
 				&& (!project.getProjectCode().equals(" ")) && (project.getProjectCode().length() > 0)) {
 			int result = duplicationCheckingProjectCode(project.getProjectCode());
-			result = 1;
+
 			if (result == 0) {
 
 				ProjectModel projectmodel = saveProjectRecord(project);
@@ -146,7 +146,7 @@ public class ProjectServiceImpl implements ProjectService {
 						projectRegion.setProject_Id(projectmodel);
 						RegionModel regionmodel = regionService.getregion(region);
 						projectRegion.setRegion_Id(regionmodel);
-						save_project_region(projectRegion);
+						saveProjectRegion(projectRegion);
 					}
 
 				}
@@ -183,9 +183,8 @@ public class ProjectServiceImpl implements ProjectService {
 		return getclient;
 	}
 
-	public void save_project_region(ProjectRegion region) {
-		// TODO Auto-generated method stub
-		ProjectRegion region1 = projectRegionRepository.save(region);
+	public void saveProjectRegion(ProjectRegion region) {
+		projectRegionRepository.save(region);
 	}
 	
 	public int duplicationCheckingProjectCode(String projectCode) {
