@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.rcg.hrtdts.dto.ProjectDto;
+import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.ClientModel;
 import com.rcg.hrtdts.model.ContractModel;
 import com.rcg.hrtdts.model.EmployeeModel;
@@ -30,7 +31,6 @@ import com.rcg.hrtdts.repository.UserRepository;
 import com.rcg.hrtdts.service.EmployeeService;
 import com.rcg.hrtdts.service.ProjectService;
 import com.rcg.hrtdts.service.RegionService;
-import com.rcg.hrtdts.utility.Constants;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -59,7 +59,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException {
 		JSONObject responsedata = new JSONObject();
-		int responseflag = 0;
 
 		ProjectModel project = new ProjectModel();
 		Long contractId = projectDto.getContractType();
@@ -95,7 +94,7 @@ public class ProjectServiceImpl implements ProjectService {
 			if (pro_owner != null)
 				project.setProjectOwner(pro_owner);
 			project.setProjectTier(1);
-			project.setOnsite_lead(null);
+			project.setOnsiteLead(null);
 		}
 		else if (projectDto.getProjectTier() == 2) {
 			userid = projectDto.getApprover_level_1();
@@ -110,7 +109,7 @@ public class ProjectServiceImpl implements ProjectService {
 				pro_onsite_lead = employeeService.getUserDetailsById(onsite_lead);
 			}
 			if (pro_onsite_lead != null) {
-				project.setOnsite_lead(pro_onsite_lead);
+				project.setOnsiteLead(pro_onsite_lead);
 			}
 			project.setProjectTier(2);
 		}
@@ -134,9 +133,10 @@ public class ProjectServiceImpl implements ProjectService {
 				&& (project.getProjectName().length() > 0) && (project.getProjectCode() != null)
 				&& (!project.getProjectCode().equals(" ")) && (project.getProjectCode().length() > 0)) {
 			int result = duplicationCheckingProjectCode(project.getProjectCode());
+
 			if (result == 0) {
 
-				ProjectModel projectmodel = save_project_record(project);
+				ProjectModel projectmodel = saveProjectRecord(project);
 				List<Long> regions = null;
 				regions =  projectDto.getProjectRegion();
 				if (projectmodel != null && regions.size()>0) {
@@ -146,36 +146,26 @@ public class ProjectServiceImpl implements ProjectService {
 						projectRegion.setProject_Id(projectmodel);
 						RegionModel regionmodel = regionService.getregion(region);
 						projectRegion.setRegion_Id(regionmodel);
-						save_project_region(projectRegion);
+						saveProjectRegion(projectRegion);
 					}
 
 				}
 				if (projectmodel == null) {
-					responseflag = 1;
-					responsedata.put("message", "Project record creation failed");
+					throw new HRTDTSException("Project record creation failed");
 				} 
 			} else {
-				responseflag = 1;
-				responsedata.put("message", "Insertion failed due to duplicate entry");
+				throw new HRTDTSException("Insertion failed due to duplicate entry");
 			}
 
 		} else {
-			responseflag = 1;
-			responsedata.put("message", "Insertion failed due to invalid credientials for project");
-		}
-
-		if (responseflag == 0) {
-			responsedata.put("status", Constants.SUCCESS);
-			responsedata.put("message", "Record Inserted");
-		} else {
-			responsedata.put("status", Constants.FAILURE);
+			throw new HRTDTSException("Insertion failed due to invalid credientials for project");
 		}
 
 		return responsedata;
 	}
 
 	
-	public ProjectModel save_project_record(ProjectModel projectmodel) {
+	public ProjectModel saveProjectRecord(ProjectModel projectmodel) {
 
 		ProjectModel model = projectRepository.save(projectmodel);
 		return model;
@@ -193,9 +183,8 @@ public class ProjectServiceImpl implements ProjectService {
 		return getclient;
 	}
 
-	public void save_project_region(ProjectRegion region) {
-		// TODO Auto-generated method stub
-		ProjectRegion region1 = projectRegionRepository.save(region);
+	public void saveProjectRegion(ProjectRegion region) {
+		projectRegionRepository.save(region);
 	}
 	
 	public int duplicationCheckingProjectCode(String projectCode) {

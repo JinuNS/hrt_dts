@@ -29,7 +29,7 @@ public class ProjectModel {
 	private String clientPointOfContact;
 	private long parentProjectId;
 	private Integer projectTier; 
-	private String project_refId;
+	private String projectRefId;
 	private Integer wokflowType;
 	
 	@ManyToOne
@@ -42,7 +42,7 @@ public class ProjectModel {
 	private ContractModel contract;
 
 	@ManyToOne
-	private EmployeeModel onsite_lead;
+	private EmployeeModel onsiteLead;
 
 	public ProjectModel(long projectId, String projectName, String projectDetails, int estimatedHours, Date startDate,
 			Date endDate, int isBillable, String projectCode, int projectType, EmployeeModel projectOwner,
@@ -193,14 +193,6 @@ public class ProjectModel {
 		this.projectTier = projectTier;
 	}
 
-	public String getProject_refId() {
-		return project_refId;
-	}
-
-	public void setProject_refId(String project_refId) {
-		this.project_refId = project_refId;
-	}
-
 	public Integer getWokflowType() {
 		return wokflowType;
 	}
@@ -233,13 +225,23 @@ public class ProjectModel {
 		this.contract = contract;
 	}
 
-	public EmployeeModel getOnsite_lead() {
-		return onsite_lead;
+	public String getProjectRefId() {
+		return projectRefId;
 	}
 
-	public void setOnsite_lead(EmployeeModel onsite_lead) {
-		this.onsite_lead = onsite_lead;
+	public void setProjectRefId(String projectRefId) {
+		this.projectRefId = projectRefId;
 	}
+
+	public EmployeeModel getOnsiteLead() {
+		return onsiteLead;
+	}
+
+	public void setOnsiteLead(EmployeeModel onsiteLead) {
+		this.onsiteLead = onsiteLead;
+	}
+
+
 
 
 
