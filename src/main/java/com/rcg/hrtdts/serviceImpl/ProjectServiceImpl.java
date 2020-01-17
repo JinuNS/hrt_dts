@@ -6,6 +6,7 @@
 
 package com.rcg.hrtdts.serviceImpl;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,25 +14,39 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.rcg.hrtdts.dto.ProjectDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.ClientModel;
 import com.rcg.hrtdts.model.ContractModel;
+import com.rcg.hrtdts.model.DepartmentModel;
+import com.rcg.hrtdts.model.EmployeeContractorsModel;
 import com.rcg.hrtdts.model.EmployeeModel;
 import com.rcg.hrtdts.model.ProjectModel;
 import com.rcg.hrtdts.model.ProjectRegion;
 import com.rcg.hrtdts.model.RegionModel;
+import com.rcg.hrtdts.model.RoleModel;
+import com.rcg.hrtdts.model.StatusResponse;
+import com.rcg.hrtdts.model.TimeZoneModel;
 import com.rcg.hrtdts.repository.ClientRepository;
 import com.rcg.hrtdts.repository.ContractRepository;
+import com.rcg.hrtdts.repository.DepartmentRepository;
+import com.rcg.hrtdts.repository.EmployeeContractorsRepository;
+import com.rcg.hrtdts.repository.EmployeeRepository;
 import com.rcg.hrtdts.repository.ProjectRegionRepository;
 import com.rcg.hrtdts.repository.ProjectRepository;
+import com.rcg.hrtdts.repository.RegionRepository;
+import com.rcg.hrtdts.repository.RoleRepository;
+import com.rcg.hrtdts.repository.TimeZoneRepository;
 import com.rcg.hrtdts.repository.UserRepository;
 import com.rcg.hrtdts.service.EmployeeService;
 import com.rcg.hrtdts.service.ProjectService;
 import com.rcg.hrtdts.service.RegionService;
+import com.rcg.hrtdts.utility.Constants;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -56,6 +71,189 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private RegionService regionService;
+	@Autowired
+	RegionRepository regionRepository;
+	@Autowired
+	TimeZoneRepository timezoneRepository;
+	@Autowired
+	EmployeeRepository employeeRepository;
+	@Autowired
+	DepartmentRepository departmentRepository;
+	@Autowired
+	EmployeeContractorsRepository employeeContractorsRepository;
+	@Autowired
+	RoleRepository roleRepository;
+
+	@Override
+	public StatusResponse projectListDataForAdmin(ProjectHrtDto projectHrtDto) throws Exception {
+		// TODO Auto-generated method stub
+		StatusResponse<Serializable> status = new StatusResponse();
+		List<ClientModel> clients = clientRepository.getAll();
+		List<ProjectModel> projectlist = projectRepository.getProjectsOnly();
+		ArrayList<ContractModel> contract = (ArrayList<ContractModel>) contractRepository.findAll();
+		List<RegionModel> region = regionRepository.getlistofRegions();
+		ArrayList<TimeZoneModel> timezone = timezoneRepository.getTimeZones1();
+		List<EmployeeModel> user_owner = employeeRepository.getProjectOwners();
+		List<EmployeeModel> onsite_lead = employeeRepository.getOnsiteLeads();
+		List<DepartmentModel> department = ((JpaRepository<DepartmentModel, Long>) departmentRepository).findAll();
+		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
+		List<RoleModel> rolelist = roleRepository.findAll();
+		JSONObject clientsobject = new JSONObject();
+		JSONObject projectlistobject = new JSONObject();
+		JSONObject contractobject = new JSONObject();
+		JSONObject regionobject = new JSONObject();
+		JSONObject timezoneobject = new JSONObject();
+		JSONObject user_ownerobject = new JSONObject();
+		JSONObject onsite_leadobject = new JSONObject();
+		JSONObject departmentobject = new JSONObject();
+		JSONObject employeeContractorsobject = new JSONObject();
+		JSONObject rolelistobject = new JSONObject();
+		ArrayList<JSONObject> listofObjects = new ArrayList<JSONObject>();
+		ArrayList jsonArrayProjectsClient = new ArrayList();
+		ArrayList jsonArrayProjectsList = new ArrayList();
+		ArrayList jsonArrayProjectsContractType = new ArrayList();
+		ArrayList jsonArrayProjectsRegion = new ArrayList();
+		ArrayList jsonArrayProjectsTimezone = new ArrayList();
+		ArrayList jsonArrayProjectsUserOwner = new ArrayList();
+		ArrayList jsonArrayProjectsOnsiteLead = new ArrayList();
+		ArrayList jsonArrayProjectsDepartment = new ArrayList();
+		ArrayList jsonArrayProjectsEmployeeContractors = new ArrayList();
+		ArrayList jsonArrayProjectsRole = new ArrayList();
+
+		if (clients.isEmpty()) {
+			clientsobject.put("clientList", jsonArrayProjectsClient);
+		} else {
+			for (ClientModel client : clients) {
+				JSONObject clientjson = new JSONObject();
+				clientjson.put("clientId", client.getClientId());
+				clientjson.put("clientName", client.getClientName());
+				jsonArrayProjectsClient.add(clientjson);
+			}
+			clientsobject.put("clientList", jsonArrayProjectsClient);
+		}
+
+		if (projectlist.isEmpty()) {
+			projectlistobject.put("projectList", jsonArrayProjectsList);
+		} else {
+			for (ProjectModel project : projectlist) {
+				JSONObject projectjson = new JSONObject();
+				projectjson.put("projectId", project.getProjectId());
+				projectjson.put("projectName", project.getProjectName());
+				jsonArrayProjectsList.add(projectjson);
+			}
+			projectlistobject.put("projectList", jsonArrayProjectsList);
+		}
+
+		if (contract.isEmpty()) {
+			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
+		} else {
+			for (ContractModel contracts : contract) {
+				JSONObject contractjson = new JSONObject();
+				contractjson.put("contractTypeId", contracts.getContractTypeId());
+				contractjson.put("contractTypeName", contracts.getContractTypeName());
+				jsonArrayProjectsContractType.add(contractjson);
+			}
+			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
+		}
+		if (region.isEmpty()) {
+			regionobject.put("regionList", jsonArrayProjectsRegion);
+		} else {
+			for (RegionModel regions : region) {
+				JSONObject regionjson = new JSONObject();
+				regionjson.put("regionId", regions.getId());
+				regionjson.put("regionName", regions.getRegionName());
+				regionjson.put("regionCode", regions.getRegionCode());
+				jsonArrayProjectsRegion.add(regionjson);
+			}
+			regionobject.put("regionList", jsonArrayProjectsRegion);
+		}
+		if (timezone.isEmpty()) {
+			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
+		} else {
+			for (TimeZoneModel timeZones : timezone) {
+				JSONObject timezonejson = new JSONObject();
+				timezonejson.put("timezoneId", timeZones.getId());
+				timezonejson.put("timezoneName", timeZones.getTimezoneCode());
+				timezonejson.put("timezoneCode", timeZones.getTimezoneName());
+				jsonArrayProjectsTimezone.add(timezonejson);
+			}
+			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
+		}
+		if (user_owner.isEmpty()) {
+			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
+		} else {
+			for (EmployeeModel userOwners : user_owner) {
+				JSONObject userOwnersjson = new JSONObject();
+				userOwnersjson.put("firstName", userOwners.getFirstName());
+				userOwnersjson.put("id", userOwners.geteId());
+				userOwnersjson.put("lastName", userOwners.getLastName());
+				userOwnersjson.put("role", userOwners.getRole().getRoleId());
+				userOwnersjson.put("status", userOwners.isActive());
+				jsonArrayProjectsUserOwner.add(userOwnersjson);
+			}
+			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
+		}
+		if (onsite_lead.isEmpty()) {
+			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsUserOwner);
+		} else {
+			for (EmployeeModel onsiteLeads : onsite_lead) {
+				JSONObject onsiteLeadsjson = new JSONObject();
+				onsiteLeadsjson.put("firstName", onsiteLeads.getFirstName());
+				onsiteLeadsjson.put("id", onsiteLeads.geteId());
+				onsiteLeadsjson.put("lastName", onsiteLeads.getLastName());
+				onsiteLeadsjson.put("role", onsiteLeads.getRole().getRoleId());
+				onsiteLeadsjson.put("status", onsiteLeads.isActive());
+				jsonArrayProjectsOnsiteLead.add(onsiteLeadsjson);
+			}
+			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
+		}
+		if (department.isEmpty()) {
+			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
+		} else {
+			for (DepartmentModel dept : department) {
+				JSONObject departmentjson = new JSONObject();
+				departmentjson.put("departmentId", dept.getDepartmentId());
+				departmentjson.put("department", dept.getDepartmentName());
+				jsonArrayProjectsDepartment.add(departmentjson);
+			}
+			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
+		}
+		if (employeeContractors.isEmpty()) {
+			user_ownerobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
+		} else {
+			for (EmployeeContractorsModel contractors : employeeContractors) {
+				JSONObject contractorsjson = new JSONObject();
+				contractorsjson.put("contractorId", contractors.getContractorId());
+				contractorsjson.put("contractorName", contractors.getContractorName());
+				jsonArrayProjectsEmployeeContractors.add(contractorsjson);
+			}
+			employeeContractorsobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
+		}
+		if (rolelist.isEmpty()) {
+			rolelistobject.put("roleList", jsonArrayProjectsRole);
+		} else {
+			for (RoleModel role : rolelist) {
+				JSONObject rolejson = new JSONObject();
+				rolejson.put("roleId", role.getRoleId());
+				rolejson.put("roleName", role.getRoleName());
+				jsonArrayProjectsRole.add(rolejson);
+			}
+			rolelistobject.put("roleList", jsonArrayProjectsRole);
+		}
+		listofObjects.add(clientsobject);
+		listofObjects.add(projectlistobject);
+		listofObjects.add(contractobject);
+		listofObjects.add(regionobject);
+		listofObjects.add(timezoneobject);
+		listofObjects.add(user_ownerobject);
+		listofObjects.add(onsite_leadobject);
+		listofObjects.add(departmentobject);
+		listofObjects.add(employeeContractorsobject);
+		listofObjects.add(rolelistobject);
+
+		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, listofObjects);
+		return status;
+	}
 
 	@Override
 	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException {
@@ -96,8 +294,7 @@ public class ProjectServiceImpl implements ProjectService {
 				project.setProjectOwner(pro_owner);
 			project.setProjectTier(1);
 			project.setOnsiteLead(null);
-		}
-		else if (projectDto.getProjectTier() == 2) {
+		} else if (projectDto.getProjectTier() == 2) {
 			userid = projectDto.getApproverLevel1();
 			EmployeeModel pro_owner = new EmployeeModel();
 			if (userid != null)
@@ -139,8 +336,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 				ProjectModel projectmodel = saveProjectRecord(project);
 				List<Long> regions = null;
-				regions =  projectDto.getProjectRegion();
-				if (projectmodel != null && regions.size()>0) {
+				regions = projectDto.getProjectRegion();
+				if (projectmodel != null && regions.size() > 0) {
 
 					for (Long region : regions) {
 						ProjectRegion projectRegion = new ProjectRegion();
@@ -153,7 +350,7 @@ public class ProjectServiceImpl implements ProjectService {
 				}
 				if (projectmodel == null) {
 					throw new HRTDTSException("Project record creation failed");
-				} 
+				}
 			} else {
 				throw new HRTDTSException("Insertion failed due to duplicate entry");
 			}
@@ -280,7 +477,6 @@ public class ProjectServiceImpl implements ProjectService {
 		return model;
 	}
 
-
 	public ContractModel getContract(long id) {
 		ContractModel contract = contractRepository.getOne(id);
 		return contract;
@@ -319,4 +515,5 @@ public class ProjectServiceImpl implements ProjectService {
 		int i = projectRegionRepository.deleteByProjectId(projectId);
 		return i;
 	}
+
 }

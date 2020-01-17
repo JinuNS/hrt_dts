@@ -88,8 +88,25 @@ public class EmployeeModel {
 	private TerminationTypeModel terminationType;
 	@ManyToOne
 	private EmployeeContractorsModel employeeContractors;
+	@ManyToOne
+	private RoleModel role;
+	private boolean isActive;
 	
-	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public RoleModel getRole() {
+		return role;
+	}
+
+	public void setRole(RoleModel role) {
+		this.role = role;
+	}
 
 	public Long geteId() {
 		return eId;
