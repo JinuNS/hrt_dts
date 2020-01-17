@@ -1,6 +1,7 @@
 package com.rcg.hrtdts.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,5 +15,10 @@ public interface ProjectRepository extends JpaRepository<ProjectModel, Long>{
 	
 	@Query("SELECT count(p) FROM ProjectModel p WHERE p.projectCode=?1")
 	int findprojectbycode(String projectCode);
+	
+	@Query("SELECT  p   from ProjectModel  p where p.parentProjectId != 0 AND p.projectStatus=1 order by p.projectName Asc")
+	List<ProjectModel> getProjectsOnly();
 
+	@Query("SELECT count(p) FROM ProjectModel p WHERE p.projectName=?1")
+	int findProject(String getprojectName);
 }

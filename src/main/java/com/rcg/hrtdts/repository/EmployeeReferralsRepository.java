@@ -20,7 +20,7 @@ public interface EmployeeReferralsRepository extends JpaRepository<EmployeeRefer
 	EmployeeReferralModel findByEId(long id);
 	
 	@Query("select count(*) > 0 from EmployeeReferralModel e where e.userHrtModel.eId = ?1") 
-	boolean existsByEId(long geteId);
+	Boolean existsByEId(long geteId);
 
 	@Modifying
 	@Transactional

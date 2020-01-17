@@ -22,7 +22,7 @@ public interface EmployeeTechnologyRepository extends JpaRepository<EmployeeTech
 	List<EmployeeTechnologyModel> findByEId(Long eId);
 
 	@Query("select count(*) > 0 from EmployeeTechnologyModel e where e.userHrtModel.eId = ?1") 
-	boolean existsByEId(Long geteId);
+	Boolean existsByEId(Long geteId);
 
 	@Modifying
 	@Transactional

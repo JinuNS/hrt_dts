@@ -63,7 +63,7 @@ public class EmployeeResponseDto {
 	private String type;
 	private String recipient;
 	private String refCode;
-	private Long RefLimit;
+	private Long refLimit;
 	private Date startDate;
 	private Date endDate;
 	private String notes;
@@ -86,6 +86,9 @@ public class EmployeeResponseDto {
 	private String password;
     private Boolean isActive;
     private String employeeStatus;
+	private Double annualSalary;
+	private String companyCode;
+
 
 	public Long geteId() {
 		return eId;
@@ -488,11 +491,11 @@ public class EmployeeResponseDto {
 	}
 
 	public Long getRefLimit() {
-		return RefLimit;
+		return refLimit;
 	}
 
 	public void setRefLimit(Long refLimit) {
-		RefLimit = refLimit;
+		this.refLimit = refLimit;
 	}
 
 	public Date getStartDate() {
@@ -661,6 +664,22 @@ public class EmployeeResponseDto {
 
 	public void setEmployeeStatus(String employeeStatus) {
 		this.employeeStatus = employeeStatus;
+	}
+
+	public Double getAnnualSalary() {
+		return annualSalary;
+	}
+
+	public void setAnnualSalary(Double annualSalary) {
+		this.annualSalary = annualSalary;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
 	

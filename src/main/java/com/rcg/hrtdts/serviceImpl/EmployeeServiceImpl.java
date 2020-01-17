@@ -173,6 +173,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		hrtModel.setHomeAddress(requestDto.getHomeAddress());
 		hrtModel.setRecruiter(requestDto.getRecruiter());
 		hrtModel.setTaxId(requestDto.getTaxId());
+		hrtModel.setAnnualSalary(requestDto.getAnnualSalary());
+		hrtModel.setCompanyCode(requestDto.getCompanyCode());
 
 		if(requestDto.getEmployeeStatusId() != null) {
 			EmployeeStatusModel employeeStatus = employeeStatusRepository.findById(requestDto.getEmployeeStatusId()).orElse(null);
@@ -224,14 +226,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeRepository.save(hrtModel);
 
 		// saving user skills
-		boolean isSkillsExists = userTechnologyRepository.existsByEId(hrtModel.geteId());
+		Boolean isSkillsExists = userTechnologyRepository.existsByEId(hrtModel.geteId());
 		if (isSkillsExists) {
 			userTechnologyRepository.deleteByUserHrtModelEId(hrtModel.geteId());
 		}
 		saveUserhrtSkills(hrtModel, requestDto);
 
 		// saving userHrtReferrals
-		boolean isReferralsExists = userHrtReferralsRepository.existsByEId(hrtModel.geteId());
+		Boolean isReferralsExists = userHrtReferralsRepository.existsByEId(hrtModel.geteId());
 		if (isReferralsExists) {
 			userHrtReferralsRepository.deleteByUserHrtModelEId(hrtModel.geteId());
 		}
@@ -253,7 +255,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			user = userRepository.findByeId(hrtModel.geteId());
 		}
 
-		user.seteId(hrtModel.geteId());
+		user.setEmployee(hrtModel);
 		user.setEmail(hrtModel.getRcgEmail());
 		if (requestDto.getRoleId() != null) {
 			RoleModel role = roleRepository.findById(requestDto.getRoleId()).orElse(null);
@@ -397,6 +399,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			responseDto.setTerminationType((hrtModel.getTerminationType() != null)?hrtModel.getTerminationType().getValue():null);
 			responseDto.setEmployeeContractors((hrtModel.getEmployeeContractors() != null)?hrtModel.getEmployeeContractors().getContractorName():null);
 			responseDto.setEmployeeStatus((hrtModel.getEmployeeStatus() != null)?hrtModel.getEmployeeStatus().getValue():null);
+			responseDto.setAnnualSalary(hrtModel.getAnnualSalary());
+			responseDto.setCompanyCode(hrtModel.getCompanyCode());
 			if(user != null) {
 				responseDto.setRole((user.getRole() != null)?user.getRole().getRoleId():null);
 				responseDto.setUserName(user.getUserName());

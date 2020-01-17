@@ -59,7 +59,7 @@ public class EmployeeModel {
 	private Boolean isHiretoBeach;
 	private Boolean isRehiredEmployee;
 	private Long socialSecurityNumber;
-	private String companyCodeForHR;
+	private String companyCode;
 	@ManyToOne
 	private GenderModel gender;
 	@ManyToOne
@@ -403,12 +403,12 @@ public class EmployeeModel {
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
 
-	public String getCompanyCodeForHR() {
-		return companyCodeForHR;
+	public String getCompanyCode() {
+		return companyCode;
 	}
 
-	public void setCompanyCodeForHR(String companyCodeForHR) {
-		this.companyCodeForHR = companyCodeForHR;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
 	public GenderModel getGender() {

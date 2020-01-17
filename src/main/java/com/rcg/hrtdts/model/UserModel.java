@@ -7,24 +7,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
 @Entity
 public class UserModel {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 
-	@Column(unique = true)
-	private Long eId;
-	
-	private String userName, password,email;
+    @ManyToOne
+	private EmployeeModel employee;
+
+	private String userName, password, email;
 	private Boolean isActive;
-	
+
 	@ManyToOne
 	private RoleModel role;
-	
-	
 
 	public Long getUserId() {
 		return userId;
@@ -34,12 +31,12 @@ public class UserModel {
 		this.userId = userId;
 	}
 
-	public Long geteId() {
-		return eId;
+	public EmployeeModel getEmployee() {
+		return employee;
 	}
 
-	public void seteId(Long eId) {
-		this.eId = eId;
+	public void setEmployee(EmployeeModel employee) {
+		this.employee = employee;
 	}
 
 	public String getUserName() {
@@ -81,15 +78,5 @@ public class UserModel {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-	
-
-	
-	
-	
-	
-
-	
-	
-	
 
 }

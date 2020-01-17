@@ -17,9 +17,11 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
 	UserModel findByuserName(String username);
 
-	@Query("select count(*) > 0 from UserModel u where u.eId = ?1") 
-	boolean existsByEId(Long geteId);
+	@Query("select count(*) > 0 from UserModel u where u.employee.eId = ?1") 
+	Boolean existsByEId(Long geteId);
 
+	@Query("select u from UserModel u where u.employee.eId = ?1")
 	UserModel findByeId(Long geteId);
+
 
 }

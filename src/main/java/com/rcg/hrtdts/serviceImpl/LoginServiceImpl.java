@@ -61,7 +61,7 @@ public class LoginServiceImpl implements LoginService {
 
 	private LoginResponseDto createLoginResponse(UserModel user, List<PageRule> pageRule) {
 		LoginResponseDto loginResponseDto = new LoginResponseDto();
-		loginResponseDto.seteId(user.geteId());
+		loginResponseDto.seteId(user.getEmployee().geteId());
 		loginResponseDto.setUserId(user.getUserId());
 		loginResponseDto.setEmail(user.getEmail());
 		loginResponseDto.setRole(user.getRole());

@@ -40,6 +40,7 @@ public class EmployeeRequestDto {
 	private Long businessPhone;
 	private Double hourlySalary;
 	private Double overtimeSalary;
+	private Double annualSalary;
 	private Double fixedRatePay;
 	private Double dailyPayRate;
 	private Double perdiemAllowence;
@@ -94,6 +95,8 @@ public class EmployeeRequestDto {
 	private Long roleId;
 	private Boolean isActive;
 	private Long employeeStatusId;
+	private String companyCode;
+	
 
 	public Long geteId() {
 		return eId;
@@ -655,6 +658,22 @@ public class EmployeeRequestDto {
 
 	public void setEmployeeStatusId(Long employeeStatusId) {
 		this.employeeStatusId = employeeStatusId;
+	}
+
+	public Double getAnnualSalary() {
+		return annualSalary;
+	}
+
+	public void setAnnualSalary(Double annualSalary) {
+		this.annualSalary = annualSalary;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
 	
