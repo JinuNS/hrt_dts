@@ -31,7 +31,7 @@ public class EmployeeRequestDto {
 	private String division;
 	private String assignmentBranch;
 	private String typeofAction;
-	private String streatAddress;
+	private String streetAddress;
 	private String apt;
 	private String city;
 	private String stateorCountry;
@@ -76,9 +76,9 @@ public class EmployeeRequestDto {
 	private Double ratePerDay;
 	private Double ratePerHour;
 
-	private Long department;
+	private Long departmentId;
 
-	private Long region;
+	private Long regionId;
 
 	private Long timeZoneId;
 	private Date terminationDate;
@@ -96,7 +96,6 @@ public class EmployeeRequestDto {
 	private Boolean isActive;
 	private Long employeeStatusId;
 	private String companyCode;
-	
 
 	public Long geteId() {
 		return eId;
@@ -184,14 +183,6 @@ public class EmployeeRequestDto {
 
 	public void setTypeofAction(String typeofAction) {
 		this.typeofAction = typeofAction;
-	}
-
-	public String getStreatAddress() {
-		return streatAddress;
-	}
-
-	public void setStreatAddress(String streatAddress) {
-		this.streatAddress = streatAddress;
 	}
 
 	public String getApt() {
@@ -530,22 +521,21 @@ public class EmployeeRequestDto {
 		this.ratePerHour = ratePerHour;
 	}
 
-	public Long getDepartment() {
-		return department;
+	public Long getDepartmentId() {
+		return departmentId;
 	}
 
-	public void setDepartment(Long department) {
-		this.department = department;
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
 
-	public Long getRegion() {
-		return region;
+	public Long getRegionId() {
+		return regionId;
 	}
 
-	public void setRegion(Long region) {
-		this.region = region;
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
 	}
-
 
 	public Date getTerminationDate() {
 		return terminationDate;
@@ -595,7 +585,6 @@ public class EmployeeRequestDto {
 		this.taxId = taxId;
 	}
 
-	
 	public String getUserName() {
 		return userName;
 	}
@@ -676,5 +665,12 @@ public class EmployeeRequestDto {
 		this.companyCode = companyCode;
 	}
 
-	
+	public String getStreetAddress() {
+		return streetAddress;
+	}
+
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
+
 }

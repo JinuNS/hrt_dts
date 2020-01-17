@@ -136,7 +136,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		hrtModel.setDivision(requestDto.getDivision());
 		hrtModel.setAssignmentBranch(requestDto.getAssignmentBranch());
 		hrtModel.setTypeofAction(requestDto.getTypeofAction());
-		hrtModel.setStreatAddress(requestDto.getStreatAddress());
+		hrtModel.setStreetAddress(requestDto.getStreetAddress());
 		hrtModel.setApt(requestDto.getApt());
 		hrtModel.setCity(requestDto.getCity());
 		hrtModel.setStateorCountry(requestDto.getStateorCountry());
@@ -180,12 +180,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 			EmployeeStatusModel employeeStatus = employeeStatusRepository.findById(requestDto.getEmployeeStatusId()).orElse(null);
 			hrtModel.setEmployeeStatus(employeeStatus);
 		}
-		if (requestDto.getDepartment() != null) {
-			DepartmentModel department = departmentRepository.findById(requestDto.getDepartment()).orElse(null);
+		if (requestDto.getDepartmentId() != null) {
+			DepartmentModel department = departmentRepository.findById(requestDto.getDepartmentId()).orElse(null);
 			hrtModel.setDepartment(department);
 		}
-		if (requestDto.getRegion() != null) {
-			RegionModel region = regionRepository.findById(requestDto.getRegion()).orElse(null);
+		if (requestDto.getRegionId() != null) {
+			RegionModel region = regionRepository.findById(requestDto.getRegionId()).orElse(null);
 			hrtModel.setRegion(region);
 		}
 		if (requestDto.getTimeZoneId() != null) {
@@ -318,6 +318,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<TerminationTypeModel> terminationType = terminationTypeRepository.findAll();
 		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
 		List<EmployeeStatusModel> employeeStatus = employeeStatusRepository.findAll();
+		List<MaritalStatusModel> maritalStatus = maritalStatusRepository.findAll();
+		List<EmployeeTypeModel> employeeType = employeeTypeRepository.findAll();
+		List<RaceModel> race = raceRepository.findAll();
 		
 		preDataDto.setReferrals(referrals);
 		preDataDto.setSkills(skills);
@@ -327,6 +330,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		preDataDto.setTerminationType(terminationType);
 		preDataDto.setEmployeeContractors(employeeContractors);
 		preDataDto.setEmployeeStatus(employeeStatus);
+		preDataDto.setMaritalStatus(maritalStatus);
+		preDataDto.setEmployeeType(employeeType);
+		preDataDto.setRace(race);
 
 		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preDataDto);
 		return response;
@@ -351,7 +357,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			responseDto.setDivision(hrtModel.getDivision());
 			responseDto.setAssignmentBranch(hrtModel.getAssignmentBranch());
 			responseDto.setTypeofAction(hrtModel.getTypeofAction());
-			responseDto.setStreatAddress(hrtModel.getStreatAddress());
+			responseDto.setStreetAddress(hrtModel.getStreetAddress());
 			responseDto.setApt(hrtModel.getApt());
 			responseDto.setCity(hrtModel.getCity());
 			responseDto.setStateorCountry(hrtModel.getStateorCountry());

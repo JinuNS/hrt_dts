@@ -23,7 +23,7 @@ public class EmployeeResponseDto {
 	private String division;
 	private String assignmentBranch;
 	private String typeofAction;
-	private String streatAddress;
+	private String streetAddress;
 	private String apt;
 	private String city;
 	private String stateorCountry;
@@ -69,7 +69,7 @@ public class EmployeeResponseDto {
 	private String notes;
 	private Double ratePerDay;
 	private Double ratePerHour;
-	
+
 	private String department;
 	private String region;
 	private String timeZone;
@@ -81,14 +81,13 @@ public class EmployeeResponseDto {
 	private String taxId;
 	private String terminationType;
 	private String employeeContractors;
-    private Long role;
-    private String userName;
+	private Long role;
+	private String userName;
 	private String password;
-    private Boolean isActive;
-    private String employeeStatus;
+	private Boolean isActive;
+	private String employeeStatus;
 	private Double annualSalary;
 	private String companyCode;
-
 
 	public Long geteId() {
 		return eId;
@@ -178,12 +177,12 @@ public class EmployeeResponseDto {
 		this.typeofAction = typeofAction;
 	}
 
-	public String getStreatAddress() {
-		return streatAddress;
+	public String getStreetAddress() {
+		return streetAddress;
 	}
 
-	public void setStreatAddress(String streatAddress) {
-		this.streatAddress = streatAddress;
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
 	}
 
 	public String getApt() {
@@ -682,5 +681,4 @@ public class EmployeeResponseDto {
 		this.companyCode = companyCode;
 	}
 
-	
 }

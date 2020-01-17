@@ -31,7 +31,7 @@ public class EmployeeModel {
 	private String division;
 	private String assignmentBranch;
 	private String typeofAction;
-	private String streatAddress;
+	private String streetAddress;
 	private String apt;
 	private String city;
 	private String stateorCountry;
@@ -179,12 +179,12 @@ public class EmployeeModel {
 		this.typeofAction = typeofAction;
 	}
 
-	public String getStreatAddress() {
-		return streatAddress;
+	public String getStreetAddress() {
+		return streetAddress;
 	}
 
-	public void setStreatAddress(String streatAddress) {
-		this.streatAddress = streatAddress;
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
 	}
 
 	public String getApt() {

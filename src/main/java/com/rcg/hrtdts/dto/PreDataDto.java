@@ -5,6 +5,9 @@ import java.util.List;
 import com.rcg.hrtdts.model.DepartmentModel;
 import com.rcg.hrtdts.model.EmployeeContractorsModel;
 import com.rcg.hrtdts.model.EmployeeStatusModel;
+import com.rcg.hrtdts.model.EmployeeTypeModel;
+import com.rcg.hrtdts.model.MaritalStatusModel;
+import com.rcg.hrtdts.model.RaceModel;
 import com.rcg.hrtdts.model.ReferralsModel;
 import com.rcg.hrtdts.model.RegionModel;
 import com.rcg.hrtdts.model.TechnologyModel;
@@ -29,6 +32,9 @@ public class PreDataDto {
 	private List<TerminationTypeModel> terminationType;
 	private List<EmployeeContractorsModel> employeeContractors;
 	private List<EmployeeStatusModel> employeeStatus;
+	List<MaritalStatusModel> maritalStatus;
+	List<EmployeeTypeModel> employeeType;
+	List<RaceModel> race;
 
 	public List<TechnologyModel> getSkills() {
 		return skills;
@@ -92,6 +98,30 @@ public class PreDataDto {
 
 	public void setEmployeeStatus(List<EmployeeStatusModel> employeeStatus) {
 		this.employeeStatus = employeeStatus;
+	}
+
+	public List<MaritalStatusModel> getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(List<MaritalStatusModel> maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
+	public List<EmployeeTypeModel> getEmployeeType() {
+		return employeeType;
+	}
+
+	public void setEmployeeType(List<EmployeeTypeModel> employeeType) {
+		this.employeeType = employeeType;
+	}
+
+	public List<RaceModel> getRace() {
+		return race;
+	}
+
+	public void setRace(List<RaceModel> race) {
+		this.race = race;
 	}
 
 }
