@@ -25,7 +25,9 @@ public class DTSModel {
 	
 	@ManyToOne
 	private ClientModel clientName;
-	private String projectName;
+	
+	@ManyToOne
+	private ProjectModel projectName;
 	private Date startDate;
 	private Date endDate;
 	private String status;
@@ -99,10 +101,10 @@ public class DTSModel {
 	public void setClientName(ClientModel clientName) {
 		this.clientName = clientName;
 	}
-	public String getProjectName() {
+	public ProjectModel getProjectName() {
 		return projectName;
 	}
-	public void setProjectName(String projectName) {
+	public void setProjectName(ProjectModel projectName) {
 		this.projectName = projectName;
 	}
 	public Date getStartDate() {

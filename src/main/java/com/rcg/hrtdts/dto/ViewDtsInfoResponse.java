@@ -8,7 +8,7 @@ public class ViewDtsInfoResponse {
 	private Long dtsNo;
 	private String status;
 	private String startDate,endDate;
-	private String projectName;
+	private Long projectName;
 	private Long employeeId;
 	private String employeeName;
 	private String rcgMail;
@@ -52,10 +52,10 @@ public class ViewDtsInfoResponse {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public String getProjectName() {
+	public Long getProjectName() {
 		return projectName;
 	}
-	public void setProjectName(String projectName) {
+	public void setProjectName(Long projectName) {
 		this.projectName = projectName;
 	}
 	public Long getEmployeeId() {

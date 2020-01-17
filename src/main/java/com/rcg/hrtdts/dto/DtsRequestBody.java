@@ -14,7 +14,7 @@ public class DtsRequestBody {
 	private Long revenueType;
 	private Long empId;
 	private Long clientName;
-	private String projectName;
+	private Long projectName;
 	private Date startDate;
 	private Date endDate;
 	private Long billingTypeId;
@@ -60,11 +60,11 @@ public class DtsRequestBody {
 		this.clientName = clientName;
 	}
 
-	public String getProjectName() {
+	public Long getProjectName() {
 		return projectName;
 	}
 
-	public void setProjectName(String projectName) {
+	public void setProjectName(Long projectName) {
 		this.projectName = projectName;
 	}
 

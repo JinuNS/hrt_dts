@@ -30,6 +30,7 @@ import com.rcg.hrtdts.model.ClientModel;
 import com.rcg.hrtdts.model.DTSModel;
 import com.rcg.hrtdts.model.EmployeeModel;
 import com.rcg.hrtdts.model.JobTypeModel;
+import com.rcg.hrtdts.model.ProjectModel;
 import com.rcg.hrtdts.model.RegionModel;
 import com.rcg.hrtdts.model.RevenueType;
 import com.rcg.hrtdts.model.StatusResponse;
@@ -180,7 +181,9 @@ public class DTSServiceImpl implements DTSService {
 
 		ClientModel client = clientRepository.getClientData(requestBody.getClientName());
 		dtsmodel.setClientName(client);
-		dtsmodel.setProjectName(requestBody.getProjectName());
+
+		ProjectModel project = projectRepository.getProjectdata(requestBody.getProjectName());
+		dtsmodel.setProjectName(project);
 		dtsmodel.setStartDate(requestBody.getStartDate());
 		dtsmodel.setEndDate(requestBody.getEndDate());
 		dtsmodel.setStatus(Constants.DTS_STATUS_NEW);
@@ -232,10 +235,10 @@ public class DTSServiceImpl implements DTSService {
 				cal.setTime(startDatee);
 
 				String enddate = obj[6] == null ? null : String.valueOf(obj[6]);
-					
+
 				if (enddate == null) {
 					dtsData.setEndDate("");
-				}else {
+				} else {
 					Date enddatee = sdf.parse(enddate);
 					Calendar calender = Calendar.getInstance();
 					calender.setTime(enddatee);
@@ -246,7 +249,12 @@ public class DTSServiceImpl implements DTSService {
 				dtsData.setCppLevel(employeedetail.getCPPCareerLevel());
 				dtsData.setStartDate(String.valueOf(
 						cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE)));
-				dtsData.setProjectName(obj[3].toString());
+
+				Long projectid = obj[3] == null ? null : Long.parseLong(obj[3].toString());
+				ProjectModel project = new ProjectModel();
+				if (projectid != null)
+					project = projectRepository.getProjectdata(projectid);
+				dtsData.setProjectName(project.getProjectId());
 				dtsData.setJobType(jobtype.getValue());
 				dtsData.setRcgMail(employeedetail.getRcgEmail());
 				dtsResponse.add(dtsData);
@@ -280,8 +288,6 @@ public class DTSServiceImpl implements DTSService {
 	@Override
 	public StatusResponse getDTSInformation(Long dtsId) {
 		DTSModel dtsData = dtsRepository.getDtsData(dtsId);
-		
-		
 
 		StatusResponse response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, dtsData);
 		return response;
