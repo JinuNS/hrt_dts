@@ -45,26 +45,22 @@ public class LoginServiceImpl implements LoginService {
 				user = userRepository.findByuserName(requestDto.getUsername());
 				if (user != null && user.getRole() != null && user.getRole().getRoleId() != null) {
 					pageRule = pageRuleRepository.findByroleId(user.getRole().getRoleId());
-
 				}
-
 			}
 			if (user != null && pageRule != null) {
-				loginResponseDto = createLoginResponse(loginResponseDto, user, pageRule);
+				loginResponseDto = createLoginResponse(user, pageRule);
 			}
-			if(loginResponseDto!=null)
+			if (loginResponseDto != null)
 				result = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, loginResponseDto);
 			else
-				result = new StatusResponse(Constants.FAILURE, HttpStatus.OK, loginResponseDto);
-			
-		}
+				result = new StatusResponse(Constants.FAILURE, HttpStatus.OK, "");
 
+		}
 		return result;
 	}
 
-	private LoginResponseDto createLoginResponse(LoginResponseDto loginResponseDto, UserModel user,
-			List<PageRule> pageRule) {
-		loginResponseDto = new LoginResponseDto();
+	private LoginResponseDto createLoginResponse(UserModel user, List<PageRule> pageRule) {
+		LoginResponseDto loginResponseDto = new LoginResponseDto();
 		loginResponseDto.seteId(user.geteId());
 		loginResponseDto.setUserId(user.getUserId());
 		loginResponseDto.setEmail(user.getEmail());
