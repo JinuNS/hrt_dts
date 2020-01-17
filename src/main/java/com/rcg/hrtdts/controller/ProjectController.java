@@ -69,9 +69,8 @@ public class ProjectController {
 	@PutMapping("/edit")
 	public StatusResponse updateProject(@RequestBody ProjectDto projectDto) {
 		StatusResponse response = new StatusResponse();
-		JSONObject projectDetails = new JSONObject();
 		try {		
-			projectDetails = projectservice.updateProject(projectDto);
+			projectservice.updateProject(projectDto);
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, "Project updated successfully");
 		}
 		catch (HRTDTSException e) {
