@@ -6,7 +6,6 @@
 package com.rcg.hrtdts.controller;
 
 import java.text.ParseException;
-import java.util.Date;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import com.rcg.hrtdts.dto.ProjectDto;
 import com.rcg.hrtdts.exception.HRTDTSDateFormatException;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.exception.HRTDTSNotFoundException;
-import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.ProjectService;
 import com.rcg.hrtdts.utility.Constants;
@@ -32,6 +30,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectservice;
 
+	
 	/**
 	 * To create new project
 	 * @author  Jinu Shaji
@@ -47,9 +46,6 @@ public class ProjectController {
 		try {		
 			projectDetails = projectservice.createNewProject(projectDto);
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, projectDetails);
-		}
-		catch (HRTDTSNotFoundException e) {
-			throw new HRTDTSNotFoundException(e.getErrorMessage());
 		}
 		catch (HRTDTSException e) {
 			throw new HRTDTSException(e.getErrorMessage());
