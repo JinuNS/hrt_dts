@@ -15,7 +15,7 @@ import com.rcg.hrtdts.model.ProjectRegion;
 
 public interface ProjectRegionRepository extends JpaRepository<ProjectRegion, Long> {
 
-	@Query("SELECT r FROM ProjectRegion r WHERE r.project_Id.projectId=?1")
+	@Query("SELECT r FROM ProjectRegion r WHERE r.projectId.projectId=?1")
 	List<ProjectRegion> getRegionList(long projectId);
 
 	@Modifying
