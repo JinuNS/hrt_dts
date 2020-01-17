@@ -1,6 +1,7 @@
 package com.rcg.hrtdts.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.rcg.hrtdts.model.UserModel;
@@ -15,5 +16,10 @@ import com.rcg.hrtdts.model.UserModel;
 public interface UserRepository extends JpaRepository<UserModel, Long> {
 
 	UserModel findByuserName(String username);
+
+	@Query("select count(*) > 0 from UserModel u where u.eId = ?1") 
+	boolean existsByEId(Long geteId);
+
+	UserModel findByeId(Long geteId);
 
 }

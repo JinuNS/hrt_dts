@@ -5,20 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * 
- * @author neena
- * @version 1.0
- * @since 2020-01-14
- * 
- **/
 @Entity
-public class SkillsModel {
+public class TerminationTypeModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String skill;
+	private String value;
 
 	public Long getId() {
 		return id;
@@ -28,12 +21,12 @@ public class SkillsModel {
 		this.id = id;
 	}
 
-	public String getSkill() {
-		return skill;
+	public String getValue() {
+		return value;
 	}
 
-	public void setSkill(String skill) {
-		this.skill = skill;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 }

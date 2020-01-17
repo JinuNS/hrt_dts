@@ -15,24 +15,38 @@ import com.rcg.hrtdts.dto.UserSkillRequestDto;
 import com.rcg.hrtdts.dto.UserSkillResponseDto;
 import com.rcg.hrtdts.model.EmployeeTypeModel;
 import com.rcg.hrtdts.model.GenderModel;
+import com.rcg.hrtdts.model.DepartmentModel;
+import com.rcg.hrtdts.model.EmployeeContractorsModel;
 import com.rcg.hrtdts.model.EmployeeModel;
 import com.rcg.hrtdts.model.EmployeeReferralModel;
-import com.rcg.hrtdts.model.EmployeeSkillsModel;
+import com.rcg.hrtdts.model.EmployeeTechnologyModel;
 import com.rcg.hrtdts.model.JobTypeModel;
 import com.rcg.hrtdts.model.MaritalStatusModel;
 import com.rcg.hrtdts.model.RaceModel;
 import com.rcg.hrtdts.model.ReferralsModel;
-import com.rcg.hrtdts.model.SkillsModel;
+import com.rcg.hrtdts.model.RegionModel;
+import com.rcg.hrtdts.model.RoleModel;
+import com.rcg.hrtdts.model.TechnologyModel;
+import com.rcg.hrtdts.model.TerminationTypeModel;
+import com.rcg.hrtdts.model.TimeZoneModel;
+import com.rcg.hrtdts.model.UserModel;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.repository.EmployeeTypeRepository;
 import com.rcg.hrtdts.repository.GenderRepository;
 import com.rcg.hrtdts.repository.EmployeeRepository;
-import com.rcg.hrtdts.repository.EmployeeSkillsRepository;
+import com.rcg.hrtdts.repository.EmployeeTechnologyRepository;
 import com.rcg.hrtdts.repository.JobTypeRepository;
 import com.rcg.hrtdts.repository.MaritalStatusRepository;
 import com.rcg.hrtdts.repository.RaceRepository;
 import com.rcg.hrtdts.repository.ReferralsRepository;
-import com.rcg.hrtdts.repository.SkillsModelrepository;
+import com.rcg.hrtdts.repository.RegionRepository;
+import com.rcg.hrtdts.repository.RoleRepository;
+import com.rcg.hrtdts.repository.TechnologyRepository;
+import com.rcg.hrtdts.repository.TerminationTypeRepository;
+import com.rcg.hrtdts.repository.TimeZoneRepository;
+import com.rcg.hrtdts.repository.UserRepository;
+import com.rcg.hrtdts.repository.DepartmentRepository;
+import com.rcg.hrtdts.repository.EmployeeContractorsRepository;
 import com.rcg.hrtdts.repository.EmployeeReferralsRepository;
 import com.rcg.hrtdts.service.EmployeeService;
 import com.rcg.hrtdts.utility.Constants;
@@ -66,10 +80,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private RaceRepository raceRepository;
 
 	@Autowired
-	private SkillsModelrepository skillsModelrepository;
+	private TechnologyRepository technologyRepository;
 
 	@Autowired
-	private EmployeeSkillsRepository userSkillsRepository;
+	private EmployeeTechnologyRepository userTechnologyRepository;
 
 	@Autowired
 	private ReferralsRepository referralsRepository;
@@ -77,13 +91,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeReferralsRepository userHrtReferralsRepository;
 
+	@Autowired
+	private DepartmentRepository departmentRepository;
+
+	@Autowired
+	private RegionRepository regionRepository;
+
+	@Autowired
+	private TimeZoneRepository timeZoneRepository;
+
+	@Autowired
+	private EmployeeContractorsRepository employeeContractorsRepository;
+
+	@Autowired
+	private TerminationTypeRepository terminationTypeRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@Transactional
 	public StatusResponse saveEmployeeInfo(EmployeeRequestDto requestDto) throws Exception {
 		StatusResponse response = new StatusResponse();
 		EmployeeModel hrtModel = new EmployeeModel();
-		if(requestDto.geteId() != 0) {
+		if (requestDto.geteId() != null) {
 			hrtModel = employeeRepository.findById(requestDto.geteId()).orElse(new EmployeeModel());
 		}
 		hrtModel.setFirstName(requestDto.getFirstName());
@@ -126,7 +161,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 		hrtModel.setHireCodes(requestDto.getHireCodes());
 		hrtModel.setHomeBranch(requestDto.getHomeBranch());
 		hrtModel.setCPPCareerLevel(requestDto.getCPPCareerLevel());
+		hrtModel.setTerminationDate(requestDto.getTerminationDate());
+		hrtModel.setBloodGroup(requestDto.getBloodGroup());
+		hrtModel.setQualification(requestDto.getQualification());
+		hrtModel.setHomeAddress(requestDto.getHomeAddress());
+		hrtModel.setRecruiter(requestDto.getRecruiter());
+		hrtModel.setTaxId(requestDto.getTaxId());
 
+		if (requestDto.getDepartment() != null) {
+			DepartmentModel department = departmentRepository.findById(requestDto.getDepartment()).orElse(null);
+			hrtModel.setDepartment(department);
+		}
+		if (requestDto.getRegion() != null) {
+			RegionModel region = regionRepository.findById(requestDto.getRegion()).orElse(null);
+			hrtModel.setRegion(region);
+		}
+		if (requestDto.getTimeZone() != null) {
+			TimeZoneModel timezone = timeZoneRepository.findById(requestDto.getTimeZone()).orElse(null);
+			hrtModel.setTimeZone(timezone);
+		}
+		if (requestDto.getEmployeeContractors() != null) {
+			EmployeeContractorsModel vendor = employeeContractorsRepository
+					.findById(requestDto.getEmployeeContractors()).orElse(null);
+			hrtModel.setEmployeeContractors(vendor);
+		}
+		if (requestDto.getTerminationType() != null) {
+			TerminationTypeModel terminationType = terminationTypeRepository.findById(requestDto.getTerminationType())
+					.orElse(null);
+			hrtModel.setTerminationType(terminationType);
+		}
 		if (requestDto.getEmployeeType() != null) {
 			EmployeeTypeModel employeeType = employeeTypeRepository.findByValue(requestDto.getEmployeeType());
 			hrtModel.setEmployeeType(employeeType);
@@ -147,28 +210,48 @@ public class EmployeeServiceImpl implements EmployeeService {
 			RaceModel race = raceRepository.findByValue(requestDto.getRace());
 			hrtModel.setRace(race);
 		}
-		
-		
 
-		
 		employeeRepository.save(hrtModel);
 
 		// saving user skills
-		boolean isSkillsExists = userSkillsRepository.existsByEId(hrtModel.geteId());
-		if(isSkillsExists) {
-			userSkillsRepository.deleteByUserHrtModelEId(hrtModel.geteId());
+		boolean isSkillsExists = userTechnologyRepository.existsByEId(hrtModel.geteId());
+		if (isSkillsExists) {
+			userTechnologyRepository.deleteByUserHrtModelEId(hrtModel.geteId());
 		}
 		saveUserhrtSkills(hrtModel, requestDto);
 
 		// saving userHrtReferrals
 		boolean isReferralsExists = userHrtReferralsRepository.existsByEId(hrtModel.geteId());
-		if(isReferralsExists) {
+		if (isReferralsExists) {
 			userHrtReferralsRepository.deleteByUserHrtModelEId(hrtModel.geteId());
 		}
 		saveUserHrtReferrals(hrtModel, requestDto);
 
+		// saving employeeCredentials
+		saveEmployeeCredentials(hrtModel, requestDto);
+
 		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, null);
 		return response;
+	}
+
+	private void saveEmployeeCredentials(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
+
+		UserModel user = new UserModel();
+
+		Boolean isUserExists = userRepository.existsByEId(hrtModel.geteId());
+		if (isUserExists) {
+			user = userRepository.findByeId(hrtModel.geteId());
+		}
+
+		user.seteId(hrtModel.geteId());
+		user.setEmail(hrtModel.getRcgEmail());
+		if (requestDto.getRole() != null) {
+			RoleModel role = roleRepository.findById(requestDto.getRole()).orElse(null);
+			user.setRole(role);
+		}
+		user.setUserName(requestDto.getUserName());
+		user.setPassword(requestDto.getPassword());
+		userRepository.save(user);
 	}
 
 	private void saveUserHrtReferrals(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
@@ -190,19 +273,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	private void saveUserhrtSkills(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
-		
-		List<EmployeeSkillsModel> userSkillModelList = new ArrayList<EmployeeSkillsModel>();
+
+		List<EmployeeTechnologyModel> userSkillModelList = new ArrayList<EmployeeTechnologyModel>();
 		if (requestDto.getUserSkills() != null && requestDto.getUserSkills().size() > 0) {
 			List<UserSkillRequestDto> skills = requestDto.getUserSkills();
-			for (UserSkillRequestDto dto : skills) {
-				EmployeeSkillsModel userSkillModel = new EmployeeSkillsModel();
+			for (UserSkillRequestDto dto : skills) { 
+				EmployeeTechnologyModel userSkillModel = new EmployeeTechnologyModel();
 				userSkillModel.setUserHrtModel(hrtModel);
-				SkillsModel skillsModel = skillsModelrepository.findBySkillId(dto.getSkillId());
+				TechnologyModel skillsModel = technologyRepository.findById(dto.getSkillId()).orElse(new TechnologyModel());
 				userSkillModel.setSkills(skillsModel);
 				userSkillModel.setSkillLevel(dto.getLevel());
 				userSkillModelList.add(userSkillModel);
 			}
-			userSkillsRepository.saveAll(userSkillModelList);
+			userTechnologyRepository.saveAll(userSkillModelList);
 		}
 
 	}
@@ -212,10 +295,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public StatusResponse getSkillsAndReferrals() throws Exception {
 		StatusResponse response = new StatusResponse();
 		PreDataDto preDataDto = new PreDataDto();
-		List<SkillsModel> skills = skillsModelrepository.findAll();
+		List<TechnologyModel> skills = technologyRepository.findAll();
 		List<ReferralsModel> referrals = referralsRepository.findAll();
+		List<RegionModel> region = regionRepository.findAll();
+		List<DepartmentModel> department = departmentRepository.findAll();
+		List<TimeZoneModel> timeZone = timeZoneRepository.findAll();
+		List<TerminationTypeModel> terminationType = terminationTypeRepository.findAll();
+		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
+		
 		preDataDto.setReferrals(referrals);
 		preDataDto.setSkills(skills);
+		preDataDto.setRegion(region);
+		preDataDto.setDepartment(department);
+		preDataDto.setTimeZone(timeZone);
+		preDataDto.setTerminationType(terminationType);
+		preDataDto.setEmployeeContractors(employeeContractors);
 
 		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preDataDto);
 		return response;
@@ -227,6 +321,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		StatusResponse response = new StatusResponse();
 		EmployeeModel hrtModel = employeeRepository.findById(id).orElse(null);
 		EmployeeResponseDto responseDto = new EmployeeResponseDto();
+		UserModel user = userRepository.findByeId(hrtModel.geteId());
 
 		if (hrtModel != null) {
 			responseDto.seteId(hrtModel.geteId());
@@ -275,27 +370,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 			responseDto.setJobType(hrtModel.getJobType().getValue());
 			responseDto.setMaritalStatus(hrtModel.getMaritalStatus().getValue());
 			responseDto.setRace(hrtModel.getRace().getValue());
+			responseDto.setDepartment(hrtModel.getDepartment().getDepartmentName());
+			responseDto.setRegion(hrtModel.getRegion().getRegionName());
+			responseDto.setTimeZone(hrtModel.getTimeZone().getTimezoneName());
+			responseDto.setTerminationDate(hrtModel.getTerminationDate());
+			responseDto.setBloodGroup(hrtModel.getBloodGroup());
+			responseDto.setQualification(hrtModel.getQualification());
+			responseDto.setHomeAddress(hrtModel.getHomeAddress());
+			responseDto.setRecruiter(hrtModel.getRecruiter());
+			responseDto.setTaxId(hrtModel.getTaxId());
+			responseDto.setTerminationType(hrtModel.getTerminationType().getValue());
+			responseDto.setEmployeeContractors(hrtModel.getEmployeeContractors().getContractorName());
+			if(user != null) {
+				responseDto.setRole(user.getRole().getRoleId());
+				responseDto.setUserName(user.getUserName());
+				responseDto.setPassword(user.getPassword());
+			}
 
 			List<UserSkillResponseDto> skillDtoList = new ArrayList<UserSkillResponseDto>();
-			List<EmployeeSkillsModel> skilsList = userSkillsRepository.findByEId(hrtModel.geteId());
+			List<EmployeeTechnologyModel> skilsList = userTechnologyRepository.findByEId(hrtModel.geteId());
 			UserSkillResponseDto skillDto = new UserSkillResponseDto();
-			skilsList.forEach((empSkills) -> {skillDto.setLevel(empSkills.getSkillLevel());
-											  skillDto.setSkill(empSkills.getSkills().getSkill());
-			                                  skillDtoList.add(skillDto);});
+			skilsList.forEach((empSkills) -> {
+				skillDto.setLevel(empSkills.getSkillLevel());
+				skillDto.setSkill(empSkills.getSkills().getSkill());
+				skillDtoList.add(skillDto);
+			});
 			responseDto.setUserSkills(skillDtoList);
-			
-	        EmployeeReferralModel empReferral = userHrtReferralsRepository.findByEId(id);
-	        responseDto.setType(empReferral.getReferralsModel().getType());
-	        responseDto.setRecipient(empReferral.getReferralsModel().getRecipient());
-	        responseDto.setRefCode(empReferral.getReferralsModel().getRefCode());
-	        responseDto.setRefLimit(empReferral.getRefLimit());
-	        responseDto.setStartDate(empReferral.getStartDate());
-	        responseDto.setEndDate(empReferral.getEndDate());
-	        responseDto.setNotes(empReferral.getNotes());
-	        responseDto.setRatePerDay(empReferral.getRatePerDay());
-	        responseDto.setRatePerHour(empReferral.getRatePerHour());
-	        
-	        			
+
+			EmployeeReferralModel empReferral = userHrtReferralsRepository.findByEId(id);
+			responseDto.setType(empReferral.getReferralsModel().getType());
+			responseDto.setRecipient(empReferral.getReferralsModel().getRecipient());
+			responseDto.setRefCode(empReferral.getReferralsModel().getRefCode());
+			responseDto.setRefLimit(empReferral.getRefLimit());
+			responseDto.setStartDate(empReferral.getStartDate());
+			responseDto.setEndDate(empReferral.getEndDate());
+			responseDto.setNotes(empReferral.getNotes());
+			responseDto.setRatePerDay(empReferral.getRatePerDay());
+			responseDto.setRatePerHour(empReferral.getRatePerHour());
 
 		}
 		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseDto);
@@ -303,6 +414,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return response;
 	}
 
+
+	@Override
+	public EmployeeModel getUserDetailsById(Long id) {
+		return employeeRepository.getNonActiveUser(id);
+	}
 
 
 }

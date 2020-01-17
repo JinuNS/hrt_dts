@@ -1,25 +1,15 @@
 package com.rcg.hrtdts.model;
 
-import java.security.Timestamp;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class ProjectModel {
@@ -28,80 +18,31 @@ public class ProjectModel {
 	@Column(name = "projectId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Cascade(CascadeType.ALL)
-	private long projectId;
-	private int projectCategory;
+	private Long projectId;
+	private Integer projectCategory;
 	private String projectName, projectDetails;
-	private int estimatedHours;
+	private Integer estimatedHours;
 	private Date startDate, endDate, releasingDate;
-	private int isBillable;
+	private Integer isBillable;
 	private String projectCode;
-	private int projectType, isPOC, projectStatus;
+	private Integer projectType, isPOC, projectStatus;
 	private String clientPointOfContact;
-
 	private long parentProjectId;
-
-	private int projectTier; // 1-level1 project ,2level2 project
-
+	private Integer projectTier; 
 	private String project_refId;
-
+	private Integer wokflowType;
+	
 	@ManyToOne
 	private ClientModel clientName;
 
 	@ManyToOne
-//	private UserModel projectOwner; // approver_level_1
 	private EmployeeModel projectOwner;
 
 	@ManyToOne
 	private ContractModel contract;
 
 	@ManyToOne
-//	private UserModel onsite_lead; // approver_level_2
 	private EmployeeModel onsite_lead;
-
-	/*
-	 * @CreatedBy
-	 * 
-	 * @ManyToOne private UserModel createdBy;
-	 * 
-	 * @LastModifiedBy
-	 * 
-	 * @ManyToOne private UserModel modifiedBy;
-	 * 
-	 * @CreatedDate private Date createdDate;
-	 * 
-	 * @LastModifiedDate private Date modifiedDate;
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * public UserModel getCreatedBy() { return createdBy; }
-	 * 
-	 * 
-	 * public void setCreatedBy(UserModel createdBy) { this.createdBy = createdBy; }
-	 * 
-	 * 
-	 * public UserModel getModifiedBy() { return modifiedBy; }
-	 * 
-	 * 
-	 * public void setModifiedBy(UserModel modifiedBy) { this.modifiedBy =
-	 * modifiedBy; }
-	 * 
-	 * 
-	 * public Date getCreatedDate() { return createdDate; }
-	 * 
-	 * 
-	 * public void setCreatedDate(Date createdDate) { this.createdDate =
-	 * createdDate; }
-	 * 
-	 * 
-	 * public Date getModifiedDate() { return modifiedDate; }
-	 * 
-	 * 
-	 * public void setModifiedDate(Date modifiedDate) { this.modifiedDate =
-	 * modifiedDate; }
-	 */
 
 	public ProjectModel(long projectId, String projectName, String projectDetails, int estimatedHours, Date startDate,
 			Date endDate, int isBillable, String projectCode, int projectType, EmployeeModel projectOwner,
@@ -121,72 +62,23 @@ public class ProjectModel {
 		this.contract = contract;
 	}
 
-	public long getParentProjectId() {
-		return parentProjectId;
-	}
-
-	public void setParentProjectId(long parentProjectId) {
-		this.parentProjectId = parentProjectId;
-	}
-
-	public int getProjectCategory() {
-		return projectCategory;
-	}
-
-	public void setProjectCategory(int projectCategory) {
-		this.projectCategory = projectCategory;
-	}
-
-	public String getClientPointOfContact() {
-		return clientPointOfContact;
-	}
-
-	public void setClientPointOfContact(String clientPointOfContact) { // In case of external projects only
-		this.clientPointOfContact = clientPointOfContact;
-	}
-
-	public ClientModel getClientName() {
-		return clientName;
-	}
-
-	public void setClientName(ClientModel clientName) {
-		this.clientName = clientName;
-	}
-
-	public Date getReleasingDate() {
-		return releasingDate;
-	}
-
-	public void setReleasingDate(Date releasingDate) {
-		this.releasingDate = releasingDate;
-	}
-
-	public int getisPOC() {
-		return isPOC;
-	}
-
-	public void setisPOC(int isPOC) {
-		this.isPOC = isPOC;
-	}
-
-	public int getprojectStatus() {
-		return projectStatus;
-	}
-
-	public void setprojectStatus(int projectStatus) {
-		this.projectStatus = projectStatus;
-	}
-
 	public ProjectModel() {
-
 	}
 
-	public long getProjectId() {
+	public Long getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(long projectId) {
+	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
+	}
+
+	public Integer getProjectCategory() {
+		return projectCategory;
+	}
+
+	public void setProjectCategory(Integer projectCategory) {
+		this.projectCategory = projectCategory;
 	}
 
 	public String getProjectName() {
@@ -205,11 +97,11 @@ public class ProjectModel {
 		this.projectDetails = projectDetails;
 	}
 
-	public int getEstimatedHours() {
+	public Integer getEstimatedHours() {
 		return estimatedHours;
 	}
 
-	public void setEstimatedHours(int estimatedHours) {
+	public void setEstimatedHours(Integer estimatedHours) {
 		this.estimatedHours = estimatedHours;
 	}
 
@@ -229,11 +121,19 @@ public class ProjectModel {
 		this.endDate = endDate;
 	}
 
-	public int getisBillable() {
+	public Date getReleasingDate() {
+		return releasingDate;
+	}
+
+	public void setReleasingDate(Date releasingDate) {
+		this.releasingDate = releasingDate;
+	}
+
+	public Integer getIsBillable() {
 		return isBillable;
 	}
 
-	public void setisBillable(int isBillable) {
+	public void setIsBillable(Integer isBillable) {
 		this.isBillable = isBillable;
 	}
 
@@ -245,40 +145,53 @@ public class ProjectModel {
 		this.projectCode = projectCode;
 	}
 
-	public int getprojectType() {
+	public Integer getProjectType() {
 		return projectType;
 	}
 
-	public void setprojectType(int projectType) {
+	public void setProjectType(Integer projectType) {
 		this.projectType = projectType;
 	}
 
-//	public UserModel getProjectOwner() {
-//		return projectOwner;
-//	}
-//
-//	public void setProjectOwner(UserModel projectOwner) {
-//		this.projectOwner = projectOwner;
-//	}
-
-	public ContractModel getContract() {
-		return contract;
+	public Integer getIsPOC() {
+		return isPOC;
 	}
 
-	public void setContract(ContractModel contract) {
-		this.contract = contract;
+	public void setIsPOC(Integer isPOC) {
+		this.isPOC = isPOC;
 	}
 
-//	public UserModel getOnsite_lead() {
-//		return onsite_lead;
-//	}
-//
-//
-//
-//
-//	public void setOnsite_lead(UserModel onsite_lead) {
-//		this.onsite_lead = onsite_lead;
-//	}
+	public Integer getProjectStatus() {
+		return projectStatus;
+	}
+
+	public void setProjectStatus(Integer projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+
+	public String getClientPointOfContact() {
+		return clientPointOfContact;
+	}
+
+	public void setClientPointOfContact(String clientPointOfContact) {
+		this.clientPointOfContact = clientPointOfContact;
+	}
+
+	public long getParentProjectId() {
+		return parentProjectId;
+	}
+
+	public void setParentProjectId(long parentProjectId) {
+		this.parentProjectId = parentProjectId;
+	}
+
+	public Integer getProjectTier() {
+		return projectTier;
+	}
+
+	public void setProjectTier(Integer projectTier) {
+		this.projectTier = projectTier;
+	}
 
 	public String getProject_refId() {
 		return project_refId;
@@ -288,44 +201,20 @@ public class ProjectModel {
 		this.project_refId = project_refId;
 	}
 
-	public int getProjectTier() {
-		return projectTier;
+	public Integer getWokflowType() {
+		return wokflowType;
 	}
 
-	public void setProjectTier(int projectTier) {
-		this.projectTier = projectTier;
+	public void setWokflowType(Integer wokflowType) {
+		this.wokflowType = wokflowType;
 	}
 
-	public int getIsBillable() {
-		return isBillable;
+	public ClientModel getClientName() {
+		return clientName;
 	}
 
-	public void setIsBillable(int isBillable) {
-		this.isBillable = isBillable;
-	}
-
-	public int getProjectType() {
-		return projectType;
-	}
-
-	public void setProjectType(int projectType) {
-		this.projectType = projectType;
-	}
-
-	public int getIsPOC() {
-		return isPOC;
-	}
-
-	public void setIsPOC(int isPOC) {
-		this.isPOC = isPOC;
-	}
-
-	public int getProjectStatus() {
-		return projectStatus;
-	}
-
-	public void setProjectStatus(int projectStatus) {
-		this.projectStatus = projectStatus;
+	public void setClientName(ClientModel clientName) {
+		this.clientName = clientName;
 	}
 
 	public EmployeeModel getProjectOwner() {
@@ -336,6 +225,14 @@ public class ProjectModel {
 		this.projectOwner = projectOwner;
 	}
 
+	public ContractModel getContract() {
+		return contract;
+	}
+
+	public void setContract(ContractModel contract) {
+		this.contract = contract;
+	}
+
 	public EmployeeModel getOnsite_lead() {
 		return onsite_lead;
 	}
@@ -343,5 +240,7 @@ public class ProjectModel {
 	public void setOnsite_lead(EmployeeModel onsite_lead) {
 		this.onsite_lead = onsite_lead;
 	}
+
+
 
 }

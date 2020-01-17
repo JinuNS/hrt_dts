@@ -1,6 +1,7 @@
 package com.rcg.hrtdts.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.rcg.hrtdts.model.EmployeeModel;
 /**
@@ -11,5 +12,7 @@ import com.rcg.hrtdts.model.EmployeeModel;
  * 
  **/
 public interface EmployeeRepository extends JpaRepository<EmployeeModel, Long>{
-
+	
+	@Query("SELECT e FROM EmployeeModel e WHERE e.eId = ?1")
+	EmployeeModel getNonActiveUser(Long id);
 }

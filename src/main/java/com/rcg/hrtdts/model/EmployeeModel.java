@@ -72,6 +72,24 @@ public class EmployeeModel {
 	private String hireCodes;
 	private String homeBranch;
 	private String CPPCareerLevel;
+	@ManyToOne
+	private DepartmentModel department;
+	@ManyToOne
+	private RegionModel region;
+	@ManyToOne
+	private TimeZoneModel timeZone;
+	private Date terminationDate;
+	private String bloodGroup;
+	private String qualification;
+	private String homeAddress;
+	private String recruiter;
+	private String taxId;
+	@ManyToOne
+	private TerminationTypeModel terminationType;
+	@ManyToOne
+	private EmployeeContractorsModel employeeContractors;
+	
+	
 
 	public Long geteId() {
 		return eId;
@@ -457,4 +475,93 @@ public class EmployeeModel {
 		CPPCareerLevel = cPPCareerLevel;
 	}
 
+	public DepartmentModel getDepartment() {
+		return department;
+	}
+
+	public RegionModel getRegion() {
+		return region;
+	}
+
+	public void setRegion(RegionModel region) {
+		this.region = region;
+	}
+
+	public TimeZoneModel getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(TimeZoneModel timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	public Date getTerminationDate() {
+		return terminationDate;
+	}
+
+	public void setTerminationDate(Date terminationDate) {
+		this.terminationDate = terminationDate;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getQualification() {
+		return qualification;
+	}
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
+	}
+
+	public String getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+
+	public String getRecruiter() {
+		return recruiter;
+	}
+
+	public void setRecruiter(String recruiter) {
+		this.recruiter = recruiter;
+	}
+
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	public void setDepartment(DepartmentModel department) {
+		this.department = department;
+	}
+
+	public TerminationTypeModel getTerminationType() {
+		return terminationType;
+	}
+
+	public void setTerminationType(TerminationTypeModel terminationType) {
+		this.terminationType = terminationType;
+	}
+
+	public EmployeeContractorsModel getEmployeeContractors() {
+		return employeeContractors;
+	}
+
+	public void setEmployeeContractors(EmployeeContractorsModel employeeContractors) {
+		this.employeeContractors = employeeContractors;
+	}
+
+	
 }

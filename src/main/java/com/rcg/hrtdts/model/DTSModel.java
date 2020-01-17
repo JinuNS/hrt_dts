@@ -17,6 +17,10 @@ public class DTSModel {
 	private Long dtsNo;
 	
 	@ManyToOne
+	private EmployeeModel empId;
+	
+	
+	@ManyToOne
 	private RevenueType revenueType;
 	
 	private String clientName;
@@ -40,6 +44,12 @@ public class DTSModel {
 	private String shift;
 	private String aeName;
 	
+	public EmployeeModel getEmpId() {
+		return empId;
+	}
+	public void setEmpId(EmployeeModel empId) {
+		this.empId = empId;
+	}
 	
 	public Long getId() {
 		return id;
