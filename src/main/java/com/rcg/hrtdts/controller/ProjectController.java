@@ -93,6 +93,21 @@ public class ProjectController {
 		}
 		return status;
 	}
+	
+	@PostMapping(value = { "/viewAllProjects" })
+	public StatusResponse viewAllProjects(@RequestBody ProjectDto projectHrtDto) throws Exception {
+		StatusResponse status = new StatusResponse();
+
+		try {
+			status = projectservice.viewAllProjects(projectHrtDto);
+		} catch (HRTDTSNotFoundException e) {
+			throw new HRTDTSNotFoundException(e.getErrorMessage());
+		}
+		catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorMessage());
+		}
+		return status;
+	}
 
 
 
