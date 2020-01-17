@@ -44,12 +44,7 @@ public class ProjectController {
 		try {		
 			projectDetails = projectservice.createNewProject(projectDto);
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, projectDetails);
-			
-			
-			/*if(projectDetails.get("status").equals(Constants.SUCCESS))
-				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, projectDetails);
-			else
-				response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, projectDetails);*/
+
 		}
 		catch (HRTDTSNotFoundException e) {
 			throw new HRTDTSNotFoundException(e.getErrorMessage());
