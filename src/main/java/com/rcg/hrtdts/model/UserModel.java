@@ -19,6 +19,7 @@ public class UserModel {
 	private Long eId;
 	
 	private String userName, password,email;
+	private Boolean isActive;
 	
 	@ManyToOne
 	private RoleModel role;
@@ -72,6 +73,15 @@ public class UserModel {
 	public void setRole(RoleModel role) {
 		this.role = role;
 	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+	
 
 	
 	

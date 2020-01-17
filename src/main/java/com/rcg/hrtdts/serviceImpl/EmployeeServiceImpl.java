@@ -415,4 +415,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return response;
 	}
 
+
+	@Override
+	public EmployeeModel getUserDetailsById(Long id) {
+		return employeeRepository.getNonActiveUser(id);
+	}
+
+
 }
