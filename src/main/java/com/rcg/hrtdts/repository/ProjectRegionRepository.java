@@ -20,7 +20,7 @@ public interface ProjectRegionRepository extends JpaRepository<ProjectRegion, Lo
 
 	@Modifying
 	@Transactional
-	@Query("delete from ProjectRegion p where p.project_Id.projectId = ?1")
+	@Query("delete from ProjectRegion p where p.projectId.projectId = ?1")
 	int deleteByProjectId(Long projectId);
 	
 }

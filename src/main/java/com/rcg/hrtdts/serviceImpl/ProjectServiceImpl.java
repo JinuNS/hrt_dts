@@ -71,21 +71,244 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private RegionService regionService;
+	
 	@Autowired
 	RegionRepository regionRepository;
+	
 	@Autowired
 	TimeZoneRepository timezoneRepository;
+	
 	@Autowired
 	EmployeeRepository employeeRepository;
+	
 	@Autowired
 	DepartmentRepository departmentRepository;
+	
 	@Autowired
 	EmployeeContractorsRepository employeeContractorsRepository;
+	
 	@Autowired
 	RoleRepository roleRepository;
 
+
 	@Override
-	public StatusResponse projectListDataForAdmin(ProjectHrtDto projectHrtDto) throws Exception {
+	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException {
+		JSONObject responsedata = new JSONObject();
+
+		ProjectModel project = new ProjectModel();
+		Long contractId = projectDto.getContractType();
+		ContractModel contractModel = new ContractModel();
+		if (contractId != null)
+			contractModel = getContract(contractId);
+		project.setProjectDetails(projectDto.getProjectDetails());
+		project.setProjectType(projectDto.getProjectType());
+		project.setWokflowType(projectDto.getWorkflowType());
+
+		Long clientid = projectDto.getClientId();
+		ClientModel client = new ClientModel();
+		if (clientid != 0L) {
+			client = getClientName(clientid);
+			project.setClientName(client);
+			project.setClientPointOfContact(projectDto.getClientPointOfContact());
+		}
+		project.setParentProjectId(projectDto.getParentProjectId());
+		project.setProjectCategory(projectDto.getProjectCategory());
+		project.setProjectName(projectDto.getProjectName());
+		project.setIsBillable(projectDto.getIsBillable());
+		project.setProjectCode(projectDto.getProjectCode());
+		project.setProjectStatus(projectDto.getProjectStatus());
+		project.setIsPOC(projectDto.getIsPOC());
+		project.setProjectTier(0);
+		Long userid = null;
+
+		if (projectDto.getProjectTier() == 1) {
+			userid = projectDto.getApproverLevel1();
+			EmployeeModel projectOwner = new EmployeeModel();
+			if (userid != null)
+				projectOwner = employeeService.getUserDetailsById(userid);
+			if (projectOwner != null)
+				project.setProjectOwner(projectOwner);
+			project.setProjectTier(1);
+			project.setOnsiteLead(null);
+		} else if (projectDto.getProjectTier() == 2) {
+			userid = projectDto.getApproverLevel1();
+			EmployeeModel projectOwner = new EmployeeModel();
+			if (userid != null)
+				projectOwner = employeeService.getUserDetailsById(userid);
+			if (projectOwner != null)
+				project.setProjectOwner(projectOwner);
+			Long onsiteLead = projectDto.getApproverLevel2();
+			EmployeeModel projectOnsiteLead = new EmployeeModel();
+			if (onsiteLead != null) {
+				projectOnsiteLead = employeeService.getUserDetailsById(onsiteLead);
+			}
+			if (projectOnsiteLead != null) {
+				project.setOnsiteLead(projectOnsiteLead);
+			}
+			project.setProjectTier(2);
+		}
+		if (contractModel != null)
+			project.setContract(contractModel);
+
+		project.setEstimatedHours(projectDto.getEstimatedHours());
+		Date startdate = projectDto.getStartDate();
+		Date enddate = projectDto.getEndDate();
+		Date releasingdate = projectDto.getReleasingDate();
+
+		TimeZone zone = TimeZone.getTimeZone("MST");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		formatter.setTimeZone(zone);
+
+		project.setStartDate(formatter.parse(formatter.format(startdate)));
+		project.setEndDate(formatter.parse(formatter.format(enddate)));
+		project.setReleasingDate(formatter.parse(formatter.format(releasingdate)));
+
+		if ((project.getProjectName() != null) && (!project.getProjectName().equals(" "))
+				&& (project.getProjectName().length() > 0) && (project.getProjectCode() != null)
+				&& (!project.getProjectCode().equals(" ")) && (project.getProjectCode().length() > 0)) {
+			int result = duplicationCheckingProjectCode(project.getProjectCode());
+
+			if (result == 0) {
+
+				ProjectModel projectmodel = saveProjectRecord(project);
+				List<Long> regions = null;
+				regions = projectDto.getProjectRegion();
+				if (projectmodel != null && regions.size() > 0) {
+
+					for (Long region : regions) {
+						ProjectRegion projectRegion = new ProjectRegion();
+						projectRegion.setProjectId(projectmodel);
+						RegionModel regionmodel = regionService.getregion(region);
+						projectRegion.setRegionId(regionmodel);
+						saveProjectRegion(projectRegion);
+					}
+
+				}
+				if (projectmodel == null) {
+					throw new HRTDTSException("Project record creation failed");
+				}
+			} else {
+				throw new HRTDTSException("Insertion failed due to duplicate entry");
+			}
+
+		} else {
+			throw new HRTDTSException("Insertion failed due to invalid credientials for project");
+		}
+
+		return responsedata;
+	}
+
+	@Override
+	public JSONObject updateProject(ProjectDto projectDto) throws ParseException {
+		JSONObject responsedata = new JSONObject();
+		ProjectModel project = findById(projectDto.getProjectId());
+		Long contractId = projectDto.getContractType();
+		ContractModel contractModel = new ContractModel();
+		if (contractId != null)
+			contractModel = getContract(contractId);
+		project.setProjectType(projectDto.getProjectType());
+		project.setContract(contractModel);
+		Long clientid = projectDto.getClientId();
+		ClientModel client = new ClientModel();
+		if (clientid != 0L) {
+			client = getClientName(clientid);
+			project.setClientName(client);
+			project.setClientPointOfContact(projectDto.getClientPointOfContact());
+		}
+		project.setParentProjectId(projectDto.getParentProjectId());
+		project.setProjectCategory(projectDto.getProjectCategory());
+		project.setProjectDetails(projectDto.getProjectDetails());
+		project.setProjectName(projectDto.getProjectName());
+		project.setIsBillable(projectDto.getIsBillable());
+		project.setProjectCode(projectDto.getProjectCode());
+		project.setProjectStatus(projectDto.getProjectStatus());
+		project.setWokflowType(projectDto.getWorkflowType());
+		project.setIsPOC(projectDto.getIsPOC());
+		project.setProjectTier(0);
+		Long userid = null;
+		if (projectDto.getProjectTier() == 1) {
+			userid = projectDto.getApproverLevel1();
+			EmployeeModel projectOwner = new EmployeeModel();
+			if (userid != null)
+				projectOwner = employeeService.getUserDetailsById(userid);
+			if (projectOwner != null)
+				project.setProjectOwner(projectOwner);
+			project.setProjectTier(1);
+			project.setOnsiteLead(null);
+		}
+
+		else if (projectDto.getProjectTier() == 2) {
+
+			userid = projectDto.getApproverLevel1();
+			EmployeeModel projectOwner = new EmployeeModel();
+
+			if (userid != null)
+				projectOwner = employeeService.getUserDetailsById(userid);
+			if (projectOwner != null)
+				project.setProjectOwner(projectOwner);
+
+			Long onsiteLead = projectDto.getApproverLevel2();
+
+			EmployeeModel projectOnsiteLead = new EmployeeModel();
+
+			if (onsiteLead != null) {
+				projectOnsiteLead = employeeService.getUserDetailsById(onsiteLead);
+			}
+
+			if (projectOnsiteLead != null) {
+				project.setOnsiteLead(projectOnsiteLead);
+			}
+
+			project.setProjectTier(2);
+
+		}
+		project.setEstimatedHours(projectDto.getEstimatedHours());
+
+		TimeZone zone = TimeZone.getTimeZone("MST");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		formatter.setTimeZone(zone);
+
+		project.setStartDate(formatter.parse(formatter.format(projectDto.getStartDate())));
+		project.setEndDate(formatter.parse(formatter.format(projectDto.getEndDate())));
+		project.setReleasingDate(formatter.parse(formatter.format(projectDto.getReleasingDate())));
+
+		if ((project.getProjectName() != null) && (!project.getProjectName().equals(" "))
+				&& (project.getProjectName().length() > 0) && (project.getProjectCode() != null)
+				&& (!project.getProjectCode().equals(" ")) && (project.getProjectCode().length() > 0)) {
+
+			ProjectModel projectmodel = saveProjectRecord(project);
+			List<Long> regionList = projectDto.getProjectRegion();
+			if (projectmodel != null) {
+				ArrayList<ProjectRegion> regions = getRegionsByprojectId(projectmodel.getProjectId());
+
+				if (regions.size() > 0) {
+					int i = deleteProjectRegions(projectmodel.getProjectId());
+					if (i > 0) {
+						for (Long region : regionList) {
+							ProjectRegion regionedits = new ProjectRegion();
+							regionedits.setProjectId(projectmodel);
+							RegionModel region1 = regionService.getregion(region);
+							regionedits.setRegionId(region1);
+							saveProjectRegion(regionedits);
+						}
+					}
+				} else {
+					for (Long region : regionList) {
+						ProjectRegion regionedits = new ProjectRegion();
+						regionedits.setProjectId(projectmodel);
+						RegionModel region1 = regionService.getregion(region);
+						regionedits.setRegionId(region1);
+						saveProjectRegion(regionedits);
+					}
+				}
+			}
+		}
+
+		return responsedata;
+	}
+
+	@Override
+	public StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception {
 		// TODO Auto-generated method stub
 		StatusResponse<Serializable> status = new StatusResponse();
 		List<ClientModel> clients = clientRepository.getAll();
@@ -254,223 +477,6 @@ public class ProjectServiceImpl implements ProjectService {
 		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, listofObjects);
 		return status;
 	}
-
-	@Override
-	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException {
-		JSONObject responsedata = new JSONObject();
-
-		ProjectModel project = new ProjectModel();
-		Long contractId = projectDto.getContractType();
-		ContractModel contractModel = new ContractModel();
-		if (contractId != null)
-			contractModel = getContract(contractId);
-		project.setProjectDetails(projectDto.getProjectDetails());
-		project.setProjectType(projectDto.getProjectType());
-		project.setWokflowType(projectDto.getWorkflowType());
-
-		Long clientid = projectDto.getClientId();
-		ClientModel client = new ClientModel();
-		if (clientid != 0L) {
-			client = getClientName(clientid);
-			project.setClientName(client);
-			project.setClientPointOfContact(projectDto.getClientPointOfContact());
-		}
-		project.setParentProjectId(projectDto.getParentProjectId());
-		project.setProjectCategory(projectDto.getProjectCategory());
-		project.setProjectName(projectDto.getProjectName());
-		project.setIsBillable(projectDto.getIsBillable());
-		project.setProjectCode(projectDto.getProjectCode());
-		project.setProjectStatus(projectDto.getProjectStatus());
-		project.setIsPOC(projectDto.getIsPOC());
-		project.setProjectTier(0);
-		Long userid = null;
-
-		if (projectDto.getProjectTier() == 1) {
-			userid = projectDto.getApproverLevel1();
-			EmployeeModel pro_owner = new EmployeeModel();
-			if (userid != null)
-				pro_owner = employeeService.getUserDetailsById(userid);
-			if (pro_owner != null)
-				project.setProjectOwner(pro_owner);
-			project.setProjectTier(1);
-			project.setOnsiteLead(null);
-		} else if (projectDto.getProjectTier() == 2) {
-			userid = projectDto.getApproverLevel1();
-			EmployeeModel pro_owner = new EmployeeModel();
-			if (userid != null)
-				pro_owner = employeeService.getUserDetailsById(userid);
-			if (pro_owner != null)
-				project.setProjectOwner(pro_owner);
-			Long onsite_lead = projectDto.getApproverLevel2();
-			EmployeeModel pro_onsite_lead = new EmployeeModel();
-			if (onsite_lead != null) {
-				pro_onsite_lead = employeeService.getUserDetailsById(onsite_lead);
-			}
-			if (pro_onsite_lead != null) {
-				project.setOnsiteLead(pro_onsite_lead);
-			}
-			project.setProjectTier(2);
-		}
-		if (contractModel != null)
-			project.setContract(contractModel);
-
-		project.setEstimatedHours(projectDto.getEstimatedHours());
-		Date startdate = projectDto.getStartDate();
-		Date enddate = projectDto.getEndDate();
-		Date releasingdate = projectDto.getReleasingDate();
-
-		TimeZone zone = TimeZone.getTimeZone("MST");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-		formatter.setTimeZone(zone);
-
-		project.setStartDate(formatter.parse(formatter.format(startdate)));
-		project.setEndDate(formatter.parse(formatter.format(enddate)));
-		project.setReleasingDate(formatter.parse(formatter.format(releasingdate)));
-
-		if ((project.getProjectName() != null) && (!project.getProjectName().equals(" "))
-				&& (project.getProjectName().length() > 0) && (project.getProjectCode() != null)
-				&& (!project.getProjectCode().equals(" ")) && (project.getProjectCode().length() > 0)) {
-			int result = duplicationCheckingProjectCode(project.getProjectCode());
-
-			if (result == 0) {
-
-				ProjectModel projectmodel = saveProjectRecord(project);
-				List<Long> regions = null;
-				regions = projectDto.getProjectRegion();
-				if (projectmodel != null && regions.size() > 0) {
-
-					for (Long region : regions) {
-						ProjectRegion projectRegion = new ProjectRegion();
-						projectRegion.setProject_Id(projectmodel);
-						RegionModel regionmodel = regionService.getregion(region);
-						projectRegion.setRegion_Id(regionmodel);
-						saveProjectRegion(projectRegion);
-					}
-
-				}
-				if (projectmodel == null) {
-					throw new HRTDTSException("Project record creation failed");
-				}
-			} else {
-				throw new HRTDTSException("Insertion failed due to duplicate entry");
-			}
-
-		} else {
-			throw new HRTDTSException("Insertion failed due to invalid credientials for project");
-		}
-
-		return responsedata;
-	}
-
-	@Override
-	public JSONObject updateProject(ProjectDto projectDto) throws ParseException {
-		JSONObject responsedata = new JSONObject();
-		ProjectModel project = findById(projectDto.getProjectId());
-		Long contractId = projectDto.getContractType();
-		ContractModel contractModel = new ContractModel();
-		if (contractId != null)
-			contractModel = getContract(contractId);
-		project.setProjectType(projectDto.getProjectType());
-		project.setContract(contractModel);
-		Long clientid = projectDto.getClientId();
-		ClientModel client = new ClientModel();
-		if (clientid != 0L) {
-			client = getClientName(clientid);
-			project.setClientName(client);
-			project.setClientPointOfContact(projectDto.getClientPointOfContact());
-		}
-		project.setParentProjectId(projectDto.getParentProjectId());
-		project.setProjectCategory(projectDto.getProjectCategory());
-		project.setProjectDetails(projectDto.getProjectDetails());
-		project.setProjectName(projectDto.getProjectName());
-		project.setIsBillable(projectDto.getIsBillable());
-		project.setProjectCode(projectDto.getProjectCode());
-		project.setProjectStatus(projectDto.getProjectStatus());
-		project.setWokflowType(projectDto.getWorkflowType());
-		project.setIsPOC(projectDto.getIsPOC());
-		project.setProjectTier(0);
-		Long userid = null;
-		if (projectDto.getProjectTier() == 1) {
-			userid = projectDto.getApproverLevel1();
-			EmployeeModel pro_owner = new EmployeeModel();
-			if (userid != null)
-				pro_owner = employeeService.getUserDetailsById(userid);
-			if (pro_owner != null)
-				project.setProjectOwner(pro_owner);
-			project.setProjectTier(1);
-			project.setOnsiteLead(null);
-		}
-
-		else if (projectDto.getProjectTier() == 2) {
-
-			userid = projectDto.getApproverLevel1();
-			EmployeeModel pro_owner = new EmployeeModel();
-
-			if (userid != null)
-				pro_owner = employeeService.getUserDetailsById(userid);
-			if (pro_owner != null)
-				project.setProjectOwner(pro_owner);
-
-			Long onsite_lead = projectDto.getApproverLevel2();
-
-			EmployeeModel pro_onsite_lead = new EmployeeModel();
-
-			if (onsite_lead != null) {
-				pro_onsite_lead = employeeService.getUserDetailsById(onsite_lead);
-			}
-
-			if (pro_onsite_lead != null) {
-				project.setOnsiteLead(pro_onsite_lead);
-			}
-
-			project.setProjectTier(2);
-
-		}
-		project.setEstimatedHours(projectDto.getEstimatedHours());
-
-		TimeZone zone = TimeZone.getTimeZone("MST");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-		formatter.setTimeZone(zone);
-
-		project.setStartDate(formatter.parse(formatter.format(projectDto.getStartDate())));
-		project.setEndDate(formatter.parse(formatter.format(projectDto.getEndDate())));
-		project.setReleasingDate(formatter.parse(formatter.format(projectDto.getReleasingDate())));
-
-		if ((project.getProjectName() != null) && (!project.getProjectName().equals(" "))
-				&& (project.getProjectName().length() > 0) && (project.getProjectCode() != null)
-				&& (!project.getProjectCode().equals(" ")) && (project.getProjectCode().length() > 0)) {
-
-			ProjectModel projectmodel = saveProjectRecord(project);
-			List<Long> regionList = projectDto.getProjectRegion();
-			if (projectmodel != null) {
-				ArrayList<ProjectRegion> regions = getRegionsByprojectId(projectmodel.getProjectId());
-
-				if (regions.size() > 0) {
-					int i = deleteProjectRegions(projectmodel.getProjectId());
-					if (i > 0) {
-						for (Long region : regionList) {
-							ProjectRegion regionedits = new ProjectRegion();
-							regionedits.setProject_Id(projectmodel);
-							RegionModel region1 = regionService.getregion(region);
-							regionedits.setRegion_Id(region1);
-							saveProjectRegion(regionedits);
-						}
-					}
-				} else {
-					for (Long region : regionList) {
-						ProjectRegion regionedits = new ProjectRegion();
-						regionedits.setProject_Id(projectmodel);
-						RegionModel region1 = regionService.getregion(region);
-						regionedits.setRegion_Id(region1);
-						saveProjectRegion(regionedits);
-					}
-				}
-			}
-		}
-
-		return responsedata;
-	}
-
 	public ProjectModel saveProjectRecord(ProjectModel projectmodel) {
 
 		ProjectModel model = projectRepository.save(projectmodel);

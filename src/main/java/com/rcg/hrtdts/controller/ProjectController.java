@@ -59,24 +59,6 @@ public class ProjectController {
 		return response;
 	}
 	
-	@GetMapping(value = { "/listOfprojects" })
-	public StatusResponse projectListDataForAdmin(@RequestBody ProjectHrtDto projectHrtDto) throws Exception {
-		StatusResponse status = new StatusResponse();
-
-		try {
-			status = projectservice.projectListDataForAdmin(projectHrtDto);
-		} catch (HRTDTSNotFoundException e) {
-			throw new HRTDTSNotFoundException(e.getErrorMessage());
-		}
-		catch (HRTDTSException e) {
-			throw new HRTDTSException(e.getErrorMessage());
-		} catch (ParseException e) {
-			throw new HRTDTSDateFormatException(e.getMessage());
-		}
-		return status;
-	}
-
-
 	/**
 	 * To edit project
 	 * @author  Jinu Shaji
@@ -99,5 +81,25 @@ public class ProjectController {
 		}
 		return response;
 	}
+	
+	@GetMapping(value = { "/listOfprojects" })
+	public StatusResponse projectListDataForAdmin(@RequestBody ProjectDto projectDto) throws Exception {
+		StatusResponse status = new StatusResponse();
+
+		try {
+			status = projectservice.projectListDataForAdmin(projectDto);
+		} catch (HRTDTSNotFoundException e) {
+			throw new HRTDTSNotFoundException(e.getErrorMessage());
+		}
+		catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorMessage());
+		} catch (ParseException e) {
+			throw new HRTDTSDateFormatException(e.getMessage());
+		}
+		return status;
+	}
+
+
+
 	
 }

@@ -12,40 +12,38 @@ public class ProjectRegion {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long project_region_Id;
+	private long projectRegionId;
 	
 	@ManyToOne
-	private ProjectModel project_Id;
+	private ProjectModel projectId;
 	
 	@ManyToOne
-	private RegionModel region_Id;
+	private RegionModel regionId;
 
-	public long getProject_region_Id() {
-		return project_region_Id;
+	public long getProjectRegionId() {
+		return projectRegionId;
 	}
 
-	public void setProject_region_Id(long project_region_Id) {
-		this.project_region_Id = project_region_Id;
+	public void setProjectRegionId(long projectRegionId) {
+		this.projectRegionId = projectRegionId;
 	}
 
-	public ProjectModel getProject_Id() {
-		return project_Id;
+	public ProjectModel getProjectId() {
+		return projectId;
 	}
 
-	public void setProject_Id(ProjectModel project_Id) {
-		this.project_Id = project_Id;
+	public void setProjectId(ProjectModel projectId) {
+		this.projectId = projectId;
 	}
 
-	public RegionModel getRegion_Id() {
-		return region_Id;
+	public RegionModel getRegionId() {
+		return regionId;
 	}
 
-	public void setRegion_Id(RegionModel region_Id) {
-		this.region_Id = region_Id;
+	public void setRegionId(RegionModel regionId) {
+		this.regionId = regionId;
 	}
 
-	
-	
-	
+
 	
 }
