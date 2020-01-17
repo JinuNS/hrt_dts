@@ -82,6 +82,22 @@ public class EmployeeController {
 		return response;
 	}
 	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping(value = "/hrt-information")
+	@ResponseBody
+	public StatusResponse getUserListInformation() {
+		
+		StatusResponse response = new StatusResponse();
+		try {		
+			response = employeeService.getEmployeeList();
+		}
+		catch (Exception e) {
+			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
+		}
+		return response;
+	}
 
 	
 }

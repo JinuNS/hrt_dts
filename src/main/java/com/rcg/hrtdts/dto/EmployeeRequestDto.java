@@ -79,7 +79,7 @@ public class EmployeeRequestDto {
 
 	private Long region;
 
-	private Long timeZone;
+	private Long timeZoneId;
 	private Date terminationDate;
 	private String bloodGroup;
 	private String qualification;
@@ -87,12 +87,13 @@ public class EmployeeRequestDto {
 	private String recruiter;
 	private String taxId;
 
-	private Long terminationType;
-	private Long employeeContractors;
+	private Long terminationTypeId;
+	private Long employeeContractorsId;
 	private String userName;
 	private String password;
-    private Long role;
-    private Boolean isActive;
+	private Long roleId;
+	private Boolean isActive;
+	private Long employeeStatusId;
 
 	public Long geteId() {
 		return eId;
@@ -542,13 +543,6 @@ public class EmployeeRequestDto {
 		this.region = region;
 	}
 
-	public Long getTimeZone() {
-		return timeZone;
-	}
-
-	public void setTimeZone(Long timeZone) {
-		this.timeZone = timeZone;
-	}
 
 	public Date getTerminationDate() {
 		return terminationDate;
@@ -598,22 +592,7 @@ public class EmployeeRequestDto {
 		this.taxId = taxId;
 	}
 
-	public Long getTerminationType() {
-		return terminationType;
-	}
-
-	public void setTerminationType(Long terminationType) {
-		this.terminationType = terminationType;
-	}
-
-	public Long getEmployeeContractors() {
-		return employeeContractors;
-	}
-
-	public void setEmployeeContractors(Long employeeContractors) {
-		this.employeeContractors = employeeContractors;
-	}
-
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -630,20 +609,52 @@ public class EmployeeRequestDto {
 		this.password = password;
 	}
 
-	public Long getRole() {
-		return role;
-	}
-
-	public void setRole(Long role) {
-		this.role = role;
-	}
-
 	public Boolean getIsActive() {
 		return isActive;
 	}
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public Long getTimeZoneId() {
+		return timeZoneId;
+	}
+
+	public void setTimeZoneId(Long timeZoneId) {
+		this.timeZoneId = timeZoneId;
+	}
+
+	public Long getTerminationTypeId() {
+		return terminationTypeId;
+	}
+
+	public void setTerminationTypeId(Long terminationTypeId) {
+		this.terminationTypeId = terminationTypeId;
+	}
+
+	public Long getEmployeeContractorsId() {
+		return employeeContractorsId;
+	}
+
+	public void setEmployeeContractorsId(Long employeeContractorsId) {
+		this.employeeContractorsId = employeeContractorsId;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public Long getEmployeeStatusId() {
+		return employeeStatusId;
+	}
+
+	public void setEmployeeStatusId(Long employeeStatusId) {
+		this.employeeStatusId = employeeStatusId;
 	}
 
 	

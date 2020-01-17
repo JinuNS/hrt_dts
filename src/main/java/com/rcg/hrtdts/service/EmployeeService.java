@@ -20,6 +20,9 @@ public interface EmployeeService {
 
 	EmployeeModel getUserDetailsById(Long asLong);
 
+	StatusResponse getEmployeeList() throws Exception;
+
+
 //	StatusResponse updateEmployeeInfo(EmployeeRequestDto requestDto) throws Exception;
 
 }

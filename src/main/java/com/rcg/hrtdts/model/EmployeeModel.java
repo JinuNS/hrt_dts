@@ -88,8 +88,8 @@ public class EmployeeModel {
 	private TerminationTypeModel terminationType;
 	@ManyToOne
 	private EmployeeContractorsModel employeeContractors;
-	
-	
+	@ManyToOne
+	private EmployeeStatusModel employeeStatus;
 
 	public Long geteId() {
 		return eId;
@@ -563,5 +563,12 @@ public class EmployeeModel {
 		this.employeeContractors = employeeContractors;
 	}
 
-	
+	public EmployeeStatusModel getEmployeeStatus() {
+		return employeeStatus;
+	}
+
+	public void setEmployeeStatus(EmployeeStatusModel employeeStatus) {
+		this.employeeStatus = employeeStatus;
+	}
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.rcg.hrtdts.model.DepartmentModel;
 import com.rcg.hrtdts.model.EmployeeContractorsModel;
+import com.rcg.hrtdts.model.EmployeeStatusModel;
 import com.rcg.hrtdts.model.ReferralsModel;
 import com.rcg.hrtdts.model.RegionModel;
 import com.rcg.hrtdts.model.TechnologyModel;
@@ -12,9 +13,9 @@ import com.rcg.hrtdts.model.TimeZoneModel;
 
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
 
@@ -27,6 +28,7 @@ public class PreDataDto {
 	private List<TimeZoneModel> timeZone;
 	private List<TerminationTypeModel> terminationType;
 	private List<EmployeeContractorsModel> employeeContractors;
+	private List<EmployeeStatusModel> employeeStatus;
 
 	public List<TechnologyModel> getSkills() {
 		return skills;
@@ -83,6 +85,13 @@ public class PreDataDto {
 	public void setEmployeeContractors(List<EmployeeContractorsModel> employeeContractors) {
 		this.employeeContractors = employeeContractors;
 	}
-	
-	
+
+	public List<EmployeeStatusModel> getEmployeeStatus() {
+		return employeeStatus;
+	}
+
+	public void setEmployeeStatus(List<EmployeeStatusModel> employeeStatus) {
+		this.employeeStatus = employeeStatus;
+	}
+
 }

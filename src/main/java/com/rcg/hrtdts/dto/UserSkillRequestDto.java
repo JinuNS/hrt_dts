@@ -11,6 +11,7 @@ public class UserSkillRequestDto {
 
 	private Long skillId;
 	private Integer level;
+	private Double experiance;
 
 	public Long getSkillId() {
 		return skillId;
@@ -28,4 +29,15 @@ public class UserSkillRequestDto {
 		this.level = level;
 	}
 
+	public Double getExperiance() {
+		return experiance;
+	}
+
+	public void setExperiance(Double experiance) {
+		this.experiance = experiance;
+	}
+
+	
+
+	
 }

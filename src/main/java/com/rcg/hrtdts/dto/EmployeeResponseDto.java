@@ -85,6 +85,7 @@ public class EmployeeResponseDto {
     private String userName;
 	private String password;
     private Boolean isActive;
+    private String employeeStatus;
 
 	public Long geteId() {
 		return eId;
@@ -652,6 +653,14 @@ public class EmployeeResponseDto {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public String getEmployeeStatus() {
+		return employeeStatus;
+	}
+
+	public void setEmployeeStatus(String employeeStatus) {
+		this.employeeStatus = employeeStatus;
 	}
 
 	

@@ -11,6 +11,8 @@ public class UserSkillResponseDto {
 
 	private String skill;
 	private Integer level;
+	private Double experiance;
+	private String comment;
 
 	public String getSkill() {
 		return skill;
@@ -28,4 +30,21 @@ public class UserSkillResponseDto {
 		this.level = level;
 	}
 
+	public Double getExperiance() {
+		return experiance;
+	}
+
+	public void setExperiance(Double experiance) {
+		this.experiance = experiance;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	
 }
