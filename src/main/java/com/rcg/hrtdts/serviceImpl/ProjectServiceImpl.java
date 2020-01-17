@@ -32,6 +32,7 @@ import com.rcg.hrtdts.model.RegionModel;
 import com.rcg.hrtdts.model.RoleModel;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.model.TimeZoneModel;
+import com.rcg.hrtdts.model.UserModel;
 import com.rcg.hrtdts.repository.ClientRepository;
 import com.rcg.hrtdts.repository.ContractRepository;
 import com.rcg.hrtdts.repository.DepartmentRepository;
@@ -309,175 +310,175 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception {
-//		// TODO Auto-generated method stub
+		 
 		StatusResponse<Serializable> status = new StatusResponse();
-//		List<ClientModel> clients = clientRepository.getAll();
-//		List<ProjectModel> projectlist = projectRepository.getProjectsOnly();
-//		ArrayList<ContractModel> contract = (ArrayList<ContractModel>) contractRepository.findAll();
-//		List<RegionModel> region = regionRepository.getlistofRegions();
-//		ArrayList<TimeZoneModel> timezone = timezoneRepository.getTimeZones1();
-////		List<EmployeeModel> user_owner = employeeRepository.getProjectOwners();
-//		
-//		List<EmployeeModel> user_owner = userRepository.getProjectOwners();
-//		
-//		List<EmployeeModel> onsite_lead = employeeRepository.getOnsiteLeads();
-//		List<DepartmentModel> department = ((JpaRepository<DepartmentModel, Long>) departmentRepository).findAll();
-//		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
-//		List<RoleModel> rolelist = roleRepository.findAll();
-//		JSONObject clientsobject = new JSONObject();
-//		JSONObject projectlistobject = new JSONObject();
-//		JSONObject contractobject = new JSONObject();
-//		JSONObject regionobject = new JSONObject();
-//		JSONObject timezoneobject = new JSONObject();
-//		JSONObject user_ownerobject = new JSONObject();
-//		JSONObject onsite_leadobject = new JSONObject();
-//		JSONObject departmentobject = new JSONObject();
-//		JSONObject employeeContractorsobject = new JSONObject();
-//		JSONObject rolelistobject = new JSONObject();
-//		ArrayList<JSONObject> listofObjects = new ArrayList<JSONObject>();
-//		ArrayList jsonArrayProjectsClient = new ArrayList();
-//		ArrayList jsonArrayProjectsList = new ArrayList();
-//		ArrayList jsonArrayProjectsContractType = new ArrayList();
-//		ArrayList jsonArrayProjectsRegion = new ArrayList();
-//		ArrayList jsonArrayProjectsTimezone = new ArrayList();
-//		ArrayList jsonArrayProjectsUserOwner = new ArrayList();
-//		ArrayList jsonArrayProjectsOnsiteLead = new ArrayList();
-//		ArrayList jsonArrayProjectsDepartment = new ArrayList();
-//		ArrayList jsonArrayProjectsEmployeeContractors = new ArrayList();
-//		ArrayList jsonArrayProjectsRole = new ArrayList();
-//
-//		if (clients.isEmpty()) {
-//			clientsobject.put("clientList", jsonArrayProjectsClient);
-//		} else {
-//			for (ClientModel client : clients) {
-//				JSONObject clientjson = new JSONObject();
-//				clientjson.put("clientId", client.getClientId());
-//				clientjson.put("clientName", client.getClientName());
-//				jsonArrayProjectsClient.add(clientjson);
-//			}
-//			clientsobject.put("clientList", jsonArrayProjectsClient);
-//		}
-//
-//		if (projectlist.isEmpty()) {
-//			projectlistobject.put("projectList", jsonArrayProjectsList);
-//		} else {
-//			for (ProjectModel project : projectlist) {
-//				JSONObject projectjson = new JSONObject();
-//				projectjson.put("projectId", project.getProjectId());
-//				projectjson.put("projectName", project.getProjectName());
-//				jsonArrayProjectsList.add(projectjson);
-//			}
-//			projectlistobject.put("projectList", jsonArrayProjectsList);
-//		}
-//
-//		if (contract.isEmpty()) {
-//			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
-//		} else {
-//			for (ContractModel contracts : contract) {
-//				JSONObject contractjson = new JSONObject();
-//				contractjson.put("contractTypeId", contracts.getContractTypeId());
-//				contractjson.put("contractTypeName", contracts.getContractTypeName());
-//				jsonArrayProjectsContractType.add(contractjson);
-//			}
-//			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
-//		}
-//		if (region.isEmpty()) {
-//			regionobject.put("regionList", jsonArrayProjectsRegion);
-//		} else {
-//			for (RegionModel regions : region) {
-//				JSONObject regionjson = new JSONObject();
-//				regionjson.put("regionId", regions.getId());
-//				regionjson.put("regionName", regions.getRegionName());
-//				regionjson.put("regionCode", regions.getRegionCode());
-//				jsonArrayProjectsRegion.add(regionjson);
-//			}
-//			regionobject.put("regionList", jsonArrayProjectsRegion);
-//		}
-//		if (timezone.isEmpty()) {
-//			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
-//		} else {
-//			for (TimeZoneModel timeZones : timezone) {
-//				JSONObject timezonejson = new JSONObject();
-//				timezonejson.put("timezoneId", timeZones.getId());
-//				timezonejson.put("timezoneName", timeZones.getTimezoneCode());
-//				timezonejson.put("timezoneCode", timeZones.getTimezoneName());
-//				jsonArrayProjectsTimezone.add(timezonejson);
-//			}
-//			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
-//		}
-//		if (user_owner.isEmpty()) {
-//			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
-//		} else {
-//			for (EmployeeModel userOwners : user_owner) {
-//				JSONObject userOwnersjson = new JSONObject();
-//				userOwnersjson.put("firstName", userOwners.getFirstName());
-//				userOwnersjson.put("id", userOwners.geteId());
-//				userOwnersjson.put("lastName", userOwners.getLastName());
-//				userOwnersjson.put("role", userOwners.getRole().getRoleId());
-//				userOwnersjson.put("status", userOwners.isActive());
-//				jsonArrayProjectsUserOwner.add(userOwnersjson);
-//			}
-//			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
-//		}
-//		if (onsite_lead.isEmpty()) {
-//			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsUserOwner);
-//		} else {
-//			for (EmployeeModel onsiteLeads : onsite_lead) {
-//				JSONObject onsiteLeadsjson = new JSONObject();
-//				onsiteLeadsjson.put("firstName", onsiteLeads.getFirstName());
-//				onsiteLeadsjson.put("id", onsiteLeads.geteId());
-//				onsiteLeadsjson.put("lastName", onsiteLeads.getLastName());
-//				onsiteLeadsjson.put("role", onsiteLeads.getRole().getRoleId());
-//				onsiteLeadsjson.put("status", onsiteLeads.isActive());
-//				jsonArrayProjectsOnsiteLead.add(onsiteLeadsjson);
-//			}
-//			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
-//		}
-//		if (department.isEmpty()) {
-//			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
-//		} else {
-//			for (DepartmentModel dept : department) {
-//				JSONObject departmentjson = new JSONObject();
-//				departmentjson.put("departmentId", dept.getDepartmentId());
-//				departmentjson.put("department", dept.getDepartmentName());
-//				jsonArrayProjectsDepartment.add(departmentjson);
-//			}
-//			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
-//		}
-//		if (employeeContractors.isEmpty()) {
-//			user_ownerobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
-//		} else {
-//			for (EmployeeContractorsModel contractors : employeeContractors) {
-//				JSONObject contractorsjson = new JSONObject();
-//				contractorsjson.put("contractorId", contractors.getContractorId());
-//				contractorsjson.put("contractorName", contractors.getContractorName());
-//				jsonArrayProjectsEmployeeContractors.add(contractorsjson);
-//			}
-//			employeeContractorsobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
-//		}
-//		if (rolelist.isEmpty()) {
-//			rolelistobject.put("roleList", jsonArrayProjectsRole);
-//		} else {
-//			for (RoleModel role : rolelist) {
-//				JSONObject rolejson = new JSONObject();
-//				rolejson.put("roleId", role.getRoleId());
-//				rolejson.put("roleName", role.getRoleName());
-//				jsonArrayProjectsRole.add(rolejson);
-//			}
-//			rolelistobject.put("roleList", jsonArrayProjectsRole);
-//		}
-//		listofObjects.add(clientsobject);
-//		listofObjects.add(projectlistobject);
-//		listofObjects.add(contractobject);
-//		listofObjects.add(regionobject);
-//		listofObjects.add(timezoneobject);
-//		listofObjects.add(user_ownerobject);
-//		listofObjects.add(onsite_leadobject);
-//		listofObjects.add(departmentobject);
-//		listofObjects.add(employeeContractorsobject);
-//		listofObjects.add(rolelistobject);
-//
-		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, null);
+		List<ClientModel> clients = clientRepository.getAll();
+		List<ProjectModel> projectlist = projectRepository.getProjectsOnly();
+		ArrayList<ContractModel> contract = (ArrayList<ContractModel>) contractRepository.findAll();
+		List<RegionModel> region = regionRepository.getlistofRegions();
+		ArrayList<TimeZoneModel> timezone = timezoneRepository.getTimeZones1();
+		//List<EmployeeModel> user_owner = employeeRepository.getProjectOwners();
+		
+		List<UserModel> user_owner = userRepository.getProjectOwners();
+		
+		List<UserModel> onsite_lead = userRepository.getOnsiteLeads();
+		List<DepartmentModel> department = ((JpaRepository<DepartmentModel, Long>) departmentRepository).findAll();
+		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
+		List<RoleModel> rolelist = roleRepository.findAll();
+		JSONObject clientsobject = new JSONObject();
+		JSONObject projectlistobject = new JSONObject();
+		JSONObject contractobject = new JSONObject();
+		JSONObject regionobject = new JSONObject();
+		JSONObject timezoneobject = new JSONObject();
+		JSONObject user_ownerobject = new JSONObject();
+		JSONObject onsite_leadobject = new JSONObject();
+		JSONObject departmentobject = new JSONObject();
+		JSONObject employeeContractorsobject = new JSONObject();
+		JSONObject rolelistobject = new JSONObject();
+		ArrayList<JSONObject> listofObjects = new ArrayList<JSONObject>();
+		ArrayList jsonArrayProjectsClient = new ArrayList();
+		ArrayList jsonArrayProjectsList = new ArrayList();
+		ArrayList jsonArrayProjectsContractType = new ArrayList();
+		ArrayList jsonArrayProjectsRegion = new ArrayList();
+		ArrayList jsonArrayProjectsTimezone = new ArrayList();
+		ArrayList jsonArrayProjectsUserOwner = new ArrayList();
+		ArrayList jsonArrayProjectsOnsiteLead = new ArrayList();
+		ArrayList jsonArrayProjectsDepartment = new ArrayList();
+		ArrayList jsonArrayProjectsEmployeeContractors = new ArrayList();
+		ArrayList jsonArrayProjectsRole = new ArrayList();
+
+		if (clients.isEmpty()) {
+			clientsobject.put("clientList", jsonArrayProjectsClient);
+		} else {
+			for (ClientModel client : clients) {
+				JSONObject clientjson = new JSONObject();
+				clientjson.put("clientId", client.getClientId());
+				clientjson.put("clientName", client.getClientName());
+				jsonArrayProjectsClient.add(clientjson);
+			}
+			clientsobject.put("clientList", jsonArrayProjectsClient);
+		}
+
+		if (projectlist.isEmpty()) {
+			projectlistobject.put("projectList", jsonArrayProjectsList);
+		} else {
+			for (ProjectModel project : projectlist) {
+				JSONObject projectjson = new JSONObject();
+				projectjson.put("projectId", project.getProjectId());
+				projectjson.put("projectName", project.getProjectName());
+				jsonArrayProjectsList.add(projectjson);
+			}
+			projectlistobject.put("projectList", jsonArrayProjectsList);
+		}
+
+		if (contract.isEmpty()) {
+			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
+		} else {
+			for (ContractModel contracts : contract) {
+				JSONObject contractjson = new JSONObject();
+				contractjson.put("contractTypeId", contracts.getContractTypeId());
+				contractjson.put("contractTypeName", contracts.getContractTypeName());
+				jsonArrayProjectsContractType.add(contractjson);
+			}
+			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
+		}
+		if (region.isEmpty()) {
+			regionobject.put("regionList", jsonArrayProjectsRegion);
+		} else {
+			for (RegionModel regions : region) {
+				JSONObject regionjson = new JSONObject();
+				regionjson.put("regionId", regions.getId());
+				regionjson.put("regionName", regions.getRegionName());
+				regionjson.put("regionCode", regions.getRegionCode());
+				jsonArrayProjectsRegion.add(regionjson);
+			}
+			regionobject.put("regionList", jsonArrayProjectsRegion);
+		}
+		if (timezone.isEmpty()) {
+			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
+		} else {
+			for (TimeZoneModel timeZones : timezone) {
+				JSONObject timezonejson = new JSONObject();
+				timezonejson.put("timezoneId", timeZones.getId());
+				timezonejson.put("timezoneName", timeZones.getTimezoneCode());
+				timezonejson.put("timezoneCode", timeZones.getTimezoneName());
+				jsonArrayProjectsTimezone.add(timezonejson);
+			}
+			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
+		}
+		if (user_owner.isEmpty()) {
+			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
+		} else {
+			for (UserModel userOwners : user_owner) {
+				JSONObject userOwnersjson = new JSONObject();
+				userOwnersjson.put("firstName", userOwners.getEmployee().getFirstName());
+				userOwnersjson.put("id", userOwners.getEmployee().geteId());
+				userOwnersjson.put("lastName", userOwners.getEmployee().getLastName());
+				userOwnersjson.put("role", userOwners.getRole().getRoleId());
+				userOwnersjson.put("status", userOwners.getIsActive());
+				jsonArrayProjectsUserOwner.add(userOwnersjson);
+			}
+			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
+		}
+		if (onsite_lead.isEmpty()) {
+			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
+		} else {
+			for (UserModel onsiteLeads : onsite_lead) {
+				JSONObject onsiteLeadsjson = new JSONObject();
+				onsiteLeadsjson.put("firstName", onsiteLeads.getUserName());
+				onsiteLeadsjson.put("id", onsiteLeads.getEmployee().geteId());
+				onsiteLeadsjson.put("lastName", onsiteLeads.getEmployee().getLastName());
+				onsiteLeadsjson.put("role", onsiteLeads.getRole().getRoleId());
+				onsiteLeadsjson.put("status", onsiteLeads.getIsActive());
+				jsonArrayProjectsOnsiteLead.add(onsiteLeadsjson);
+			}
+			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
+		}
+		if (department.isEmpty()) {
+			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
+		} else {
+			for (DepartmentModel dept : department) {
+				JSONObject departmentjson = new JSONObject();
+				departmentjson.put("departmentId", dept.getDepartmentId());
+				departmentjson.put("department", dept.getDepartmentName());
+				jsonArrayProjectsDepartment.add(departmentjson);
+			}
+			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
+		}
+		if (employeeContractors.isEmpty()) {
+			employeeContractorsobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
+		} else {
+			for (EmployeeContractorsModel contractors : employeeContractors) {
+				JSONObject contractorsjson = new JSONObject();
+				contractorsjson.put("contractorId", contractors.getContractorId());
+				contractorsjson.put("contractorName", contractors.getContractorName());
+				jsonArrayProjectsEmployeeContractors.add(contractorsjson);
+			}
+			employeeContractorsobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
+		}
+		if (rolelist.isEmpty()) {
+			rolelistobject.put("roleList", jsonArrayProjectsRole);
+		} else {
+			for (RoleModel role : rolelist) {
+				JSONObject rolejson = new JSONObject();
+				rolejson.put("roleId", role.getRoleId());
+				rolejson.put("roleName", role.getRoleName());
+				jsonArrayProjectsRole.add(rolejson);
+			}
+			rolelistobject.put("roleList", jsonArrayProjectsRole);
+		}
+		listofObjects.add(clientsobject);
+		listofObjects.add(projectlistobject);
+		listofObjects.add(contractobject);
+		listofObjects.add(regionobject);
+		listofObjects.add(timezoneobject);
+		listofObjects.add(user_ownerobject);
+		listofObjects.add(onsite_leadobject);
+		listofObjects.add(departmentobject);
+		listofObjects.add(employeeContractorsobject);
+		listofObjects.add(rolelistobject);
+
+		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, listofObjects);
 		return status;
 	}
 	public ProjectModel saveProjectRecord(ProjectModel projectmodel) {
@@ -523,6 +524,87 @@ public class ProjectServiceImpl implements ProjectService {
 	public int deleteProjectRegions(long projectId) {
 		int i = projectRegionRepository.deleteByProjectId(projectId);
 		return i;
+	}
+	
+	@Override
+	public StatusResponse viewAllProjects(ProjectDto projectHrtDto) {
+		ArrayList viewProjects = new ArrayList();
+		ArrayList<ProjectModel> projectlist = projectRepository.getAllNonParentProjects();
+		StatusResponse status = new StatusResponse();
+		Long contractId = null;
+		ArrayList regionsArray = new ArrayList();
+		ArrayList<Integer> regionArraylist = new ArrayList<Integer>();
+		if (projectlist.isEmpty()) {
+			status = new StatusResponse(Constants.FAILURE, HttpStatus.OK, "Empty List");
+		}
+		for (ProjectModel project : projectlist) {
+			JSONObject client = new JSONObject();
+			JSONObject contractobj = new JSONObject();
+			JSONObject employeeJson = new JSONObject();
+			UserModel employee = null;
+			ContractModel contract = null;
+			String parentproject = projectRepository.getProjectName(project.getParentProjectId());
+			List<ProjectRegion> regionList = projectRegionRepository.getRegionList(project.getProjectId());
+//			Long eId = project.getProjectOwner().geteId();
+			Long eId = 1L;
+			JSONObject viewJson = new JSONObject();
+			viewJson.put("projectId", project.getProjectId());
+			viewJson.put("projectName", project.getProjectName());
+			viewJson.put("projectFullName", parentproject + "_" + project.getProjectName());
+			viewJson.put("isBillable", project.getIsBillable());
+			viewJson.put("projectCode", project.getProjectCode());
+			viewJson.put("projectType", project.getProjectType());
+			viewJson.put("projectStatus", project.getProjectStatus());
+			viewJson.put("workflowType", project.getWokflowType());
+			if (regionList.isEmpty()) {
+				viewJson.put("projectRegion", regionsArray);
+			} else {
+				for (ProjectRegion regioneach : regionList) {
+					JSONObject resource = new JSONObject();
+					regionsArray.add(regioneach.getRegionId().getId());
+				}
+				viewJson.put("projectRegion", regionsArray);
+			}
+			if(project.getReleasingDate() != null) {
+				viewJson.put("releasingDate", project.getReleasingDate().toString());
+			}
+			if (project.getClientName() != null ) {
+				
+				client.put("clientId", project.getClientName().getClientId());
+				client.put("clientName", project.getClientName().getClientName());
+				viewJson.put("client", client);
+			} else {
+				client.put("clientId", null);
+				client.put("clientName", null);
+				viewJson.put("client", client);
+			}
+			if (project.getContract() != null || contractId != null)
+				contractId = project.getContract().getContractTypeId();
+			contract = contractRepository.getOne(contractId);
+			if (contract == null)
+				contractobj = null;
+			else {
+				contractobj.put("contractTypeId", contract.getContractTypeId());
+				contractobj.put("contractTypeName", contract.getContractTypeName());
+			}
+			viewJson.put("contractType", contractobj);			
+			if (eId != null) {
+				employee = userRepository.getNonActiveUser(eId);
+			}
+			if (employee == null)
+				employeeJson = null;
+			else {
+				employeeJson.put("firstName", employee.getEmployee().getFirstName());
+				employeeJson.put("lastName", employee.getEmployee().getLastName());
+				employeeJson.put("role", employee.getRole().getRoleId());
+				employeeJson.put("userId", employee.getEmployee().geteId());
+				//employeeJson.put("regionId", employee.getRegion().getId());
+			}
+			viewJson.put("approverLevelOne", employeeJson);
+			viewProjects.add(viewJson);
+		}
+		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, viewProjects);
+		return status;
 	}
 
 }

@@ -26,5 +26,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel, Long>{
 //
 //	@Query("SELECT u FROM EmployeeModel u WHERE u.role in (11,8)")
 //	List<EmployeeModel> getOnsiteLeads();
+	@Query(value = "select e.firstName,e.lastName,u.userName,e.JobType,e.department,e.CPPCareerLevel,e.hiredate from EmployeeModel e JOIN UserModel u WHERE e.eId = u.eId ",nativeQuery = true)
+	List<Object[]> getEmployeeLists();
 
 }
