@@ -20,10 +20,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel, Long>{
 	EmployeeModel getNonActiveUser(Long id);
 
 
-	@Query(value = "select e.firstName,e.lastName,u.userName,e.JobType,e.department,e.CPPCareerLevel,e.hiredate from EmployeeModel e JOIN UserModel u WHERE e.eId = u.eId ",nativeQuery = true)
-	List<Object[]> getEmployeeLists();
-
-	
+		
 //	@Query("SELECT u FROM EmployeeModel u WHERE u.role in (11,8)")
 //	List<EmployeeModel> getProjectOwners();
 //

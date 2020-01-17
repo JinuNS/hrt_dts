@@ -1,5 +1,10 @@
 package com.rcg.hrtdts.dto;
 
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class EmployeeListDto {
 
 	private String firstName;
@@ -8,7 +13,24 @@ public class EmployeeListDto {
 	private String jobType;
 	private String department;
 	private String cppLevel;
-	private String hireDate;
+	private Date hireDate;
+
+	public EmployeeListDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public EmployeeListDto(String firstName, String lastName, String userName, String jobType, String department,
+			String cppLevel, Date hireDate) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.jobType = jobType;
+		this.department = department;
+		this.cppLevel = cppLevel;
+		this.hireDate = hireDate;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -58,11 +80,11 @@ public class EmployeeListDto {
 		this.cppLevel = cppLevel;
 	}
 
-	public String getHireDate() {
+	public Date getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(String hireDate) {
+	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
 	}
 

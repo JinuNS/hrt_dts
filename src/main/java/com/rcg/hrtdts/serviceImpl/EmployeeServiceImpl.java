@@ -249,6 +249,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private void saveEmployeeCredentials(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
 
 		UserModel user = new UserModel();
+		
+		Boolean isUserNameExists = userRepository.existsByuserName(requestDto.getUserName());
 
 		Boolean isUserExists = userRepository.existsByEId(hrtModel.geteId());
 		if (isUserExists) {
@@ -457,14 +459,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.getNonActiveUser(id);
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public StatusResponse getEmployeeList() throws Exception {
 
 		StatusResponse response = new StatusResponse();
-		List<Object[]> employeeList = employeeRepository.getEmployeeLists();
-
-//		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preDataDto);
+		List<EmployeeListDto> employeeList = userRepository.getEmployeeLists();
+		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, employeeList);
 		return response;
 	}
 

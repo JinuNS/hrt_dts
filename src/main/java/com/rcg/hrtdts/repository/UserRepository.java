@@ -1,9 +1,12 @@
 package com.rcg.hrtdts.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.rcg.hrtdts.dto.EmployeeListDto;
 import com.rcg.hrtdts.model.UserModel;
 /**
  * 
@@ -22,6 +25,11 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
 	@Query("select u from UserModel u where u.employee.eId = ?1")
 	UserModel findByeId(Long geteId);
+
+	@Query("select new com.rcg.hrtdts.dto.EmployeeListDto( u.employee.firstName,u.employee.lastName,u.userName,u.employee.jobType.value,u.employee.department.departmentName,u.employee.CPPCareerLevel,u.employee.hiredate) from UserModel u")
+	List<EmployeeListDto> getEmployeeLists();
+
+	Boolean existsByuserName(String userName);
 
 
 }
