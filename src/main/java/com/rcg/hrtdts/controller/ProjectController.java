@@ -43,19 +43,21 @@ public class ProjectController {
 		JSONObject projectDetails = new JSONObject();
 		try {		
 			projectDetails = projectservice.createNewProject(projectDto);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, projectDetails);
 			
-			if(projectDetails.get("status").equals(Constants.SUCCESS))
+			
+			/*if(projectDetails.get("status").equals(Constants.SUCCESS))
 				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, projectDetails);
 			else
-				response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, projectDetails);
+				response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, projectDetails);*/
 		}
 		catch (HRTDTSNotFoundException e) {
-			throw new HRTDTSNotFoundException("HRTDTSNotFoundException thrown from createNewProject method");
+			throw new HRTDTSNotFoundException(e.getErrorMessage());
 		}
 		catch (HRTDTSException e) {
-			throw new HRTDTSException("HRTDTSException thrown from createNewProject method");
+			throw new HRTDTSException(e.getErrorMessage());
 		} catch (ParseException e) {
-			throw new HRTDTSDateFormatException("HRTDTSDateFormatException thrown from createNewProject method");
+			throw new HRTDTSDateFormatException(e.getMessage());
 		}
 		return response;
 	}
