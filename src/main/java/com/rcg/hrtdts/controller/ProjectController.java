@@ -6,18 +6,21 @@
 package com.rcg.hrtdts.controller;
 
 import java.text.ParseException;
-import org.json.JSONObject;
+import java.util.Date;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.rcg.hrtdts.dto.ProjectDto;
+import com.rcg.hrtdts.dto.ProjectHrtDto;
 import com.rcg.hrtdts.exception.HRTDTSDateFormatException;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.exception.HRTDTSNotFoundException;
+import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.ProjectService;
 import com.rcg.hrtdts.utility.Constants;
@@ -55,6 +58,24 @@ public class ProjectController {
 		}
 		return response;
 	}
+	
+	@GetMapping(value = { "/listOfprojects" })
+	public StatusResponse projectListDataForAdmin(@RequestBody ProjectHrtDto projectHrtDto) throws Exception {
+		StatusResponse status = new StatusResponse();
+
+		try {
+			status = projectservice.projectListDataForAdmin(projectHrtDto);
+		} catch (HRTDTSNotFoundException e) {
+			throw new HRTDTSNotFoundException(e.getErrorMessage());
+		}
+		catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorMessage());
+		} catch (ParseException e) {
+			throw new HRTDTSDateFormatException(e.getMessage());
+		}
+		return status;
+	}
+
 
 	
 }
