@@ -34,9 +34,10 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping(value = ("/hrt-information"))
+	@PostMapping(value = ("/savehrt-information"))
 	@ResponseBody
 	public StatusResponse setUserHrtInformation(@RequestBody EmployeeRequestDto requestDto){
+		System.out.println("test");
 		StatusResponse response = new StatusResponse();
 		try {		
 			response = employeeService.saveEmployeeInfo(requestDto);
