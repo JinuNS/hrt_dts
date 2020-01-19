@@ -9,13 +9,19 @@ import com.rcg.hrtdts.model.DTSModel;
 
 public interface DTSRepository extends JpaRepository<DTSModel, Long>{
 
-	@Query("SELECT id,dtsNo,empId.eId,projectName.projectId,status,startDate,endDate FROM DTSModel")
-	List<Object[]> getAllDtsInformation();
+	
+	
 
 	@Query("SELECT dts FROM DTSModel dts where dts.dtsNo=?1")
 	DTSModel getDtsInformation(Long dtsNo);
 
 	@Query("SELECT dts FROM DTSModel dts where dts.id=?1")
 	DTSModel getDtsData(Long dtsId);
+
+	@Query("SELECT id,dtsNo,empId.eId,projectName.projectId,status,startDate,endDate FROM DTSModel where empId.eId=?1")
+	List<Object[]> getAllDtsInformation(Long geteId);
+
+	@Query(value="SELECT dtsNo FROM dtsmodel ORDER BY dtsNo DESC LIMIT 1;",nativeQuery=true)
+	Long getDtsNumber();
 
 }

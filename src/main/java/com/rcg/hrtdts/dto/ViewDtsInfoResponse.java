@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ViewDtsInfoResponse {
 
-	private Long id;
+	private Long dtsId;
 	private Long dtsNo;
 	private String status;
 	private String startDate,endDate;
@@ -22,11 +22,12 @@ public class ViewDtsInfoResponse {
 	public void setCppLevel(String cppLevel) {
 		this.cppLevel = cppLevel;
 	}
-	public Long getId() {
-		return id;
+	
+	public Long getDtsId() {
+		return dtsId;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setDtsId(Long dtsId) {
+		this.dtsId = dtsId;
 	}
 	public Long getDtsNo() {
 		return dtsNo;

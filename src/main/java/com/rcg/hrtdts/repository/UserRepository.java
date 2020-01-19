@@ -36,12 +36,13 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 	@Query("SELECT e FROM UserModel e WHERE e.employee.eId = ?1")
 	UserModel getNonActiveUser(Long id);
 
-	@Query("select new com.rcg.hrtdts.dto.EmployeeListDto( u.employee.firstName,u.employee.lastName,u.userName,u.employee.jobType.value,u.employee.department.departmentName,u.employee.CPPCareerLevel,u.employee.hiredate) from UserModel u")
-	List<EmployeeListDto> getEmployeeLists();
+//	@Query("select new com.rcg.hrtdts.dto.EmployeeListDto(u.employee.eId,u.employee.firstName,u.employee.lastName,u.userName,u.employee.jobType.value,u.employee.department.departmentName,u.employee.CPPCareerLevel,u.employee.hiredate) from UserModel u")
+	@Query(value = "select e.eId,u.userName,e.firstName,e.lastName,j.value,d.departmentName,e.hiredate,e.CPPCareerLevel from usermodel u join employeemodel e on u.employee_eId = e.eId left join jobtypemodel j on e.jobType_id = j.id join departmentmodel d on d.departmentId = e.department_departmentId",nativeQuery = true)
+	List<Object[]> getEmployeeLists();
 
 	Boolean existsByuserName(String userName);
 
-	@Query("select u.userId,u.employee.firstName,u.employee.lastName from UserModel u WHERE u.role.roleName = 'Approver' ")
+	@Query("select u.userId,u.employee.firstName,u.employee.lastName from UserModel u WHERE u.role.roleId = 4 ")
 	ArrayList<Object[]> getAllProjectManagers();
 
 

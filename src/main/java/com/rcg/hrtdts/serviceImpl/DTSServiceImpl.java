@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rcg.hrtdts.dto.BillingTypeResponse;
 import com.rcg.hrtdts.dto.ClientResponse;
 import com.rcg.hrtdts.dto.DtsRequestBody;
+import com.rcg.hrtdts.dto.GetDtsDataResponse;
 import com.rcg.hrtdts.dto.PreProcessingDataResponse;
 import com.rcg.hrtdts.dto.ProjectManagerResponse;
 import com.rcg.hrtdts.dto.ProjectResponse;
@@ -109,13 +110,15 @@ public class DTSServiceImpl implements DTSService {
 		}
 
 		ArrayList<Object[]> projectmanagermodel = userRepository.getAllProjectManagers();
-
+		
 		if (!projectmanagermodel.isEmpty()) {
 			for (Object[] obj : projectmanagermodel) {
 
 				ProjectManagerResponse managerResponse = new ProjectManagerResponse();
 				managerResponse.setProjectManagerId(Long.parseLong(obj[0].toString()));
-				managerResponse.setProjectManager(obj[1].toString() + " " + obj[2].toString());
+				String firstname = obj[1] == null ? null : String.valueOf(obj[1]);
+				String lastname = obj[2] == null ? null : String.valueOf(obj[2]);
+				managerResponse.setProjectManager(firstname + " " + lastname);
 				projectManagervalue.add(managerResponse);
 
 			}
@@ -168,8 +171,14 @@ public class DTSServiceImpl implements DTSService {
 		StatusResponse response = new StatusResponse();
 
 		DTSModel dtsmodel = new DTSModel();
+		Long dtsnumber=null;
+		if (requestBody.getDtsNo() == null) {
+			dtsnumber=dtsRepository.getDtsNumber();
+			dtsnumber=dtsnumber+1;
+		} else
+			dtsnumber = requestBody.getDtsNo();
 
-		DTSModel dtsdata = dtsRepository.getDtsInformation(requestBody.getDtsNo());
+		DTSModel dtsdata = dtsRepository.getDtsInformation(dtsnumber);
 		if (dtsdata != null) {
 			dtsmodel = dtsdata;
 		}
@@ -177,7 +186,7 @@ public class DTSServiceImpl implements DTSService {
 		EmployeeModel empModel = employeeRepository.getNonActiveUser(requestBody.getEmpId());
 		dtsmodel.setEmpId(empModel);
 
-		dtsmodel.setDtsNo(requestBody.getDtsNo());
+		dtsmodel.setDtsNo(dtsnumber);
 
 		ClientModel client = clientRepository.getClientData(requestBody.getClientName());
 		dtsmodel.setClientName(client);
@@ -215,49 +224,74 @@ public class DTSServiceImpl implements DTSService {
 		StatusResponse response = new StatusResponse();
 		List<ViewDtsInfoResponse> dtsResponse = new ArrayList<ViewDtsInfoResponse>();
 
-		List<Object[]> dtsList = dtsRepository.getAllDtsInformation();
-		if (!dtsList.isEmpty()) {
-			for (Object[] obj : dtsList) {
-				ViewDtsInfoResponse dtsData = new ViewDtsInfoResponse();
-				Long employeeId = Long.parseLong(obj[2].toString());
+		List<EmployeeModel> employeeList = employeeRepository.findAll();
 
-				EmployeeModel employeedetail = employeeRepository.getNonActiveUser(employeeId);
-				JobTypeModel jobtype = jobTypeRepository.findById(employeedetail.getJobType().getId()).orElse(null);
+		for (EmployeeModel employeedetail : employeeList) {
 
-				dtsData.setDtsNo(Long.parseLong(obj[0].toString()));
-				dtsData.setId(Long.parseLong(obj[0].toString()));
-				dtsData.setEmployeeId(employeeId);
-				dtsData.setEmployeeName(employeedetail.getFirstName() + " " + employeedetail.getLastName());
-				dtsData.setStatus(obj[4].toString());
+			List<Object[]> dtsList = dtsRepository.getAllDtsInformation(employeedetail.geteId());
+			if (!dtsList.isEmpty()) {
+				for (Object[] obj : dtsList) {
 
-				Date startDatee = sdf.parse(obj[5].toString());
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(startDatee);
+					ViewDtsInfoResponse dtsData = new ViewDtsInfoResponse();
+					dtsData.setEmployeeId(employeedetail.geteId());
+					dtsData.setEmployeeName(employeedetail.getFirstName() + " " + employeedetail.getLastName());
+					dtsData.setCppLevel(employeedetail.getCPPCareerLevel());
+					dtsData.setRcgMail(employeedetail.getRcgEmail());
+					if (employeedetail.getJobType() != null) {
+						JobTypeModel jobtype = jobTypeRepository.findById(employeedetail.getJobType().getId())
+								.orElse(null);
+						dtsData.setJobType(jobtype.getValue());
+					} else
+						dtsData.setJobType(null);
+					dtsData.setDtsNo(Long.parseLong(obj[1].toString()));
+					dtsData.setDtsId(Long.parseLong(obj[0].toString()));
+					dtsData.setStatus(obj[4].toString());
+					Date startDatee = sdf.parse(obj[5].toString());
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(startDatee);
+					String enddate = obj[6] == null ? null : String.valueOf(obj[6]);
 
-				String enddate = obj[6] == null ? null : String.valueOf(obj[6]);
+					if (enddate == null) {
+						dtsData.setEndDate("");
+					} else {
+						Date enddatee = sdf.parse(enddate);
+						Calendar calender = Calendar.getInstance();
+						calender.setTime(enddatee);
+						dtsData.setEndDate(String.valueOf(calender.get(Calendar.YEAR) + "-"
+								+ (calender.get(Calendar.MONTH) + 1) + "-" + calender.get(Calendar.DATE)));
 
-				if (enddate == null) {
-					dtsData.setEndDate("");
-				} else {
-					Date enddatee = sdf.parse(enddate);
-					Calendar calender = Calendar.getInstance();
-					calender.setTime(enddatee);
-					dtsData.setEndDate(String.valueOf(calender.get(Calendar.YEAR) + "-"
-							+ (calender.get(Calendar.MONTH) + 1) + "-" + calender.get(Calendar.DATE)));
+					}
+					dtsData.setStartDate(String.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1)
+							+ "-" + cal.get(Calendar.DATE)));
 
+					Long projectid = obj[3] == null ? null : Long.parseLong(obj[3].toString());
+					ProjectModel project = new ProjectModel();
+					if (projectid != null)
+						project = projectRepository.getProjectdata(projectid);
+					dtsData.setProjectName(project.getProjectId());
+					dtsResponse.add(dtsData);
 				}
-				dtsData.setCppLevel(employeedetail.getCPPCareerLevel());
-				dtsData.setStartDate(String.valueOf(
-						cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DATE)));
 
-				Long projectid = obj[3] == null ? null : Long.parseLong(obj[3].toString());
-				ProjectModel project = new ProjectModel();
-				if (projectid != null)
-					project = projectRepository.getProjectdata(projectid);
-				dtsData.setProjectName(project.getProjectId());
-				dtsData.setJobType(jobtype.getValue());
+			} else {
+				ViewDtsInfoResponse dtsData = new ViewDtsInfoResponse();
+				dtsData.setEmployeeId(employeedetail.geteId());
+				dtsData.setEmployeeName(employeedetail.getFirstName() + " " + employeedetail.getLastName());
+				dtsData.setCppLevel(employeedetail.getCPPCareerLevel());
 				dtsData.setRcgMail(employeedetail.getRcgEmail());
+				if (employeedetail.getJobType() != null) {
+					JobTypeModel jobtype = jobTypeRepository.findById(employeedetail.getJobType().getId()).orElse(null);
+					dtsData.setJobType(jobtype.getValue());
+				} else
+					dtsData.setJobType(null);
+
+				dtsData.setDtsNo(null);
+				dtsData.setDtsId(null);
+				dtsData.setStatus(Constants.DTS_STATUS_NO_RECORD);
+				dtsData.setEndDate("");
+				dtsData.setStartDate("");
+				dtsData.setProjectName(null);
 				dtsResponse.add(dtsData);
+
 			}
 		}
 
@@ -289,7 +323,33 @@ public class DTSServiceImpl implements DTSService {
 	public StatusResponse getDTSInformation(Long dtsId) {
 		DTSModel dtsData = dtsRepository.getDtsData(dtsId);
 
-		StatusResponse response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, dtsData);
+		GetDtsDataResponse dataResponse = new GetDtsDataResponse();
+		dataResponse.setId(dtsData.getId());
+		if (!dtsData.getEmpId().geteId().equals(null))
+			dataResponse.setEmpId(dtsData.getEmpId().geteId());
+		dataResponse.setEmployeeName(dtsData.getEmpId().getFirstName() + " " + dtsData.getEmpId().getLastName());
+		dataResponse.setDtsNo(dtsData.getDtsNo());
+		if (!dtsData.getClientName().getClientId().equals(null))
+			dataResponse.setClientName(dtsData.getClientName().getClientId());
+		if (!dtsData.getProjectName().equals(null))
+			dataResponse.setProjectName(dtsData.getProjectName().getProjectId());
+		dataResponse.setAdditionalExpense(dtsData.getAdditionalExpense());
+		if (!dtsData.getBillingType().getBillingTypeId().equals(null))
+			dataResponse.setBillingTypeId(dtsData.getBillingType().getBillingTypeId());
+		dataResponse.setBillRateCurrencyType(dtsData.getBillRateCurrencyType());
+		dataResponse.setEndDate(dtsData.getEndDate());
+		dataResponse.setStartDate(dtsData.getStartDate());
+		dataResponse.setExpenseCurrencyType(dtsData.getExpenseCurrencyType());
+		if (!dtsData.getRegion().getId().equals(null))
+			dataResponse.setRegionId(dtsData.getRegion().getId());
+		if (!dtsData.getRevenueType().getRevenueTypeId().equals(null))
+			dataResponse.setRevenueType(dtsData.getRevenueType().getRevenueTypeId());
+		dataResponse.setTeamLead(dtsData.getTeamLead());
+		dataResponse.setProjectManager(dtsData.getProjectManager());
+		dataResponse.setShift(dtsData.getShift());
+		dataResponse.setWorkLocation(dtsData.getWorkLocation());
+		dataResponse.setHourlyBillRate(dtsData.getHourlyBillRate());
+		StatusResponse response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, dataResponse);
 		return response;
 	}
 

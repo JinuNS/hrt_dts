@@ -2,6 +2,7 @@ package com.rcg.hrtdts.serviceImpl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -254,9 +255,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		UserModel user = new UserModel();
 		
 		Boolean isUserNameExists = userRepository.existsByuserName(requestDto.getUserName());
-		if(isUserNameExists) {
-			throw new HRTDTSException("Username alreary extst.");
-		}
+//		if(isUserNameExists) {
+//			throw new HRTDTSException("Username alreary extst.");
+//		}
 
 		Boolean isUserExists = userRepository.existsByEId(hrtModel.geteId());
 		if (isUserExists) {
@@ -398,18 +399,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 			responseDto.setJobType((hrtModel.getJobType() != null)?hrtModel.getJobType().getValue():null);
 			responseDto.setMaritalStatus((hrtModel.getMaritalStatus() != null)?hrtModel.getMaritalStatus().getValue():null);
 			responseDto.setRace((hrtModel.getRace() != null)?hrtModel.getRace().getValue():null);
-			responseDto.setDepartment((hrtModel.getDepartment() != null)?hrtModel.getDepartment().getDepartmentName():null);
-			responseDto.setRegion((hrtModel.getRegion() != null)?hrtModel.getRegion().getRegionName():null);
-			responseDto.setTimeZone((hrtModel.getTimeZone() != null)?hrtModel.getTimeZone().getTimezoneName():null);
+			responseDto.setDepartment((hrtModel.getDepartment() != null)?hrtModel.getDepartment().getDepartmentId():null);
+			responseDto.setRegion((hrtModel.getRegion() != null)?hrtModel.getRegion().getId():null);
+			responseDto.setTimeZone((hrtModel.getTimeZone() != null)?hrtModel.getTimeZone().getId():null);
 			responseDto.setTerminationDate(hrtModel.getTerminationDate());
 			responseDto.setBloodGroup(hrtModel.getBloodGroup());
 			responseDto.setQualification(hrtModel.getQualification());
 			responseDto.setHomeAddress(hrtModel.getHomeAddress());
 			responseDto.setRecruiter(hrtModel.getRecruiter());
 			responseDto.setTaxId(hrtModel.getTaxId());
-			responseDto.setTerminationType((hrtModel.getTerminationType() != null)?hrtModel.getTerminationType().getValue():null);
-			responseDto.setEmployeeContractors((hrtModel.getEmployeeContractors() != null)?hrtModel.getEmployeeContractors().getContractorName():null);
-			responseDto.setEmployeeStatus((hrtModel.getEmployeeStatus() != null)?hrtModel.getEmployeeStatus().getValue():null);
+			responseDto.setTerminationType((hrtModel.getTerminationType() != null)?hrtModel.getTerminationType().getId():null);
+			responseDto.setEmployeeContractors((hrtModel.getEmployeeContractors() != null)?hrtModel.getEmployeeContractors().getContractorId():null);
+			responseDto.setEmployeeStatus((hrtModel.getEmployeeStatus() != null)?hrtModel.getEmployeeStatus().getId():null);
 			responseDto.setAnnualSalary(hrtModel.getAnnualSalary());
 			responseDto.setCompanyCode(hrtModel.getCompanyCode());
 			if(user != null) {
@@ -421,13 +422,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 			List<UserSkillResponseDto> skillDtoList = new ArrayList<UserSkillResponseDto>();
 			List<EmployeeTechnologyModel> skilsList = userTechnologyRepository.findByEId(hrtModel.geteId());
-			UserSkillResponseDto skillDto = new UserSkillResponseDto();
 			if(skilsList != null) {
-				skilsList.forEach((empSkills) -> { if(empSkills != null) {
+			        skilsList.forEach((empSkills) -> { if(empSkills != null) {
+					UserSkillResponseDto skillDto = new UserSkillResponseDto();
 					skillDto.setLevel(empSkills.getSkillLevel());
 					skillDto.setSkill((empSkills.getSkills() != null)?empSkills.getSkills().getSkill():null);
 					skillDto.setExperiance(empSkills.getExperience());
 					skillDto.setComment(empSkills.getComment());
+					skillDto.setSkillId(empSkills.getSkills().getId());
 					skillDtoList.add(skillDto);
 				}
 					
@@ -440,6 +442,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			if(empReferral != null) {
 				responseDto.setType((empReferral.getReferralsModel() != null)?empReferral.getReferralsModel().getType():null);
 				responseDto.setRecipient((empReferral.getReferralsModel() != null)?empReferral.getReferralsModel().getRecipient():null);
+				responseDto.setRecipientId((empReferral.getReferralsModel() != null)?empReferral.getReferralsModel().getId():null);
 				responseDto.setRefCode((empReferral.getReferralsModel() != null)?empReferral.getReferralsModel().getRefCode():null);
 				responseDto.setRefLimit(empReferral.getRefLimit());
 				responseDto.setStartDate(empReferral.getStartDate());
@@ -465,9 +468,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public StatusResponse getEmployeeList() throws Exception {
 
+		List<EmployeeListDto> responseList = new ArrayList<EmployeeListDto>();
 		StatusResponse response = new StatusResponse();
-		List<EmployeeListDto> employeeList = userRepository.getEmployeeLists();
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, employeeList);
+		List<Object[]> employeeList = userRepository.getEmployeeLists();
+		employeeList.forEach(result -> {
+		   EmployeeListDto responseDto = new EmployeeListDto();
+		   responseDto.seteId((result[0] != null)?Long.parseLong(result[0].toString()):null);
+		   responseDto.setFirstName((result[2] != null)?(String) result[2]:null);
+		   responseDto.setLastName((result[3] != null)?(String) result[3]:null);
+		   responseDto.setJobType((result[4] != null)?(String) result[4]:null);
+		   responseDto.setUserName((result[1] != null)?(String) result[1]:null);
+		   responseDto.setDepartment((result[5] != null)?(String) result[5]:null);
+		   responseDto.setHireDate((result[3] != null)?(Date) result[6]:null);
+		   responseDto.setCppLevel((result[3] != null)?(String) result[7]:null);
+		   responseList.add(responseDto);});	
+		
+		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseList);
 		return response;
 	}
 

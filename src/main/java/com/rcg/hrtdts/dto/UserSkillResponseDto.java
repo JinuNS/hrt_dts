@@ -9,6 +9,7 @@ package com.rcg.hrtdts.dto;
  **/
 public class UserSkillResponseDto {
 
+	private Long skillId;
 	private String skill;
 	private Integer level;
 	private Double experiance;
@@ -44,6 +45,14 @@ public class UserSkillResponseDto {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public Long getSkillId() {
+		return skillId;
+	}
+
+	public void setSkillId(Long skillId) {
+		this.skillId = skillId;
 	}
 
 	
