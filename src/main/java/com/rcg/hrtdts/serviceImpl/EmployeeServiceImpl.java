@@ -330,6 +330,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<MaritalStatusModel> maritalStatus = maritalStatusRepository.findAll();
 		List<EmployeeTypeModel> employeeType = employeeTypeRepository.findAll();
 		List<RaceModel> race = raceRepository.findAll();
+		List<RoleModel> role = roleRepository.findAll();
 		
 		preDataDto.setReferrals(referrals);
 		preDataDto.setSkills(skills);
@@ -342,6 +343,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		preDataDto.setMaritalStatus(maritalStatus);
 		preDataDto.setEmployeeType(employeeType);
 		preDataDto.setRace(race);
+		preDataDto.setRole(role);
 
 		return preDataDto;
 	}
