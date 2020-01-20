@@ -27,6 +27,17 @@ public class DtsRequestBody {
 	private String shift;
 	private String billRateCurrencyType;
 	private String expenseCurrencyType;
+	private String status;
+	
+
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public Long getEmpId() {
 		return empId;
