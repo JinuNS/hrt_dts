@@ -325,17 +325,18 @@ public class ProjectServiceImpl implements ProjectService {
 		List<DepartmentModel> department = ((JpaRepository<DepartmentModel, Long>) departmentRepository).findAll();
 		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
 		List<RoleModel> rolelist = roleRepository.findAll();
-		JSONObject clientsobject = new JSONObject();
-		JSONObject projectlistobject = new JSONObject();
-		JSONObject contractobject = new JSONObject();
-		JSONObject regionobject = new JSONObject();
-		JSONObject timezoneobject = new JSONObject();
-		JSONObject user_ownerobject = new JSONObject();
-		JSONObject onsite_leadobject = new JSONObject();
-		JSONObject departmentobject = new JSONObject();
-		JSONObject employeeContractorsobject = new JSONObject();
-		JSONObject rolelistobject = new JSONObject();
-		ArrayList<JSONObject> listofObjects = new ArrayList<JSONObject>();
+		JSONObject responseData = new JSONObject();
+		
+		/*
+		 * JSONObject clientsobject = new JSONObject(); JSONObject projectlistobject =
+		 * new JSONObject(); JSONObject contractobject = new JSONObject(); JSONObject
+		 * regionobject = new JSONObject(); JSONObject timezoneobject = new
+		 * JSONObject(); JSONObject user_ownerobject = new JSONObject(); JSONObject
+		 * onsite_leadobject = new JSONObject(); JSONObject departmentobject = new
+		 * JSONObject(); JSONObject employeeContractorsobject = new JSONObject();
+		 * JSONObject rolelistobject = new JSONObject(); ArrayList<JSONObject>
+		 * listofObjects = new ArrayList<JSONObject>();
+		 */
 		ArrayList jsonArrayProjectsClient = new ArrayList();
 		ArrayList jsonArrayProjectsList = new ArrayList();
 		ArrayList jsonArrayProjectsContractType = new ArrayList();
@@ -348,7 +349,7 @@ public class ProjectServiceImpl implements ProjectService {
 		ArrayList jsonArrayProjectsRole = new ArrayList();
 
 		if (clients.isEmpty()) {
-			clientsobject.put("clientList", jsonArrayProjectsClient);
+			responseData.put("clientList", jsonArrayProjectsClient);
 		} else {
 			for (ClientModel client : clients) {
 				JSONObject clientjson = new JSONObject();
@@ -356,11 +357,11 @@ public class ProjectServiceImpl implements ProjectService {
 				clientjson.put("clientName", client.getClientName());
 				jsonArrayProjectsClient.add(clientjson);
 			}
-			clientsobject.put("clientList", jsonArrayProjectsClient);
+			responseData.put("clientList", jsonArrayProjectsClient);
 		}
 
 		if (projectlist.isEmpty()) {
-			projectlistobject.put("projectList", jsonArrayProjectsList);
+			responseData.put("projectList", jsonArrayProjectsList);
 		} else {
 			for (ProjectModel project : projectlist) {
 				JSONObject projectjson = new JSONObject();
@@ -368,11 +369,11 @@ public class ProjectServiceImpl implements ProjectService {
 				projectjson.put("projectName", project.getProjectName());
 				jsonArrayProjectsList.add(projectjson);
 			}
-			projectlistobject.put("projectList", jsonArrayProjectsList);
+			responseData.put("projectList", jsonArrayProjectsList);
 		}
 
 		if (contract.isEmpty()) {
-			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
+			responseData.put("contractTypeList", jsonArrayProjectsContractType);
 		} else {
 			for (ContractModel contracts : contract) {
 				JSONObject contractjson = new JSONObject();
@@ -380,10 +381,10 @@ public class ProjectServiceImpl implements ProjectService {
 				contractjson.put("contractTypeName", contracts.getContractTypeName());
 				jsonArrayProjectsContractType.add(contractjson);
 			}
-			contractobject.put("contractTypeList", jsonArrayProjectsContractType);
+			responseData.put("contractTypeList", jsonArrayProjectsContractType);
 		}
 		if (region.isEmpty()) {
-			regionobject.put("regionList", jsonArrayProjectsRegion);
+			responseData.put("regionList", jsonArrayProjectsRegion);
 		} else {
 			for (RegionModel regions : region) {
 				JSONObject regionjson = new JSONObject();
@@ -392,10 +393,10 @@ public class ProjectServiceImpl implements ProjectService {
 				regionjson.put("regionCode", regions.getRegionCode());
 				jsonArrayProjectsRegion.add(regionjson);
 			}
-			regionobject.put("regionList", jsonArrayProjectsRegion);
+			responseData.put("regionList", jsonArrayProjectsRegion);
 		}
 		if (timezone.isEmpty()) {
-			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
+			responseData.put("timezoneList", jsonArrayProjectsTimezone);
 		} else {
 			for (TimeZoneModel timeZones : timezone) {
 				JSONObject timezonejson = new JSONObject();
@@ -404,10 +405,10 @@ public class ProjectServiceImpl implements ProjectService {
 				timezonejson.put("timezoneCode", timeZones.getTimezoneName());
 				jsonArrayProjectsTimezone.add(timezonejson);
 			}
-			timezoneobject.put("timezoneList", jsonArrayProjectsTimezone);
+			responseData.put("timezoneList", jsonArrayProjectsTimezone);
 		}
 		if (user_owner.isEmpty()) {
-			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
+			responseData.put("userownerList", jsonArrayProjectsUserOwner);
 		} else {
 			for (UserModel userOwners : user_owner) {
 				JSONObject userOwnersjson = new JSONObject();
@@ -418,10 +419,10 @@ public class ProjectServiceImpl implements ProjectService {
 				userOwnersjson.put("status", userOwners.getIsActive());
 				jsonArrayProjectsUserOwner.add(userOwnersjson);
 			}
-			user_ownerobject.put("userownerList", jsonArrayProjectsUserOwner);
+			responseData.put("userownerList", jsonArrayProjectsUserOwner);
 		}
 		if (onsite_lead.isEmpty()) {
-			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
+			responseData.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
 		} else {
 			for (UserModel onsiteLeads : onsite_lead) {
 				JSONObject onsiteLeadsjson = new JSONObject();
@@ -432,10 +433,10 @@ public class ProjectServiceImpl implements ProjectService {
 				onsiteLeadsjson.put("status", onsiteLeads.getIsActive());
 				jsonArrayProjectsOnsiteLead.add(onsiteLeadsjson);
 			}
-			onsite_leadobject.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
+			responseData.put("onsiteleadList", jsonArrayProjectsOnsiteLead);
 		}
 		if (department.isEmpty()) {
-			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
+			responseData.put("departmentList", jsonArrayProjectsDepartment);
 		} else {
 			for (DepartmentModel dept : department) {
 				JSONObject departmentjson = new JSONObject();
@@ -443,10 +444,10 @@ public class ProjectServiceImpl implements ProjectService {
 				departmentjson.put("department", dept.getDepartmentName());
 				jsonArrayProjectsDepartment.add(departmentjson);
 			}
-			departmentobject.put("departmentList", jsonArrayProjectsDepartment);
+			responseData.put("departmentList", jsonArrayProjectsDepartment);
 		}
 		if (employeeContractors.isEmpty()) {
-			employeeContractorsobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
+			responseData.put("contractorList", jsonArrayProjectsEmployeeContractors);
 		} else {
 			for (EmployeeContractorsModel contractors : employeeContractors) {
 				JSONObject contractorsjson = new JSONObject();
@@ -454,10 +455,10 @@ public class ProjectServiceImpl implements ProjectService {
 				contractorsjson.put("contractorName", contractors.getContractorName());
 				jsonArrayProjectsEmployeeContractors.add(contractorsjson);
 			}
-			employeeContractorsobject.put("contractorList", jsonArrayProjectsEmployeeContractors);
+			responseData.put("contractorList", jsonArrayProjectsEmployeeContractors);
 		}
 		if (rolelist.isEmpty()) {
-			rolelistobject.put("roleList", jsonArrayProjectsRole);
+			responseData.put("roleList", jsonArrayProjectsRole);
 		} else {
 			for (RoleModel role : rolelist) {
 				JSONObject rolejson = new JSONObject();
@@ -465,20 +466,20 @@ public class ProjectServiceImpl implements ProjectService {
 				rolejson.put("roleName", role.getRoleName());
 				jsonArrayProjectsRole.add(rolejson);
 			}
-			rolelistobject.put("roleList", jsonArrayProjectsRole);
+			responseData.put("roleList", jsonArrayProjectsRole);
 		}
-		listofObjects.add(clientsobject);
-		listofObjects.add(projectlistobject);
-		listofObjects.add(contractobject);
-		listofObjects.add(regionobject);
-		listofObjects.add(timezoneobject);
-		listofObjects.add(user_ownerobject);
-		listofObjects.add(onsite_leadobject);
-		listofObjects.add(departmentobject);
-		listofObjects.add(employeeContractorsobject);
-		listofObjects.add(rolelistobject);
+//		listofObjects.add(clientsobject);
+//		listofObjects.add(projectlistobject);
+//		listofObjects.add(contractobject);
+//		listofObjects.add(regionobject);
+//		listofObjects.add(timezoneobject);
+//		listofObjects.add(user_ownerobject);
+//		listofObjects.add(onsite_leadobject);
+//		listofObjects.add(departmentobject);
+//		listofObjects.add(employeeContractorsobject);
+//		listofObjects.add(rolelistobject);
 
-		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, listofObjects);
+		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseData);
 		return status;
 	}
 	public ProjectModel saveProjectRecord(ProjectModel projectmodel) {

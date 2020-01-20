@@ -20,6 +20,8 @@ public interface ProjectService {
 	JSONObject updateProject(ProjectDto projectDto) throws ParseException,HRTDTSException;
 	
 	StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception;
+
+	StatusResponse viewAllProjects(ProjectDto projectHrtDto);
 }
 
 

@@ -77,12 +77,12 @@ public class ProjectController {
 		return response;
 	}
 	
-	@GetMapping(value = { "/listOfprojects" })
-	public StatusResponse projectListDataForAdmin(@RequestBody ProjectDto projectDto) throws Exception {
+	@GetMapping(value = { "/listOfProjects" })
+	public StatusResponse projectListDataForAdmin() throws Exception {
 		StatusResponse status = new StatusResponse();
 
 		try {
-			status = projectservice.projectListDataForAdmin(projectDto);
+			status = projectservice.projectListDataForAdmin(new ProjectDto());
 		} catch (HRTDTSNotFoundException e) {
 			throw new HRTDTSNotFoundException(e.getErrorMessage());
 		}
@@ -108,7 +108,6 @@ public class ProjectController {
 		}
 		return status;
 	}
-
 
 
 	

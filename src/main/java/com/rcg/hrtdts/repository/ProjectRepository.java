@@ -21,4 +21,10 @@ public interface ProjectRepository extends JpaRepository<ProjectModel, Long>{
 
 	@Query("SELECT count(p) FROM ProjectModel p WHERE p.projectName=?1")
 	int findProject(String getprojectName);
+	
+	@Query(value = "SELECT project FROM ProjectModel project where project.parentProjectId !=0 order by project.projectName ASC")
+	ArrayList<ProjectModel> getAllNonParentProjects();
+	
+	@Query("SELECT s.projectName FROM ProjectModel s where s.projectId=?1")
+	String getProjectName(Long projectId);
 }
