@@ -26,7 +26,7 @@ public class EmployeeRequestDto {
 	private String lastName;
 	private Long employeeNo;
 	private String personalEmail;
-	private Date hiredate;
+	private String hiredate;
 	private String employeeType;
 	private String division;
 	private String assignmentBranch;
@@ -49,7 +49,7 @@ public class EmployeeRequestDto {
 	private String workCity;
 	private String workState;
 	private Integer hoursWorkedPerDay;
-	private Date nextReviewDate;
+	private String nextReviewDate;
 	private String comments;
 	private String companyName;
 	private Boolean isCompanyIsAllianceMember;
@@ -63,15 +63,15 @@ public class EmployeeRequestDto {
 	private String jobType;
 	private String maritalStatus;
 	private String race;
-	private Date dob;
+	private String dob;
 	private String hireCodes;
 	private String homeBranch;
 	private String CPPCareerLevel;
 	private List<UserSkillRequestDto> userSkills;
 	private Long referralId;
 	private Long RefLimit;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private String notes;
 	private Double ratePerDay;
 	private Double ratePerHour;
@@ -81,7 +81,7 @@ public class EmployeeRequestDto {
 	private Long regionId;
 
 	private Long timeZoneId;
-	private Date terminationDate;
+	private String terminationDate;
 	private String bloodGroup;
 	private String qualification;
 	private String homeAddress;
@@ -143,14 +143,6 @@ public class EmployeeRequestDto {
 
 	public void setPersonalEmail(String personalEmail) {
 		this.personalEmail = personalEmail;
-	}
-
-	public Date getHiredate() {
-		return hiredate;
-	}
-
-	public void setHiredate(Date hiredate) {
-		this.hiredate = hiredate;
 	}
 
 	public String getEmployeeType() {
@@ -313,14 +305,6 @@ public class EmployeeRequestDto {
 		this.hoursWorkedPerDay = hoursWorkedPerDay;
 	}
 
-	public Date getNextReviewDate() {
-		return nextReviewDate;
-	}
-
-	public void setNextReviewDate(Date nextReviewDate) {
-		this.nextReviewDate = nextReviewDate;
-	}
-
 	public String getComments() {
 		return comments;
 	}
@@ -425,14 +409,6 @@ public class EmployeeRequestDto {
 		this.race = race;
 	}
 
-	public Date getDob() {
-		return dob;
-	}
-
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-
 	public String getHireCodes() {
 		return hireCodes;
 	}
@@ -481,22 +457,6 @@ public class EmployeeRequestDto {
 		RefLimit = refLimit;
 	}
 
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
 	public String getNotes() {
 		return notes;
 	}
@@ -535,14 +495,6 @@ public class EmployeeRequestDto {
 
 	public void setRegionId(Long regionId) {
 		this.regionId = regionId;
-	}
-
-	public Date getTerminationDate() {
-		return terminationDate;
-	}
-
-	public void setTerminationDate(Date terminationDate) {
-		this.terminationDate = terminationDate;
 	}
 
 	public String getBloodGroup() {
@@ -673,4 +625,53 @@ public class EmployeeRequestDto {
 		this.streetAddress = streetAddress;
 	}
 
+	public String getHiredate() {
+		return hiredate;
+	}
+
+	public void setHiredate(String hiredate) {
+		this.hiredate = hiredate;
+	}
+
+	public String getNextReviewDate() {
+		return nextReviewDate;
+	}
+
+	public void setNextReviewDate(String nextReviewDate) {
+		this.nextReviewDate = nextReviewDate;
+	}
+
+	public String getDob() {
+		return dob;
+	}
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getTerminationDate() {
+		return terminationDate;
+	}
+
+	public void setTerminationDate(String terminationDate) {
+		this.terminationDate = terminationDate;
+	}
+
+	
 }

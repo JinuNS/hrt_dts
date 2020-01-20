@@ -1,5 +1,6 @@
 package com.rcg.hrtdts.serviceImpl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.rcg.hrtdts.dto.EmployeeRequestDto;
 import com.rcg.hrtdts.dto.EmployeeResponseDto;
 import com.rcg.hrtdts.dto.UserSkillRequestDto;
 import com.rcg.hrtdts.dto.UserSkillResponseDto;
+import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.EmployeeTypeModel;
 import com.rcg.hrtdts.model.GenderModel;
 import com.rcg.hrtdts.model.DepartmentModel;
@@ -53,6 +55,7 @@ import com.rcg.hrtdts.repository.EmployeeContractorsRepository;
 import com.rcg.hrtdts.repository.EmployeeReferralsRepository;
 import com.rcg.hrtdts.service.EmployeeService;
 import com.rcg.hrtdts.utility.Constants;
+import com.rcg.hrtdts.utility.StringToDateConverter;
 
 /**
  * 
@@ -121,8 +124,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@Transactional
-	public StatusResponse saveEmployeeInfo(EmployeeRequestDto requestDto) throws Exception {
-		StatusResponse response = new StatusResponse();
+	public String saveEmployeeInfo(EmployeeRequestDto requestDto) throws HRTDTSException,Exception {
+		String response;
 		EmployeeModel hrtModel = new EmployeeModel();
 		if (requestDto.geteId() != null) {
 			hrtModel = employeeRepository.findById(requestDto.geteId()).orElse(new EmployeeModel());
@@ -132,7 +135,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		hrtModel.setLastName(requestDto.getLastName());
 		hrtModel.setEmployeeNo(requestDto.getEmployeeNo());
 		hrtModel.setPersonalEmail(requestDto.getPersonalEmail());
-		hrtModel.setHiredate(requestDto.getHiredate());
+		hrtModel.setHiredate((requestDto.getHiredate() != null && !requestDto.getHiredate(). isEmpty())?StringToDateConverter.convertStringToDate(requestDto.getHiredate()):null);
 		hrtModel.setDivision(requestDto.getDivision());
 		hrtModel.setAssignmentBranch(requestDto.getAssignmentBranch());
 		hrtModel.setTypeofAction(requestDto.getTypeofAction());
@@ -153,7 +156,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		hrtModel.setWorkCity(requestDto.getWorkCity());
 		hrtModel.setWorkState(requestDto.getWorkState());
 		hrtModel.setHoursWorkedPerDay(requestDto.getHoursWorkedPerDay());
-		hrtModel.setNextReviewDate(requestDto.getNextReviewDate());
+		hrtModel.setNextReviewDate((requestDto.getNextReviewDate() != null && !requestDto.getNextReviewDate().isEmpty())?StringToDateConverter.convertStringToDate(requestDto.getNextReviewDate()):null);
 		hrtModel.setComments(requestDto.getComments());
 		hrtModel.setCompanyName(requestDto.getCompanyName());
 		hrtModel.setIsCompanyIsAllianceMember(requestDto.getIsCompanyIsAllianceMember());
@@ -163,11 +166,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		hrtModel.setIsHiretoBeach(requestDto.getIsHiretoBeach());
 		hrtModel.setIsRehiredEmployee(requestDto.getIsRehiredEmployee());
 		hrtModel.setSocialSecurityNumber(requestDto.getSocialSecurityNumber());
-		hrtModel.setDob(requestDto.getDob());
+		hrtModel.setDob(((requestDto.getDob() != null && !requestDto.getDob().isEmpty()))?StringToDateConverter.convertStringToDate(requestDto.getDob()):null);
 		hrtModel.setHireCodes(requestDto.getHireCodes());
 		hrtModel.setHomeBranch(requestDto.getHomeBranch());
 		hrtModel.setCPPCareerLevel(requestDto.getCPPCareerLevel());
-		hrtModel.setTerminationDate(requestDto.getTerminationDate());
+		hrtModel.setTerminationDate(((requestDto.getTerminationDate() != null && !requestDto.getTerminationDate().isEmpty()))?StringToDateConverter.convertStringToDate(requestDto.getTerminationDate()):null);
 		hrtModel.setBloodGroup(requestDto.getBloodGroup());
 		hrtModel.setQualification(requestDto.getQualification());
 		hrtModel.setHomeAddress(requestDto.getHomeAddress());
@@ -242,7 +245,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// saving employeeCredentials
 		saveEmployeeCredentials(hrtModel, requestDto);
 
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, null);
+		response = "Successfully saved";
 		return response;
 	}
 
@@ -251,6 +254,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		UserModel user = new UserModel();
 		
 		Boolean isUserNameExists = userRepository.existsByuserName(requestDto.getUserName());
+		if(isUserNameExists) {
+			throw new HRTDTSException("Username alreary extst.");
+		}
 
 		Boolean isUserExists = userRepository.existsByEId(hrtModel.geteId());
 		if (isUserExists) {
@@ -270,20 +276,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 		userRepository.save(user);
 	}
 
-	private void saveUserHrtReferrals(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
+	private void saveUserHrtReferrals(EmployeeModel hrtModel, EmployeeRequestDto requestDto) throws ParseException {
 
 		if (requestDto.getReferralId() != null) {
 			EmployeeReferralModel userHrtReferralModel = new EmployeeReferralModel();
 			ReferralsModel referralsModel = referralsRepository.findByReferralId(requestDto.getReferralId());
 			userHrtReferralModel.setReferralsModel(referralsModel);
 			userHrtReferralModel.setUserHrtModel(hrtModel);
-			userHrtReferralModel.setEndDate(requestDto.getEndDate());
+			userHrtReferralModel.setEndDate((requestDto.getEndDate() != null && !requestDto.getEndDate().isEmpty())?StringToDateConverter.convertStringToDate(requestDto.getEndDate()):null);
 			userHrtReferralModel.setNotes(requestDto.getNotes());
 			userHrtReferralModel.setRatePerDay(requestDto.getRatePerDay());
 			userHrtReferralModel.setRatePerHour(requestDto.getRatePerHour());
 			userHrtReferralModel.setRefLimit(requestDto.getRefLimit());
-			userHrtReferralModel.setStartDate(requestDto.getStartDate());
+			userHrtReferralModel.setStartDate((requestDto.getStartDate() != null && !requestDto.getStartDate().isEmpty())?StringToDateConverter.convertStringToDate(requestDto.getStartDate()):null);
 			userHrtReferralsRepository.save(userHrtReferralModel);
+			
 		}
 
 	}
@@ -309,8 +316,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public StatusResponse getSkillsAndReferrals() throws Exception {
-		StatusResponse response = new StatusResponse();
+	public PreDataDto getSkillsAndReferrals() throws Exception {
 		PreDataDto preDataDto = new PreDataDto();
 		List<TechnologyModel> skills = technologyRepository.findAll();
 		List<ReferralsModel> referrals = referralsRepository.findAll();
@@ -336,19 +342,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 		preDataDto.setEmployeeType(employeeType);
 		preDataDto.setRace(race);
 
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preDataDto);
-		return response;
+		return preDataDto;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public StatusResponse getUserHrtInfo(long id) throws Exception {
-		StatusResponse response = new StatusResponse();
+	public EmployeeResponseDto getUserHrtInfo(long id) throws Exception {
 		EmployeeModel hrtModel = employeeRepository.findById(id).orElse(null);
 		EmployeeResponseDto responseDto = new EmployeeResponseDto();
-		UserModel user = userRepository.findByeId(hrtModel.geteId());
-
 		if (hrtModel != null) {
+		    UserModel user = userRepository.findByeId(hrtModel.geteId());
 			responseDto.seteId(hrtModel.geteId());
 			responseDto.setFirstName(hrtModel.getFirstName());
 			responseDto.setMiddleName(hrtModel.getMiddleName());
@@ -448,9 +451,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			
 
 		}
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseDto);
 
-		return response;
+		return responseDto;
 	}
 
 
