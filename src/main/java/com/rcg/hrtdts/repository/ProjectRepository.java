@@ -27,4 +27,10 @@ public interface ProjectRepository extends JpaRepository<ProjectModel, Long>{
 	
 	@Query("SELECT s.projectName FROM ProjectModel s where s.projectId=?1")
 	String getProjectName(Long projectId);
+
+	@Query("SELECT p.projectId,p.projectName FROM ProjectModel p WHERE p.clientName.clientId=?1")
+	ArrayList<Object[]> getAllProjectsByClient(Long clientId);
+
+	@Query("SELECT p FROM ProjectModel p WHERE p.projectId=?1")
+	ProjectModel getProjectdata(Long projectName);
 }

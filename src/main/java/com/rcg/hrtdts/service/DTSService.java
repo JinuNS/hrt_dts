@@ -11,4 +11,8 @@ public interface DTSService {
 
 	StatusResponse getDTSData() throws Exception;
 
+	StatusResponse getAllClientProjects(Long clientId);
+
+	StatusResponse getDTSInformation(Long dtsId);
+
 }

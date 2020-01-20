@@ -62,6 +62,7 @@ public class EmployeeResponseDto {
 
 	private String type;
 	private String recipient;
+	private Long recipientId;
 	private String refCode;
 	private Long refLimit;
 	private Date startDate;
@@ -70,22 +71,22 @@ public class EmployeeResponseDto {
 	private Double ratePerDay;
 	private Double ratePerHour;
 
-	private String department;
-	private String region;
-	private String timeZone;
+	private Long department;
+	private Long region;
+	private Long timeZone;
 	private Date terminationDate;
 	private String bloodGroup;
 	private String qualification;
 	private String homeAddress;
 	private String recruiter;
 	private String taxId;
-	private String terminationType;
-	private String employeeContractors;
+	private Long terminationType;
+	private Long employeeContractors;
 	private Long role;
 	private String userName;
 	private String password;
 	private Boolean isActive;
-	private String employeeStatus;
+	private Long employeeStatus;
 	private Double annualSalary;
 	private String companyCode;
 
@@ -537,30 +538,6 @@ public class EmployeeResponseDto {
 		this.ratePerHour = ratePerHour;
 	}
 
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
-	}
-
-	public String getTimeZone() {
-		return timeZone;
-	}
-
-	public void setTimeZone(String timeZone) {
-		this.timeZone = timeZone;
-	}
-
 	public Date getTerminationDate() {
 		return terminationDate;
 	}
@@ -609,22 +586,6 @@ public class EmployeeResponseDto {
 		this.taxId = taxId;
 	}
 
-	public String getTerminationType() {
-		return terminationType;
-	}
-
-	public void setTerminationType(String terminationType) {
-		this.terminationType = terminationType;
-	}
-
-	public String getEmployeeContractors() {
-		return employeeContractors;
-	}
-
-	public void setEmployeeContractors(String employeeContractors) {
-		this.employeeContractors = employeeContractors;
-	}
-
 	public Long getRole() {
 		return role;
 	}
@@ -657,14 +618,6 @@ public class EmployeeResponseDto {
 		this.isActive = isActive;
 	}
 
-	public String getEmployeeStatus() {
-		return employeeStatus;
-	}
-
-	public void setEmployeeStatus(String employeeStatus) {
-		this.employeeStatus = employeeStatus;
-	}
-
 	public Double getAnnualSalary() {
 		return annualSalary;
 	}
@@ -681,4 +634,61 @@ public class EmployeeResponseDto {
 		this.companyCode = companyCode;
 	}
 
+	public Long getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Long department) {
+		this.department = department;
+	}
+
+	public Long getRegion() {
+		return region;
+	}
+
+	public void setRegion(Long region) {
+		this.region = region;
+	}
+
+	public Long getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(Long timeZone) {
+		this.timeZone = timeZone;
+	}
+
+	public Long getTerminationType() {
+		return terminationType;
+	}
+
+	public void setTerminationType(Long terminationType) {
+		this.terminationType = terminationType;
+	}
+
+	public Long getEmployeeContractors() {
+		return employeeContractors;
+	}
+
+	public void setEmployeeContractors(Long employeeContractors) {
+		this.employeeContractors = employeeContractors;
+	}
+
+	public Long getEmployeeStatus() {
+		return employeeStatus;
+	}
+
+	public void setEmployeeStatus(Long employeeStatus) {
+		this.employeeStatus = employeeStatus;
+	}
+
+	public Long getRecipientId() {
+		return recipientId;
+	}
+
+	public void setRecipientId(Long recipientId) {
+		this.recipientId = recipientId;
+	}
+
+	
 }

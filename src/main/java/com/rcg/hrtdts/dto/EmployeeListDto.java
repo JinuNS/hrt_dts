@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmployeeListDto {
 
+	private Long eId;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -20,9 +21,10 @@ public class EmployeeListDto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public EmployeeListDto(String firstName, String lastName, String userName, String jobType, String department,
+	public EmployeeListDto(Long eId,String firstName, String lastName, String userName, String jobType, String department,
 			String cppLevel, Date hireDate) {
 		super();
+		this.eId = eId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
@@ -88,4 +90,13 @@ public class EmployeeListDto {
 		this.hireDate = hireDate;
 	}
 
+	public Long geteId() {
+		return eId;
+	}
+
+	public void seteId(Long eId) {
+		this.eId = eId;
+	}
+
+	
 }

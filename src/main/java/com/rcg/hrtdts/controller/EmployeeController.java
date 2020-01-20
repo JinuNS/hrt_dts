@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rcg.hrtdts.dto.EmployeeRequestDto;
+import com.rcg.hrtdts.dto.EmployeeResponseDto;
+import com.rcg.hrtdts.dto.PreDataDto;
+import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.service.EmployeeService;
@@ -39,7 +42,12 @@ public class EmployeeController {
 	public StatusResponse setUserHrtInformation(@RequestBody EmployeeRequestDto requestDto){
 		StatusResponse response = new StatusResponse();
 		try {		
-			response = employeeService.saveEmployeeInfo(requestDto);
+			String result = employeeService.saveEmployeeInfo(requestDto);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, result);
+
+		}
+		catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorMessage());
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
@@ -56,7 +64,8 @@ public class EmployeeController {
 		
 		StatusResponse response = new StatusResponse();
 		try {		
-			response = employeeService.getSkillsAndReferrals();
+			PreDataDto preDataDto = employeeService.getSkillsAndReferrals();
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preDataDto);
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
@@ -73,7 +82,11 @@ public class EmployeeController {
 		
 		StatusResponse response = new StatusResponse();
 		try {		
-			response = employeeService.getUserHrtInfo(id);
+			EmployeeResponseDto responseDto = employeeService.getUserHrtInfo(id);
+			if(responseDto == null)
+				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, "Employee info is not available for this ID");
+			else
+				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseDto);
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());

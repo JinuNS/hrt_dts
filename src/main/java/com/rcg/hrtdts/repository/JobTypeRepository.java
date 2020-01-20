@@ -15,4 +15,6 @@ public interface JobTypeRepository extends JpaRepository<JobTypeModel, Long>{
 
 	JobTypeModel findByValue(String jobType);
 
+	
+
 }

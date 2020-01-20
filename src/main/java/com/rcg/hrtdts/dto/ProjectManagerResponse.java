@@ -1,33 +1,24 @@
-package com.rcg.hrtdts.model;
+package com.rcg.hrtdts.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class ProjectManagerResponse {
 
-@Entity
-public class ProjectManager {
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long projectManagerId;
-	
 	private String projectManager;
-
+	
+	
 	public Long getProjectManagerId() {
 		return projectManagerId;
 	}
-
 	public void setProjectManagerId(Long projectManagerId) {
 		this.projectManagerId = projectManagerId;
 	}
-
 	public String getProjectManager() {
 		return projectManager;
 	}
-
 	public void setProjectManager(String projectManager) {
 		this.projectManager = projectManager;
 	}
+	
+	
 	
 }

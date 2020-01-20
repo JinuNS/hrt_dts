@@ -23,10 +23,16 @@ public class DTSModel {
 	@ManyToOne
 	private RevenueType revenueType;
 	
-	private String clientName;
-	private String projectName;
+	@ManyToOne
+	private ClientModel clientName;
+	
+	@ManyToOne
+	private ProjectModel projectName;
 	private Date startDate;
 	private Date endDate;
+	private String status;
+	private String BillRateCurrencyType;
+	private String expenseCurrencyType;
 	
 	@ManyToOne
 	private BillingType billingType;
@@ -38,12 +44,32 @@ public class DTSModel {
 	private Double additionalExpense;
 	private String teamLead;
 	
-	@ManyToOne
-	private ProjectManager projectManager;
+	
+	private Long projectManager;
 	private String workLocation;
 	private String shift;
-	private String aeName;
 	
+	
+	
+	
+	public String getBillRateCurrencyType() {
+		return BillRateCurrencyType;
+	}
+	public void setBillRateCurrencyType(String billRateCurrencyType) {
+		BillRateCurrencyType = billRateCurrencyType;
+	}
+	public String getExpenseCurrencyType() {
+		return expenseCurrencyType;
+	}
+	public void setExpenseCurrencyType(String expenseCurrencyType) {
+		this.expenseCurrencyType = expenseCurrencyType;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public EmployeeModel getEmpId() {
 		return empId;
 	}
@@ -69,16 +95,16 @@ public class DTSModel {
 	public void setRevenueType(RevenueType revenueType) {
 		this.revenueType = revenueType;
 	}
-	public String getClientName() {
+	public ClientModel getClientName() {
 		return clientName;
 	}
-	public void setClientName(String clientName) {
+	public void setClientName(ClientModel clientName) {
 		this.clientName = clientName;
 	}
-	public String getProjectName() {
+	public ProjectModel getProjectName() {
 		return projectName;
 	}
-	public void setProjectName(String projectName) {
+	public void setProjectName(ProjectModel projectName) {
 		this.projectName = projectName;
 	}
 	public Date getStartDate() {
@@ -123,10 +149,10 @@ public class DTSModel {
 	public void setTeamLead(String teamLead) {
 		this.teamLead = teamLead;
 	}
-	public ProjectManager getProjectManager() {
+	public Long getProjectManager() {
 		return projectManager;
 	}
-	public void setProjectManager(ProjectManager projectManager) {
+	public void setProjectManager(Long projectManager) {
 		this.projectManager = projectManager;
 	}
 	public String getWorkLocation() {
@@ -141,14 +167,5 @@ public class DTSModel {
 	public void setShift(String shift) {
 		this.shift = shift;
 	}
-	public String getAeName() {
-		return aeName;
-	}
-	public void setAeName(String aeName) {
-		this.aeName = aeName;
-	}
-	
-	
-	
 	
 }

@@ -7,7 +7,9 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,11 +84,55 @@ public class DTSController {
 	 * 
 	 **/
 	@GetMapping("/getDTSData")
-	public StatusResponse getDTSData(@RequestBody DtsRequestBody requestBody) {
+	public StatusResponse getDTSData() {
 		StatusResponse response=new StatusResponse();
 		
 		try {
 			response=dtsService.getDTSData();
+		}catch(Exception e) {
+			e.printStackTrace();
+			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+		}
+		return response;
+		
+	}
+	
+	/**
+	 * 
+	 * @author  Haritha
+	 * @version 1.0
+	 * @since   2020-01-18 
+	 * 
+	 **/
+	@PutMapping("/getAllClientProjects/{clientId}")
+	public StatusResponse getAllClientProjects(@PathVariable("clientId") Long clientId,@RequestBody String requestdata) {
+		StatusResponse response=new StatusResponse();
+		
+		try {
+			response=dtsService.getAllClientProjects(clientId);
+		}catch(Exception e) {
+			e.printStackTrace();
+			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+		}
+		return response;
+		
+	}
+	
+	/**
+	 * 
+	 * @author  Haritha
+	 * @version 1.0
+	 * @since   2020-01-18 
+	 * 
+	 **/
+	@PutMapping("/getDTSInformation/{dtsId}")
+	public StatusResponse getDTSInformation(@PathVariable("dtsId") Long dtsId,@RequestBody String requestdata) {
+		StatusResponse response=new StatusResponse();
+		
+		try {
+			response=dtsService.getDTSInformation(dtsId);
 		}catch(Exception e) {
 			e.printStackTrace();
 			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
