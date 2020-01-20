@@ -27,10 +27,10 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 	@Query("select u from UserModel u where u.employee.eId = ?1")
 	UserModel findByeId(Long geteId);
 	
-	@Query("SELECT u FROM UserModel u WHERE u.role in (11,8)")
+	@Query("SELECT u FROM UserModel u WHERE u.role in (4)")
 	List<UserModel> getProjectOwners();
 
-	@Query("SELECT u FROM UserModel u WHERE u.role in (11,8)")
+	@Query("SELECT u FROM UserModel u WHERE u.role in (4)")
 	List<UserModel> getOnsiteLeads();
 
 	@Query("SELECT e FROM UserModel e WHERE e.employee.eId = ?1")
