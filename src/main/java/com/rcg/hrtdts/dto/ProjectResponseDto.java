@@ -1,6 +1,6 @@
 package com.rcg.hrtdts.dto;
 
-public class ProjectResponse {
+public class ProjectResponseDto {
 
 	private Long projectId;
 	private String projectName;

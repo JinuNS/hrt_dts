@@ -1,6 +1,6 @@
 package com.rcg.hrtdts.dto;
 
-public class ProjectManagerResponse {
+public class ProjectManagerResponseDto {
 
 	private Long projectManagerId;
 	private String projectManager;

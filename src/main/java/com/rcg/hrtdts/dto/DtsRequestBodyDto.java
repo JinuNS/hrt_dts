@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import com.rcg.hrtdts.model.BillingType;
 import com.rcg.hrtdts.model.RevenueType;
 
-public class DtsRequestBody {
+public class DtsRequestBodyDto {
 
 	private Long dtsNo;
 

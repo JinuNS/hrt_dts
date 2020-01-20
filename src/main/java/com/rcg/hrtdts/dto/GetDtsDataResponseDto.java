@@ -2,7 +2,7 @@ package com.rcg.hrtdts.dto;
 
 import java.util.Date;
 
-public class GetDtsDataResponse {
+public class GetDtsDataResponseDto {
 
 	private Long id;
 	private Long dtsNo;

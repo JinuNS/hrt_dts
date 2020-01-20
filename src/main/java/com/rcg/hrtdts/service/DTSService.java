@@ -1,18 +1,24 @@
 package com.rcg.hrtdts.service;
 
-import com.rcg.hrtdts.dto.DtsRequestBody;
-import com.rcg.hrtdts.model.StatusResponse;
+import java.util.List;
+
+import com.rcg.hrtdts.dto.DtsRequestBodyDto;
+import com.rcg.hrtdts.dto.GetDtsDataResponseDto;
+import com.rcg.hrtdts.dto.PreProcessingDataResponseDto;
+import com.rcg.hrtdts.dto.ProjectResponseDto;
+import com.rcg.hrtdts.dto.ViewDtsInfoResponseDto;
+import com.rcg.hrtdts.exception.HRTDTSException;
 
 public interface DTSService {
 
-	StatusResponse getpreProcessingData() throws Exception;
+	PreProcessingDataResponseDto getpreProcessingData() throws Exception;
 
-	StatusResponse addNewDTSData(DtsRequestBody requestBody) throws Exception;
+	void addNewDTSData(DtsRequestBodyDto requestBody) throws Exception, HRTDTSException;
 
-	StatusResponse getDTSData() throws Exception;
+	List<ViewDtsInfoResponseDto> getDTSData() throws Exception;
 
-	StatusResponse getAllClientProjects(Long clientId);
+	List<ProjectResponseDto> getAllClientProjects(Long clientId);
 
-	StatusResponse getDTSInformation(Long dtsId);
+	GetDtsDataResponseDto getDTSInformation(Long dtsId);
 
 }

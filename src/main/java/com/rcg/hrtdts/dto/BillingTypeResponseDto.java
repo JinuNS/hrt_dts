@@ -1,6 +1,6 @@
 package com.rcg.hrtdts.dto;
 
-public class BillingTypeResponse {
+public class BillingTypeResponseDto {
 
 	private Long BillingTypeId;
 	private String BillingTypeName;

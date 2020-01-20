@@ -1,6 +1,6 @@
 package com.rcg.hrtdts.dto;
 
-public class RevenueTypeResponse {
+public class RevenueTypeResponseDto {
 
 	private Long revenueTypeId;
 	private String revenueTypeName;

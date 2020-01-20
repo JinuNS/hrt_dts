@@ -1,6 +1,6 @@
 package com.rcg.hrtdts.dto;
 
-public class RegionResponse {
+public class RegionResponseDto {
 
 	private Long regionId;
 	private String regionName;

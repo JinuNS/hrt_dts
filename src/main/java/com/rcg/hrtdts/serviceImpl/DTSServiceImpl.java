@@ -4,28 +4,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.hamcrest.core.IsNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.rcg.hrtdts.dto.BillingTypeResponse;
-import com.rcg.hrtdts.dto.ClientResponse;
-import com.rcg.hrtdts.dto.DtsRequestBody;
-import com.rcg.hrtdts.dto.GetDtsDataResponse;
-import com.rcg.hrtdts.dto.PreProcessingDataResponse;
-import com.rcg.hrtdts.dto.ProjectManagerResponse;
-import com.rcg.hrtdts.dto.ProjectResponse;
-import com.rcg.hrtdts.dto.RegionResponse;
-import com.rcg.hrtdts.dto.RevenueTypeResponse;
-import com.rcg.hrtdts.dto.ViewDtsInfoResponse;
+import com.rcg.hrtdts.dto.BillingTypeResponseDto;
+import com.rcg.hrtdts.dto.ClientResponseDto;
+import com.rcg.hrtdts.dto.DtsRequestBodyDto;
+import com.rcg.hrtdts.dto.GetDtsDataResponseDto;
+import com.rcg.hrtdts.dto.PreProcessingDataResponseDto;
+import com.rcg.hrtdts.dto.ProjectManagerResponseDto;
+import com.rcg.hrtdts.dto.ProjectResponseDto;
+import com.rcg.hrtdts.dto.RegionResponseDto;
+import com.rcg.hrtdts.dto.RevenueTypeResponseDto;
+import com.rcg.hrtdts.dto.ViewDtsInfoResponseDto;
+import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.BillingType;
 import com.rcg.hrtdts.model.ClientModel;
 import com.rcg.hrtdts.model.DTSModel;
@@ -34,7 +29,6 @@ import com.rcg.hrtdts.model.JobTypeModel;
 import com.rcg.hrtdts.model.ProjectModel;
 import com.rcg.hrtdts.model.RegionModel;
 import com.rcg.hrtdts.model.RevenueType;
-import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.repository.BillingTypeRepository;
 import com.rcg.hrtdts.repository.ClientRepository;
 import com.rcg.hrtdts.repository.DTSRepository;
@@ -85,23 +79,21 @@ public class DTSServiceImpl implements DTSService {
 	JobTypeRepository jobTypeRepository;
 
 	@Override
-	public StatusResponse getpreProcessingData() throws Exception {
+	public PreProcessingDataResponseDto getpreProcessingData() throws Exception {
 
-		StatusResponse response = new StatusResponse();
-
-		PreProcessingDataResponse preData = new PreProcessingDataResponse();
-		List<ClientResponse> clientvalue = new ArrayList<ClientResponse>();
-		List<ProjectManagerResponse> projectManagervalue = new ArrayList<ProjectManagerResponse>();
-		List<RevenueTypeResponse> revenuevalue = new ArrayList<RevenueTypeResponse>();
-		List<BillingTypeResponse> billingvalue = new ArrayList<BillingTypeResponse>();
-		List<RegionResponse> regionvalue = new ArrayList<RegionResponse>();
+		PreProcessingDataResponseDto preData = new PreProcessingDataResponseDto();
+		List<ClientResponseDto> clientvalue = new ArrayList<ClientResponseDto>();
+		List<ProjectManagerResponseDto> projectManagervalue = new ArrayList<ProjectManagerResponseDto>();
+		List<RevenueTypeResponseDto> revenuevalue = new ArrayList<RevenueTypeResponseDto>();
+		List<BillingTypeResponseDto> billingvalue = new ArrayList<BillingTypeResponseDto>();
+		List<RegionResponseDto> regionvalue = new ArrayList<RegionResponseDto>();
 
 		ArrayList<Object[]> clientmodel = clientRepository.getAllClientName();
 
 		if (!clientmodel.isEmpty()) {
 			for (Object[] obj : clientmodel) {
 
-				ClientResponse clientdata = new ClientResponse();
+				ClientResponseDto clientdata = new ClientResponseDto();
 				clientdata.setClientId(Long.parseLong(obj[0].toString()));
 				clientdata.setClientName(obj[1].toString());
 				clientvalue.add(clientdata);
@@ -114,7 +106,7 @@ public class DTSServiceImpl implements DTSService {
 		if (!projectmanagermodel.isEmpty()) {
 			for (Object[] obj : projectmanagermodel) {
 
-				ProjectManagerResponse managerResponse = new ProjectManagerResponse();
+				ProjectManagerResponseDto managerResponse = new ProjectManagerResponseDto();
 				managerResponse.setProjectManagerId(Long.parseLong(obj[0].toString()));
 				String firstname = obj[1] == null ? null : String.valueOf(obj[1]);
 				String lastname = obj[2] == null ? null : String.valueOf(obj[2]);
@@ -129,7 +121,7 @@ public class DTSServiceImpl implements DTSService {
 		if (!revenuemodel.isEmpty()) {
 			for (RevenueType obj : revenuemodel) {
 
-				RevenueTypeResponse revenuedata = new RevenueTypeResponse();
+				RevenueTypeResponseDto revenuedata = new RevenueTypeResponseDto();
 				revenuedata.setRevenueTypeId(obj.getRevenueTypeId());
 				revenuedata.setRevenueTypeName(obj.getRevenueTypeName());
 				revenuevalue.add(revenuedata);
@@ -141,7 +133,7 @@ public class DTSServiceImpl implements DTSService {
 		if (!billingmodel.isEmpty()) {
 			for (BillingType obj : billingmodel) {
 
-				BillingTypeResponse billingdata = new BillingTypeResponse();
+				BillingTypeResponseDto billingdata = new BillingTypeResponseDto();
 				billingdata.setBillingTypeId(obj.getBillingTypeId());
 				billingdata.setBillingTypeName(obj.getBillingTypeName());
 				billingvalue.add(billingdata);
@@ -153,22 +145,18 @@ public class DTSServiceImpl implements DTSService {
 		if (!regionModel.isEmpty()) {
 			for (RegionModel obj : regionModel) {
 
-				RegionResponse regionData = new RegionResponse();
+				RegionResponseDto regionData = new RegionResponseDto();
 				regionData.setRegionId(obj.getId());
 				regionData.setRegionName(obj.getRegionName());
 				regionvalue.add(regionData);
 			}
 			preData.setRegionData(regionvalue);
 		}
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preData);
-
-		return response;
+		return preData;
 	}
 
 	@Override
-	public StatusResponse addNewDTSData(DtsRequestBody requestBody) throws Exception {
-
-		StatusResponse response = new StatusResponse();
+	public void addNewDTSData(DtsRequestBodyDto requestBody) throws Exception, HRTDTSException {
 
 		DTSModel dtsmodel = new DTSModel();
 		Long dtsnumber = null;
@@ -178,9 +166,9 @@ public class DTSServiceImpl implements DTSService {
 
 			int checkingstatus = dtsRepository.checkingUserDtsStatus(requestBody.getEmpId());
 			if (checkingstatus > 0) {
-				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK,
-						"Insertion Not Possible.An Active DTS is available");
-				return response;
+
+				throw new HRTDTSException("Insertion Not Possible.An Active DTS is available");
+
 			}
 		} else
 			dtsnumber = requestBody.getDtsNo();
@@ -221,17 +209,14 @@ public class DTSServiceImpl implements DTSService {
 		dtsmodel.setRevenueType(revenue);
 
 		dtsRepository.save(dtsmodel);
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, "Insertion completed");
 
-		return response;
 	}
 
 	@Override
-	public StatusResponse getDTSData() throws Exception {
+	public List<ViewDtsInfoResponseDto> getDTSData() throws Exception {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		StatusResponse response = new StatusResponse();
-		List<ViewDtsInfoResponse> dtsResponse = new ArrayList<ViewDtsInfoResponse>();
+		List<ViewDtsInfoResponseDto> dtsResponse = new ArrayList<ViewDtsInfoResponseDto>();
 
 		List<EmployeeModel> employeeList = employeeRepository.findAll();
 
@@ -241,7 +226,7 @@ public class DTSServiceImpl implements DTSService {
 			if (!dtsList.isEmpty()) {
 				for (Object[] obj : dtsList) {
 
-					ViewDtsInfoResponse dtsData = new ViewDtsInfoResponse();
+					ViewDtsInfoResponseDto dtsData = new ViewDtsInfoResponseDto();
 					dtsData.setEmployeeId(employeedetail.geteId());
 					dtsData.setEmployeeName(employeedetail.getFirstName() + " " + employeedetail.getLastName());
 					dtsData.setCppLevel(employeedetail.getCPPCareerLevel());
@@ -255,7 +240,7 @@ public class DTSServiceImpl implements DTSService {
 					dtsData.setDtsNo(Long.parseLong(obj[1].toString()));
 					dtsData.setDtsId(Long.parseLong(obj[0].toString()));
 					dtsData.setStatus(obj[4].toString());
-					if(dtsData.getStatus().equals(Constants.DTS_STATUS_CLOSED))
+					if (dtsData.getStatus().equals(Constants.DTS_STATUS_CLOSED))
 						dtsData.setStatus(Constants.DTS_STATUS_ACTIVE_DTS);
 					Date startDatee = sdf.parse(obj[5].toString());
 					Calendar cal = Calendar.getInstance();
@@ -284,7 +269,7 @@ public class DTSServiceImpl implements DTSService {
 				}
 
 			} else {
-				ViewDtsInfoResponse dtsData = new ViewDtsInfoResponse();
+				ViewDtsInfoResponseDto dtsData = new ViewDtsInfoResponseDto();
 				dtsData.setEmployeeId(employeedetail.geteId());
 				dtsData.setEmployeeName(employeedetail.getFirstName() + " " + employeedetail.getLastName());
 				dtsData.setCppLevel(employeedetail.getCPPCareerLevel());
@@ -306,19 +291,18 @@ public class DTSServiceImpl implements DTSService {
 			}
 		}
 
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, dtsResponse);
-		return response;
+		return dtsResponse;
 	}
 
 	@Override
-	public StatusResponse getAllClientProjects(Long clientId) {
+	public List<ProjectResponseDto> getAllClientProjects(Long clientId) {
 		ArrayList<Object[]> projectmodel = projectRepository.getAllProjectsByClient(clientId);
-		List<ProjectResponse> projectvalue = new ArrayList<ProjectResponse>();
+		List<ProjectResponseDto> projectvalue = new ArrayList<ProjectResponseDto>();
 
 		if (!projectmodel.isEmpty()) {
 			for (Object[] obj : projectmodel) {
 
-				ProjectResponse projectResponse = new ProjectResponse();
+				ProjectResponseDto projectResponse = new ProjectResponseDto();
 				projectResponse.setProjectId(Long.parseLong(obj[0].toString()));
 				projectResponse.setProjectName(obj[1].toString());
 				projectvalue.add(projectResponse);
@@ -326,16 +310,15 @@ public class DTSServiceImpl implements DTSService {
 
 		}
 
-		StatusResponse response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, projectvalue);
-		return response;
+		return projectvalue;
 	}
 
 	@Override
-	public StatusResponse getDTSInformation(Long dtsId) {
-		
+	public GetDtsDataResponseDto getDTSInformation(Long dtsId) {
+
 		DTSModel dtsData = dtsRepository.getDtsData(dtsId);
-		GetDtsDataResponse dataResponse = new GetDtsDataResponse();
-		if(dtsData.getId()!=null)
+		GetDtsDataResponseDto dataResponse = new GetDtsDataResponseDto();
+		if (dtsData.getId() != null)
 			dataResponse.setId(dtsData.getId());
 		if (!dtsData.getEmpId().geteId().equals(null))
 			dataResponse.setEmpId(dtsData.getEmpId().geteId());
@@ -363,8 +346,7 @@ public class DTSServiceImpl implements DTSService {
 		dataResponse.setShift(dtsData.getShift());
 		dataResponse.setWorkLocation(dtsData.getWorkLocation());
 		dataResponse.setHourlyBillRate(dtsData.getHourlyBillRate());
-		StatusResponse response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, dataResponse);
-		return response;
+		return dataResponse;
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.rcg.hrtdts.dto;
 
-public class ClientResponse {
+public class ClientResponseDto {
  private Long clientId;
  private String clientName;
 public Long getClientId() {
