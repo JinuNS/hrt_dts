@@ -1,5 +1,6 @@
 package com.rcg.hrtdts.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,6 +40,9 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 	List<EmployeeListDto> getEmployeeLists();
 
 	Boolean existsByuserName(String userName);
+
+	@Query("select u.userId,u.employee.firstName,u.employee.lastName from UserModel u WHERE u.role.roleName = 'Approver' ")
+	ArrayList<Object[]> getAllProjectManagers();
 
 
 }

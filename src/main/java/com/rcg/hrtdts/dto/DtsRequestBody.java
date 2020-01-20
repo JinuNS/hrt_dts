@@ -13,8 +13,8 @@ public class DtsRequestBody {
 
 	private Long revenueType;
 	private Long empId;
-	private String clientName;
-	private String projectName;
+	private Long clientName;
+	private Long projectName;
 	private Date startDate;
 	private Date endDate;
 	private Long billingTypeId;
@@ -25,7 +25,8 @@ public class DtsRequestBody {
 	private Long projectManager;
 	private String workLocation;
 	private String shift;
-	private String aeName;
+	private String billRateCurrencyType;
+	private String expenseCurrencyType;
 
 	public Long getEmpId() {
 		return empId;
@@ -51,19 +52,19 @@ public class DtsRequestBody {
 		this.revenueType = revenueType;
 	}
 
-	public String getClientName() {
+	public Long getClientName() {
 		return clientName;
 	}
 
-	public void setClientName(String clientName) {
+	public void setClientName(Long clientName) {
 		this.clientName = clientName;
 	}
 
-	public String getProjectName() {
+	public Long getProjectName() {
 		return projectName;
 	}
 
-	public void setProjectName(String projectName) {
+	public void setProjectName(Long projectName) {
 		this.projectName = projectName;
 	}
 
@@ -147,12 +148,20 @@ public class DtsRequestBody {
 		this.shift = shift;
 	}
 
-	public String getAeName() {
-		return aeName;
+	public String getBillRateCurrencyType() {
+		return billRateCurrencyType;
 	}
 
-	public void setAeName(String aeName) {
-		this.aeName = aeName;
+	public void setBillRateCurrencyType(String billRateCurrencyType) {
+		this.billRateCurrencyType = billRateCurrencyType;
+	}
+
+	public String getExpenseCurrencyType() {
+		return expenseCurrencyType;
+	}
+
+	public void setExpenseCurrencyType(String expenseCurrencyType) {
+		this.expenseCurrencyType = expenseCurrencyType;
 	}
 
 }
