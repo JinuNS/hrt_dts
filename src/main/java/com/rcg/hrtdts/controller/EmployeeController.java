@@ -45,7 +45,7 @@ public class EmployeeController {
 		StatusResponse response = new StatusResponse();
 		try {		
 			String result = employeeService.saveEmployeeInfo(requestDto);
-			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, result);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), result);
 
 		}
 		catch (HRTDTSException e) {
@@ -53,7 +53,7 @@ public class EmployeeController {
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
 		}
 		return response;
 	}
@@ -67,11 +67,11 @@ public class EmployeeController {
 		StatusResponse response = new StatusResponse();
 		try {		
 			PreDataDto preDataDto = employeeService.getSkillsAndReferrals();
-			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, preDataDto);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), preDataDto);
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
 		}
 		return response;
 	}
@@ -85,14 +85,14 @@ public class EmployeeController {
 		StatusResponse response = new StatusResponse();
 		try {		
 			EmployeeResponseDto responseDto = employeeService.getUserHrtInfo(id);
-			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseDto);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseDto);
 		}
 		catch (HRTDTSException e) {
 			throw new HRTDTSException(e.getErrorMessage());
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
 		}
 		return response;
 	}
@@ -106,12 +106,12 @@ public class EmployeeController {
 		StatusResponse response = new StatusResponse();
 		try {		
 			List<EmployeeListDto> responseList = employeeService.getEmployeeList();
-			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseList);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseList);
 
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
 		}
 		return response;
 	}

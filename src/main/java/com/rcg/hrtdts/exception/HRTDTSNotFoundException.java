@@ -9,7 +9,7 @@ package com.rcg.hrtdts.exception;
 
 public class HRTDTSNotFoundException extends HRTDTSException{
 
-	public static final int defaultAppErrorCode = 12404;
+	public static final int defaultAppErrorCode = 101;
 	public static final String defaultMessage = "The link you followed may be broken, or the page may have been removed";
 	
 	public String errorMessage;

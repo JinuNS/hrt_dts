@@ -18,21 +18,21 @@ import java.util.Date;
  **/
 public class ExceptionResponse {
 
-	public int errorCode;
+	public Integer errorCode;
 	public String errorMessage;
 	public Date timestamp;
 
-	public ExceptionResponse(int errorCode, String errorMessage, Date timestamp) {
+	public ExceptionResponse(Integer errorCode, String errorMessage, Date timestamp) {
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 		this.timestamp = timestamp;
 	}
 
-	public int getErrorCode() {
+	public Integer getErrorCode() {
 		return errorCode;
 	}
 
-	public void setErrorCode(int errorCode) {
+	public void setErrorCode(Integer errorCode) {
 		this.errorCode = errorCode;
 	}
 

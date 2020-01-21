@@ -53,7 +53,7 @@ public class LoginServiceImpl implements LoginService {
 					pageRule = pageRuleRepository.findByroleId(user.getRole().getRoleId());
 				}
 			} else {
-				throw new HRTDTSException("Invalid credientials");
+				throw new HRTDTSException("Invalid credentials");
 			}
 			
 			if (user != null && pageRule != null) {

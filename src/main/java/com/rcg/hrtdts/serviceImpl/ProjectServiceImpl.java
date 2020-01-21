@@ -93,7 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 
 	@Override
-	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException {
+	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException,Exception {
 		JSONObject responsedata = new JSONObject();
 
 		ProjectModel project = new ProjectModel();
@@ -200,7 +200,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public JSONObject updateProject(ProjectDto projectDto) throws ParseException {
+	public JSONObject updateProject(ProjectDto projectDto) throws ParseException,Exception {
 		JSONObject responsedata = new JSONObject();
 		ProjectModel project = findById(projectDto.getProjectId());
 		Long contractId = projectDto.getContractType();
@@ -479,7 +479,7 @@ public class ProjectServiceImpl implements ProjectService {
 //		listofObjects.add(employeeContractorsobject);
 //		listofObjects.add(rolelistobject);
 
-		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseData);
+		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseData);
 		return status;
 	}
 	public ProjectModel saveProjectRecord(ProjectModel projectmodel) {
@@ -536,7 +536,7 @@ public class ProjectServiceImpl implements ProjectService {
 		ArrayList regionsArray = new ArrayList();
 		ArrayList<Integer> regionArraylist = new ArrayList<Integer>();
 		if (projectlist.isEmpty()) {
-			status = new StatusResponse(Constants.FAILURE, HttpStatus.OK, "Empty List");
+			status = new StatusResponse(Constants.FAILURE, HttpStatus.OK.value(), "Empty List");
 		}
 		for (ProjectModel project : projectlist) {
 			JSONObject client = new JSONObject();
@@ -604,7 +604,7 @@ public class ProjectServiceImpl implements ProjectService {
 			viewJson.put("approverLevelOne", employeeJson);
 			viewProjects.add(viewJson);
 		}
-		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, viewProjects);
+		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), viewProjects);
 		return status;
 	}
 

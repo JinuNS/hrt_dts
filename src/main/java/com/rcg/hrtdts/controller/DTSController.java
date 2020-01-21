@@ -22,7 +22,7 @@ import com.rcg.hrtdts.service.DTSService;
 import com.rcg.hrtdts.utility.Constants;
 
 @RestController
-@RequestMapping(value="/DTS")
+@RequestMapping(value="/dts")
 public class DTSController {
 	
 	@Autowired
@@ -45,8 +45,8 @@ public class DTSController {
 			response=dtsService.getpreProcessingData();
 		}catch(Exception e) {
 			e.printStackTrace();
-			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+			ExceptionResponse exceptionresponse = new ExceptionResponse(500, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionresponse);
 		}
 		return response;
 		
@@ -68,8 +68,8 @@ public class DTSController {
 			response=dtsService.addNewDTSData(requestBody);
 		}catch(Exception e) {
 			e.printStackTrace();
-			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+			ExceptionResponse exceptionresponse = new ExceptionResponse(500, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionresponse);
 		}
 		return response;
 		
@@ -91,8 +91,8 @@ public class DTSController {
 			response=dtsService.getDTSData();
 		}catch(Exception e) {
 			e.printStackTrace();
-			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+			ExceptionResponse exceptionresponse = new ExceptionResponse(500, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionresponse);
 		}
 		return response;
 		
@@ -113,8 +113,8 @@ public class DTSController {
 			response=dtsService.getAllClientProjects(clientId);
 		}catch(Exception e) {
 			e.printStackTrace();
-			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+			ExceptionResponse exceptionresponse = new ExceptionResponse(500, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionresponse);
 		}
 		return response;
 		
@@ -135,8 +135,8 @@ public class DTSController {
 			response=dtsService.getDTSInformation(dtsId);
 		}catch(Exception e) {
 			e.printStackTrace();
-			ExceptionResponse exceptionresponse = new ExceptionResponse(501, e.getMessage(), new Date()); 
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionresponse);
+			ExceptionResponse exceptionresponse = new ExceptionResponse(500, e.getMessage(), new Date()); 
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionresponse);
 		}
 		return response;
 		

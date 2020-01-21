@@ -8,7 +8,6 @@
 
 package com.rcg.hrtdts.model;
 
-import org.springframework.http.HttpStatus;
 
 /**
  * 
@@ -20,10 +19,10 @@ import org.springframework.http.HttpStatus;
 public class StatusResponse<T> {
 
 	public String status;
-	public HttpStatus statusCode;
+	public Integer statusCode;
 	public T data;
 
-	public StatusResponse(String status, HttpStatus statusCode, T data) {
+	public StatusResponse(String status, Integer statusCode, T data) {
 		this.status = status;
 		this.statusCode = statusCode;
 		this.data = data;
@@ -40,11 +39,11 @@ public class StatusResponse<T> {
 		this.status = status;
 	}
 
-	public HttpStatus getStatusCode() {
+	public Integer getStatusCode() {
 		return statusCode;
 	}
 
-	public void setStatusCode(HttpStatus statusCode) {
+	public void setStatusCode(Integer statusCode) {
 		this.statusCode = statusCode;
 	}
 

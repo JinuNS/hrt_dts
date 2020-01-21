@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rcg.hrtdts.dto.LoginDto;
-import com.rcg.hrtdts.dto.LoginResponseDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.ExceptionResponse;
 import com.rcg.hrtdts.model.StatusResponse;
@@ -36,12 +35,12 @@ public class LoginController {
 	public StatusResponse getLoginCredentials(@RequestBody LoginDto requestDto) {
 		StatusResponse response = new StatusResponse();
 		try {
-			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK,loginService.getLoginCredentials(requestDto));
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),loginService.getLoginCredentials(requestDto));
 		} catch (HRTDTSException e) {
-			throw new HRTDTSException(e.getErrorMessage());
+			throw new HRTDTSException(e.getErrorCode(),e.getErrorMessage());
 		} catch (Exception e) {
-			ExceptionResponse exceptionResponse = new ExceptionResponse(501, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR, exceptionResponse);
+			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
 		}
 		return response;
 	}

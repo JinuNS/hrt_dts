@@ -15,9 +15,9 @@ import com.rcg.hrtdts.model.StatusResponse;
 
 public interface ProjectService {
 
-	JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException;
+	JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException,Exception;
 
-	JSONObject updateProject(ProjectDto projectDto) throws ParseException,HRTDTSException;
+	JSONObject updateProject(ProjectDto projectDto) throws ParseException,HRTDTSException,Exception;
 	
 	StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception;
 

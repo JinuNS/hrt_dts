@@ -9,7 +9,7 @@ package com.rcg.hrtdts.exception;
 
 public class HRTDTSDateFormatException extends HRTDTSException{
 
-	public static final int defaultAppErrorCode = 12505;
+	public static final int defaultAppErrorCode = 102;
 	public static final String defaultMessage = "Invalid date format!";
 	
 	public String errorMessage;

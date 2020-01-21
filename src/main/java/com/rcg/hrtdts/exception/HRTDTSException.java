@@ -8,7 +8,7 @@ package com.rcg.hrtdts.exception;
 
 public class HRTDTSException extends RuntimeException{
 
-	public static final int defaultAppErrorCode = 12345;
+	public static final int defaultAppErrorCode = 100;
 	public static final String defaultMessage = "Exception Throwned from HRT-DTS Application";
 	
 	public String errorMessage;
