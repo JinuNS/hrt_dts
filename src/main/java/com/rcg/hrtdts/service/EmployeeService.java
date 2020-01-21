@@ -8,17 +8,17 @@ import com.rcg.hrtdts.dto.EmployeeResponseDto;
 import com.rcg.hrtdts.dto.PreDataDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.EmployeeModel;
-import com.rcg.hrtdts.model.StatusResponse;
+
 /**
  * 
- * @author  neena
+ * @author neena
  * @version 1.0
- * @since   2020-01-14 
+ * @since 2020-01-14
  * 
  **/
 public interface EmployeeService {
 
-	String saveEmployeeInfo(EmployeeRequestDto requestDto) throws HRTDTSException,Exception;
+	String saveEmployeeInfo(EmployeeRequestDto requestDto) throws HRTDTSException, Exception;
 
 	PreDataDto getSkillsAndReferrals() throws Exception;
 
@@ -28,8 +28,6 @@ public interface EmployeeService {
 
 	List<EmployeeListDto> getEmployeeList() throws Exception;
 
-
 //	StatusResponse updateEmployeeInfo(EmployeeRequestDto requestDto) throws Exception;
 
 }
-
