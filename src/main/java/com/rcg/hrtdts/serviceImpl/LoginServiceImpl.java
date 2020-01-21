@@ -1,17 +1,13 @@
 package com.rcg.hrtdts.serviceImpl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.rcg.hrtdts.dto.LoginDto;
 import com.rcg.hrtdts.dto.LoginResponseDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.PageRule;
-import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.model.UserModel;
 import com.rcg.hrtdts.repository.PageRuleRepository;
 import com.rcg.hrtdts.repository.UserRepository;

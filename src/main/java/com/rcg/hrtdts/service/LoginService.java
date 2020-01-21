@@ -3,7 +3,6 @@ package com.rcg.hrtdts.service;
 import com.rcg.hrtdts.dto.LoginDto;
 import com.rcg.hrtdts.dto.LoginResponseDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
-import com.rcg.hrtdts.model.StatusResponse;
 
 /**
  * 
