@@ -110,7 +110,7 @@ public class DTSServiceImpl implements DTSService {
 		}
 
 		ArrayList<Object[]> projectmanagermodel = userRepository.getAllProjectManagers();
-		
+
 		if (!projectmanagermodel.isEmpty()) {
 			for (Object[] obj : projectmanagermodel) {
 
@@ -171,10 +171,17 @@ public class DTSServiceImpl implements DTSService {
 		StatusResponse response = new StatusResponse();
 
 		DTSModel dtsmodel = new DTSModel();
-		Long dtsnumber=null;
+		Long dtsnumber = null;
 		if (requestBody.getDtsNo() == null) {
-			dtsnumber=dtsRepository.getDtsNumber();
-			dtsnumber=dtsnumber+1;
+			dtsnumber = dtsRepository.getDtsNumber();
+			dtsnumber = dtsnumber + 1;
+
+			int checkingstatus = dtsRepository.checkingUserDtsStatus(requestBody.getEmpId());
+			if (checkingstatus > 0) {
+				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK,
+						"Insertion Not Possible.An Active DTS is available");
+				return response;
+			}
 		} else
 			dtsnumber = requestBody.getDtsNo();
 
@@ -195,7 +202,9 @@ public class DTSServiceImpl implements DTSService {
 		dtsmodel.setProjectName(project);
 		dtsmodel.setStartDate(requestBody.getStartDate());
 		dtsmodel.setEndDate(requestBody.getEndDate());
-		dtsmodel.setStatus(Constants.DTS_STATUS_NEW);
+		dtsmodel.setStatus(requestBody.getStatus());
+
+//		dtsmodel.setStatus(Constants.DTS_STATUS_NEW);
 		BillingType billingtypeobj = billingRepository.findBillingType(requestBody.getBillingTypeId());
 		dtsmodel.setBillingType(billingtypeobj);
 		RegionModel regionObj = regionRepository.findRegionName(requestBody.getRegionId());
@@ -246,6 +255,8 @@ public class DTSServiceImpl implements DTSService {
 					dtsData.setDtsNo(Long.parseLong(obj[1].toString()));
 					dtsData.setDtsId(Long.parseLong(obj[0].toString()));
 					dtsData.setStatus(obj[4].toString());
+					if(dtsData.getStatus().equals(Constants.DTS_STATUS_CLOSED))
+						dtsData.setStatus(Constants.DTS_STATUS_ACTIVE_DTS);
 					Date startDatee = sdf.parse(obj[5].toString());
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(startDatee);
@@ -321,10 +332,11 @@ public class DTSServiceImpl implements DTSService {
 
 	@Override
 	public StatusResponse getDTSInformation(Long dtsId) {
+		
 		DTSModel dtsData = dtsRepository.getDtsData(dtsId);
-
 		GetDtsDataResponse dataResponse = new GetDtsDataResponse();
-		dataResponse.setId(dtsData.getId());
+		if(dtsData.getId()!=null)
+			dataResponse.setId(dtsData.getId());
 		if (!dtsData.getEmpId().geteId().equals(null))
 			dataResponse.setEmpId(dtsData.getEmpId().geteId());
 		dataResponse.setEmployeeName(dtsData.getEmpId().getFirstName() + " " + dtsData.getEmpId().getLastName());
@@ -337,7 +349,9 @@ public class DTSServiceImpl implements DTSService {
 		if (!dtsData.getBillingType().getBillingTypeId().equals(null))
 			dataResponse.setBillingTypeId(dtsData.getBillingType().getBillingTypeId());
 		dataResponse.setBillRateCurrencyType(dtsData.getBillRateCurrencyType());
-		dataResponse.setEndDate(dtsData.getEndDate());
+
+		if (dtsData.getEndDate() != null)
+			dataResponse.setEndDate(dtsData.getEndDate());
 		dataResponse.setStartDate(dtsData.getStartDate());
 		dataResponse.setExpenseCurrencyType(dtsData.getExpenseCurrencyType());
 		if (!dtsData.getRegion().getId().equals(null))

@@ -12,4 +12,6 @@ public class Constants {
 	public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	public static final String DTS_STATUS_NEW = "NEW";
 	public static final String DTS_STATUS_NO_RECORD = "NO RECORD AVAILABLE";
+	public static final String DTS_STATUS_CLOSED = "CLOSED";
+	public static final String DTS_STATUS_ACTIVE_DTS = "NO ACTIVE DTS";
 }
