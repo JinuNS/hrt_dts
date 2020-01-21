@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 	UserModel getNonActiveUser(Long id);
 
 //	@Query("select new com.rcg.hrtdts.dto.EmployeeListDto(u.employee.eId,u.employee.firstName,u.employee.lastName,u.userName,u.employee.jobType.value,u.employee.department.departmentName,u.employee.CPPCareerLevel,u.employee.hiredate) from UserModel u")
-	@Query(value = "select e.eId,u.userName,e.firstName,e.lastName,j.value,d.departmentName,e.hiredate,e.CPPCareerLevel from usermodel u join employeemodel e on u.employee_eId = e.eId left join jobtypemodel j on e.jobType_id = j.id join departmentmodel d on d.departmentId = e.department_departmentId",nativeQuery = true)
+	@Query(value = "select e.eId,u.userName,e.firstName,e.lastName,j.value,d.departmentName,e.hiredate,e.CPPCareerLevel from UserModel u join EmployeeModel e on u.employee_eId = e.eId left join JobTypeModel j on e.jobType_id = j.id join DepartmentModel d on d.departmentId = e.department_departmentId",nativeQuery = true)
 	List<Object[]> getEmployeeLists();
 
 	Boolean existsByuserName(String userName);

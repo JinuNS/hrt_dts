@@ -9,9 +9,9 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.rsg</groupId>
+	<groupId>com.rcg</groupId>
 	<artifactId>HRT_DTS</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.5</version>
 	<name>HRT_DTS</name>
 	<description>Project for completing HRT and DTS process</description>
 
