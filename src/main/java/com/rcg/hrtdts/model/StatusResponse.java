@@ -11,10 +11,10 @@ package com.rcg.hrtdts.model;
 public class StatusResponse<T> {
 	
 	public String status;
-	public int statusCode;
+	public Integer statusCode;
 	public T data;
 	
-	public StatusResponse(String status,int statusCode,T data){
+	public StatusResponse(String status,Integer statusCode,T data){
 		this.status = status;
 		this.statusCode = statusCode;
 		this.data = data;
@@ -29,10 +29,10 @@ public class StatusResponse<T> {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public int getStatusCode() {
+	public Integer getStatusCode() {
 		return statusCode;
 	}
-	public void setStatusCode(int statusCode) {
+	public void setStatusCode(Integer statusCode) {
 		this.statusCode = statusCode;
 	}
 	public T getData() {

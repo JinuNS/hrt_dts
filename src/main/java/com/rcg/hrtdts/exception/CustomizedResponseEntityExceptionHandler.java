@@ -18,22 +18,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.rcg.hrtdts.model.ExceptionResponse;
+import com.rcg.hrtdts.model.StatusResponse;
+import com.rcg.hrtdts.utility.Constants;
+
 
 @ControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ExceptionHandler(PMSException.class)
-	public final ResponseEntity<LinkedHashMap> handlePMSException(PMSException ex, WebRequest request) {
-
-		LinkedHashMap responseEntity = new LinkedHashMap();
-		StringWriter errors = new StringWriter();
-		ex.printStackTrace(new PrintWriter(errors));	
-		
-		responseEntity=getResponseEntity(request, HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-				ex.getErrorMessage(),ex.getErrorCode(), errors.toString());
-		
-		return new ResponseEntity<LinkedHashMap>(responseEntity,HttpStatus.INTERNAL_SERVER_ERROR);
+	public final ResponseEntity<StatusResponse> handlePMSException(PMSException ex, WebRequest request) {
+		StatusResponse response = new StatusResponse();   
+        ExceptionResponse exceptionResponse = new ExceptionResponse(ex.getErrorCode(), ex.getErrorMessage(), new Date());
+        response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
+        return new ResponseEntity<StatusResponse>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@SuppressWarnings("rawtypes")
