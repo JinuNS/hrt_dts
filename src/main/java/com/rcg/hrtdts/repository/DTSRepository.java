@@ -18,7 +18,7 @@ public interface DTSRepository extends JpaRepository<DTSModel, Long>{
 	@Query(value="SELECT id,dtsNo,empId_eId,projectName_projectId,status,startDate,endDate FROM DTSModel where empId_eId=?1 ORDER BY id DESC limit 1 ",nativeQuery=true)
 	List<Object[]> getAllDtsInformation(Long geteId);
 
-	@Query(value="SELECT dtsNo FROM dtsmodel ORDER BY dtsNo DESC LIMIT 1;",nativeQuery=true)
+	@Query(value="SELECT dtsNo FROM DTSModel ORDER BY dtsNo DESC LIMIT 1",nativeQuery=true)
 	Long getDtsNumber();
 
 	@Query("SELECT count(*) FROM DTSModel where empId.eId=?1 AND status!='CLOSED'")
