@@ -337,6 +337,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<EmployeeTypeModel> employeeType = employeeTypeRepository.findAll();
 		List<RaceModel> race = raceRepository.findAll();
 		List<RoleModel> role = roleRepository.findAll();
+		List<JobTypeModel> jobType = jobTypeRepository.findAll();
 		
 		preDataDto.setReferrals(referrals);
 		preDataDto.setSkills(skills);
@@ -350,6 +351,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		preDataDto.setEmployeeType(employeeType);
 		preDataDto.setRace(race);
 		preDataDto.setRole(role);
+		preDataDto.setJobType(jobType);
 
 		return preDataDto;
 	}

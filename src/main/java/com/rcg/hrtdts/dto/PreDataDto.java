@@ -6,6 +6,7 @@ import com.rcg.hrtdts.model.DepartmentModel;
 import com.rcg.hrtdts.model.EmployeeContractorsModel;
 import com.rcg.hrtdts.model.EmployeeStatusModel;
 import com.rcg.hrtdts.model.EmployeeTypeModel;
+import com.rcg.hrtdts.model.JobTypeModel;
 import com.rcg.hrtdts.model.MaritalStatusModel;
 import com.rcg.hrtdts.model.RaceModel;
 import com.rcg.hrtdts.model.ReferralsModel;
@@ -37,6 +38,7 @@ public class PreDataDto {
 	List<EmployeeTypeModel> employeeType;
 	List<RaceModel> race;
 	List<RoleModel> role;
+	List<JobTypeModel> jobType;
 
 	public List<TechnologyModel> getSkills() {
 		return skills;
@@ -132,6 +134,14 @@ public class PreDataDto {
 
 	public void setRole(List<RoleModel> role) {
 		this.role = role;
+	}
+
+	public List<JobTypeModel> getJobType() {
+		return jobType;
+	}
+
+	public void setJobType(List<JobTypeModel> jobType) {
+		this.jobType = jobType;
 	}
 
 	
