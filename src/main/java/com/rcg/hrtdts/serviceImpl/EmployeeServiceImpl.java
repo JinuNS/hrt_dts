@@ -253,16 +253,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private void saveEmployeeCredentials(EmployeeModel hrtModel, EmployeeRequestDto requestDto) {
 
 		UserModel user = new UserModel();
+		Boolean isUserNameExists = false;
 		
-		Boolean isUserNameExists = userRepository.existsByuserName(requestDto.getUserName());
-//		if(isUserNameExists) {
-//			throw new HRTDTSException("Username alreary extst.");
-//		}
-
 		Boolean isUserExists = userRepository.existsByEId(hrtModel.geteId());
 		if (isUserExists) {
 			user = userRepository.findByeId(hrtModel.geteId());
+			isUserNameExists = userRepository.existsByuserNameAndEId(requestDto.getUserName(),hrtModel.geteId());
+			
+		}else {
+			isUserNameExists = userRepository.existsByuserName(requestDto.getUserName());
+
 		}
+		if(isUserNameExists) {
+			throw new HRTDTSException("Username alreary extst.");
+		}
+
+		
 
 		user.setEmployee(hrtModel);
 		user.setEmail(hrtModel.getRcgEmail());
@@ -348,12 +354,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return preDataDto;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	@Override
 	public EmployeeResponseDto getUserHrtInfo(long id) throws Exception {
 		EmployeeModel hrtModel = employeeRepository.findById(id).orElse(null);
-		EmployeeResponseDto responseDto = new EmployeeResponseDto();
+		EmployeeResponseDto responseDto = null;
 		if (hrtModel != null) {
+			responseDto = new EmployeeResponseDto();
 		    UserModel user = userRepository.findByeId(hrtModel.geteId());
 			responseDto.seteId(hrtModel.geteId());
 			responseDto.setFirstName(hrtModel.getFirstName());
@@ -457,6 +464,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		}
 
+		if(responseDto == null)
+			throw new HRTDTSException("Employee info is not available for this ID");
+		
 		return responseDto;
 	}
 
@@ -468,10 +478,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public StatusResponse getEmployeeList() throws Exception {
+	public List<EmployeeListDto> getEmployeeList() throws Exception {
 
 		List<EmployeeListDto> responseList = new ArrayList<EmployeeListDto>();
-		StatusResponse response = new StatusResponse();
 		List<Object[]> employeeList = userRepository.getEmployeeLists();
 		employeeList.forEach(result -> {
 		   EmployeeListDto responseDto = new EmployeeListDto();
@@ -481,12 +490,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		   responseDto.setJobType((result[4] != null)?(String) result[4]:null);
 		   responseDto.setUserName((result[1] != null)?(String) result[1]:null);
 		   responseDto.setDepartment((result[5] != null)?(String) result[5]:null);
-		   responseDto.setHireDate((result[3] != null)?(Date) result[6]:null);
-		   responseDto.setCppLevel((result[3] != null)?(String) result[7]:null);
+		   responseDto.setHireDate((result[6] != null)?(Date) result[6]:null);
+		   responseDto.setCppLevel((result[7] != null)?(String) result[7]:null);
+		   responseDto.setStatus((result[8] != null)?(String) result[8]:null);
+		   responseDto.setConsultantType((result[9] != null)?(String) result[9]:null);
+
 		   responseList.add(responseDto);});	
 		
-		response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseList);
-		return response;
+		return responseList;
 	}
 
 

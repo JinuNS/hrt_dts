@@ -1,5 +1,8 @@
 package com.rcg.hrtdts.service;
 
+import java.util.List;
+
+import com.rcg.hrtdts.dto.EmployeeListDto;
 import com.rcg.hrtdts.dto.EmployeeRequestDto;
 import com.rcg.hrtdts.dto.EmployeeResponseDto;
 import com.rcg.hrtdts.dto.PreDataDto;
@@ -23,7 +26,7 @@ public interface EmployeeService {
 
 	EmployeeModel getUserDetailsById(Long asLong);
 
-	StatusResponse getEmployeeList() throws Exception;
+	List<EmployeeListDto> getEmployeeList() throws Exception;
 
 
 //	StatusResponse updateEmployeeInfo(EmployeeRequestDto requestDto) throws Exception;

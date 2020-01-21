@@ -1,6 +1,7 @@
 package com.rcg.hrtdts.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rcg.hrtdts.dto.EmployeeListDto;
 import com.rcg.hrtdts.dto.EmployeeRequestDto;
 import com.rcg.hrtdts.dto.EmployeeResponseDto;
 import com.rcg.hrtdts.dto.PreDataDto;
@@ -83,10 +85,10 @@ public class EmployeeController {
 		StatusResponse response = new StatusResponse();
 		try {		
 			EmployeeResponseDto responseDto = employeeService.getUserHrtInfo(id);
-			if(responseDto == null)
-				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, "Employee info is not available for this ID");
-			else
-				response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseDto);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseDto);
+		}
+		catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorMessage());
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
@@ -103,7 +105,9 @@ public class EmployeeController {
 		
 		StatusResponse response = new StatusResponse();
 		try {		
-			response = employeeService.getEmployeeList();
+			List<EmployeeListDto> responseList = employeeService.getEmployeeList();
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK, responseList);
+
 		}
 		catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(1234, e.getMessage(), new Date());
