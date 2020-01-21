@@ -15,6 +15,8 @@ public class EmployeeListDto {
 	private String department;
 	private String cppLevel;
 	private Date hireDate;
+	private String status;
+	private String consultantType;
 
 	public EmployeeListDto() {
 		super();
@@ -22,7 +24,7 @@ public class EmployeeListDto {
 	}
 	
 	public EmployeeListDto(Long eId,String firstName, String lastName, String userName, String jobType, String department,
-			String cppLevel, Date hireDate) {
+			String cppLevel, Date hireDate, String status, String consultantType) {
 		super();
 		this.eId = eId;
 		this.firstName = firstName;
@@ -32,6 +34,8 @@ public class EmployeeListDto {
 		this.department = department;
 		this.cppLevel = cppLevel;
 		this.hireDate = hireDate;
+		this.status = status;
+		this.consultantType = consultantType;
 	}
 
 	public String getFirstName() {
@@ -96,6 +100,22 @@ public class EmployeeListDto {
 
 	public void seteId(Long eId) {
 		this.eId = eId;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getConsultantType() {
+		return consultantType;
+	}
+
+	public void setConsultantType(String consultantType) {
+		this.consultantType = consultantType;
 	}
 
 	
