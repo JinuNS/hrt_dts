@@ -18,6 +18,8 @@ import com.rcg.hrtdts.model.RoleModel;
 @Repository
 public interface PageRuleRepository extends JpaRepository<PageRule, Long> {
 
-	List<PageRule> findByroleId(Long roleId);
+	List<PageRule> findByroleIdAndLevelId(Long roleId,Long parentId);
+
+	List<PageRule> findByparentIdOrderBySortAsc(Long parentId);
 
 }
