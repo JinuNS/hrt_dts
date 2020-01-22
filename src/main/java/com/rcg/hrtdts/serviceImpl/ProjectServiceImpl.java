@@ -332,17 +332,6 @@ public class ProjectServiceImpl implements ProjectService {
 		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
 		List<RoleModel> rolelist = roleRepository.findAll();
 		JSONObject responseData = new JSONObject();
-
-		/*
-		 * JSONObject clientsobject = new JSONObject(); JSONObject projectlistobject =
-		 * new JSONObject(); JSONObject contractobject = new JSONObject(); JSONObject
-		 * regionobject = new JSONObject(); JSONObject timezoneobject = new
-		 * JSONObject(); JSONObject user_ownerobject = new JSONObject(); JSONObject
-		 * onsite_leadobject = new JSONObject(); JSONObject departmentobject = new
-		 * JSONObject(); JSONObject employeeContractorsobject = new JSONObject();
-		 * JSONObject rolelistobject = new JSONObject(); ArrayList<JSONObject>
-		 * listofObjects = new ArrayList<JSONObject>();
-		 */
 		ArrayList jsonArrayProjectsClient = new ArrayList();
 		ArrayList jsonArrayProjectsList = new ArrayList();
 		ArrayList jsonArrayProjectsContractType = new ArrayList();
@@ -474,17 +463,6 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 			responseData.put("roleList", jsonArrayProjectsRole);
 		}
-//		listofObjects.add(clientsobject);
-//		listofObjects.add(projectlistobject);
-//		listofObjects.add(contractobject);
-//		listofObjects.add(regionobject);
-//		listofObjects.add(timezoneobject);
-//		listofObjects.add(user_ownerobject);
-//		listofObjects.add(onsite_leadobject);
-//		listofObjects.add(departmentobject);
-//		listofObjects.add(employeeContractorsobject);
-//		listofObjects.add(rolelistobject);
-
 		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseData);
 		return status;
 	}
@@ -554,8 +532,7 @@ public class ProjectServiceImpl implements ProjectService {
 			ContractModel contract = null;
 			String parentproject = projectRepository.getProjectName(project.getParentProjectId());
 			List<ProjectRegion> regionList = projectRegionRepository.getRegionList(project.getProjectId());
-//			Long eId = project.getProjectOwner().geteId();
-			Long eId = 1L;
+			Long eId = project.getProjectOwner().geteId();			
 			JSONObject viewJson = new JSONObject();
 			viewJson.put("projectId", project.getProjectId());
 			viewJson.put("projectName", project.getProjectName());
@@ -697,7 +674,6 @@ public class ProjectServiceImpl implements ProjectService {
 			JSONObject onsiteLeads = new JSONObject();
 			if (project.getOnsiteLead() != null) {
 				Long onsiteLead = project.getOnsiteLead().geteId();
-//				Long onsiteLead = 4L;
 				UserModel leadData = null;
 				if (onsiteLead != null) {
 					leadData = userRepository.findByeId(onsiteLead);
