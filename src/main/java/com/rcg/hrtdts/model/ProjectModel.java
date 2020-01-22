@@ -30,7 +30,7 @@ public class ProjectModel {
 	private long parentProjectId;
 	private Integer projectTier; 
 	private String projectRefId;
-	private Integer wokflowType;
+	private Integer workflowType;
 	
 	@ManyToOne
 	private ClientModel clientName;
@@ -46,7 +46,7 @@ public class ProjectModel {
 
 	public ProjectModel(long projectId, String projectName, String projectDetails, int estimatedHours, Date startDate,
 			Date endDate, int isBillable, String projectCode, int projectType, EmployeeModel projectOwner,
-			long parentProjectId, ContractModel contract) {
+			long parentProjectId, ContractModel contract,Integer workflowType) {
 		super();
 		this.projectId = projectId;
 		this.parentProjectId = parentProjectId;
@@ -60,6 +60,7 @@ public class ProjectModel {
 		this.projectType = projectType;
 		this.projectOwner = projectOwner;
 		this.contract = contract;
+		this.workflowType=workflowType;
 	}
 
 	public ProjectModel() {
@@ -194,11 +195,11 @@ public class ProjectModel {
 	}
 
 	public Integer getWokflowType() {
-		return wokflowType;
+		return workflowType;
 	}
 
-	public void setWokflowType(Integer wokflowType) {
-		this.wokflowType = wokflowType;
+	public void setWokflowType(Integer workflowType) {
+		this.workflowType = workflowType;
 	}
 
 	public ClientModel getClientName() {

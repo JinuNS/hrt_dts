@@ -22,6 +22,8 @@ public interface ProjectService {
 	StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception;
 
 	StatusResponse viewAllProjects(ProjectDto projectHrtDto);
+
+	StatusResponse getSingleProject(Long projectId);
 }
 
 

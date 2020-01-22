@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.rcg.hrtdts.dto.ProjectDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.ClientModel;
@@ -29,6 +31,7 @@ import com.rcg.hrtdts.model.EmployeeModel;
 import com.rcg.hrtdts.model.ProjectModel;
 import com.rcg.hrtdts.model.ProjectRegion;
 import com.rcg.hrtdts.model.RegionModel;
+import com.rcg.hrtdts.model.Resources;
 import com.rcg.hrtdts.model.RoleModel;
 import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.model.TimeZoneModel;
@@ -41,6 +44,7 @@ import com.rcg.hrtdts.repository.EmployeeRepository;
 import com.rcg.hrtdts.repository.ProjectRegionRepository;
 import com.rcg.hrtdts.repository.ProjectRepository;
 import com.rcg.hrtdts.repository.RegionRepository;
+import com.rcg.hrtdts.repository.ResourceRepository;
 import com.rcg.hrtdts.repository.RoleRepository;
 import com.rcg.hrtdts.repository.TimeZoneRepository;
 import com.rcg.hrtdts.repository.UserRepository;
@@ -72,28 +76,30 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private RegionService regionService;
-	
+
 	@Autowired
 	RegionRepository regionRepository;
-	
+
 	@Autowired
 	TimeZoneRepository timezoneRepository;
-	
+
 	@Autowired
 	EmployeeRepository employeeRepository;
-	
+
 	@Autowired
 	DepartmentRepository departmentRepository;
-	
+
 	@Autowired
 	EmployeeContractorsRepository employeeContractorsRepository;
-	
+
 	@Autowired
 	RoleRepository roleRepository;
 
+	@Autowired
+	ResourceRepository resourceRepository;
 
 	@Override
-	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException,Exception {
+	public JSONObject createNewProject(ProjectDto projectDto) throws ParseException, HRTDTSException, Exception {
 		JSONObject responsedata = new JSONObject();
 
 		ProjectModel project = new ProjectModel();
@@ -200,7 +206,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public JSONObject updateProject(ProjectDto projectDto) throws ParseException,Exception {
+	public JSONObject updateProject(ProjectDto projectDto) throws ParseException, Exception {
 		JSONObject responsedata = new JSONObject();
 		ProjectModel project = findById(projectDto.getProjectId());
 		Long contractId = projectDto.getContractType();
@@ -223,7 +229,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setIsBillable(projectDto.getIsBillable());
 		project.setProjectCode(projectDto.getProjectCode());
 		project.setProjectStatus(projectDto.getProjectStatus());
-		project.setWokflowType(projectDto.getWorkflowType());
+		//project.setWokflowType(projectDto.getWorkflowType());
 		project.setIsPOC(projectDto.getIsPOC());
 		project.setProjectTier(0);
 		Long userid = null;
@@ -310,33 +316,22 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception {
-		 
+
 		StatusResponse<Serializable> status = new StatusResponse();
 		List<ClientModel> clients = clientRepository.getAll();
 		List<ProjectModel> projectlist = projectRepository.getProjectsOnly();
 		ArrayList<ContractModel> contract = (ArrayList<ContractModel>) contractRepository.findAll();
 		List<RegionModel> region = regionRepository.getlistofRegions();
 		ArrayList<TimeZoneModel> timezone = timezoneRepository.getTimeZones1();
-		//List<EmployeeModel> user_owner = employeeRepository.getProjectOwners();
-		
+		// List<EmployeeModel> user_owner = employeeRepository.getProjectOwners();
+
 		List<UserModel> user_owner = userRepository.getProjectOwners();
-		
+
 		List<UserModel> onsite_lead = userRepository.getOnsiteLeads();
 		List<DepartmentModel> department = ((JpaRepository<DepartmentModel, Long>) departmentRepository).findAll();
 		List<EmployeeContractorsModel> employeeContractors = employeeContractorsRepository.findAll();
 		List<RoleModel> rolelist = roleRepository.findAll();
 		JSONObject responseData = new JSONObject();
-		
-		/*
-		 * JSONObject clientsobject = new JSONObject(); JSONObject projectlistobject =
-		 * new JSONObject(); JSONObject contractobject = new JSONObject(); JSONObject
-		 * regionobject = new JSONObject(); JSONObject timezoneobject = new
-		 * JSONObject(); JSONObject user_ownerobject = new JSONObject(); JSONObject
-		 * onsite_leadobject = new JSONObject(); JSONObject departmentobject = new
-		 * JSONObject(); JSONObject employeeContractorsobject = new JSONObject();
-		 * JSONObject rolelistobject = new JSONObject(); ArrayList<JSONObject>
-		 * listofObjects = new ArrayList<JSONObject>();
-		 */
 		ArrayList jsonArrayProjectsClient = new ArrayList();
 		ArrayList jsonArrayProjectsList = new ArrayList();
 		ArrayList jsonArrayProjectsContractType = new ArrayList();
@@ -468,20 +463,10 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 			responseData.put("roleList", jsonArrayProjectsRole);
 		}
-//		listofObjects.add(clientsobject);
-//		listofObjects.add(projectlistobject);
-//		listofObjects.add(contractobject);
-//		listofObjects.add(regionobject);
-//		listofObjects.add(timezoneobject);
-//		listofObjects.add(user_ownerobject);
-//		listofObjects.add(onsite_leadobject);
-//		listofObjects.add(departmentobject);
-//		listofObjects.add(employeeContractorsobject);
-//		listofObjects.add(rolelistobject);
-
 		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseData);
 		return status;
 	}
+
 	public ProjectModel saveProjectRecord(ProjectModel projectmodel) {
 
 		ProjectModel model = projectRepository.save(projectmodel);
@@ -522,11 +507,12 @@ public class ProjectServiceImpl implements ProjectService {
 		ArrayList<ProjectRegion> list = (ArrayList<ProjectRegion>) projectRegionRepository.getRegionList(projectId);
 		return list;
 	}
+
 	public int deleteProjectRegions(long projectId) {
 		int i = projectRegionRepository.deleteByProjectId(projectId);
 		return i;
 	}
-	
+
 	@Override
 	public StatusResponse viewAllProjects(ProjectDto projectHrtDto) {
 		ArrayList viewProjects = new ArrayList();
@@ -546,8 +532,7 @@ public class ProjectServiceImpl implements ProjectService {
 			ContractModel contract = null;
 			String parentproject = projectRepository.getProjectName(project.getParentProjectId());
 			List<ProjectRegion> regionList = projectRegionRepository.getRegionList(project.getProjectId());
-//			Long eId = project.getProjectOwner().geteId();
-			Long eId = 1L;
+			Long eId = project.getProjectOwner().geteId();			
 			JSONObject viewJson = new JSONObject();
 			viewJson.put("projectId", project.getProjectId());
 			viewJson.put("projectName", project.getProjectName());
@@ -566,11 +551,11 @@ public class ProjectServiceImpl implements ProjectService {
 				}
 				viewJson.put("projectRegion", regionsArray);
 			}
-			if(project.getReleasingDate() != null) {
+			if (project.getReleasingDate() != null) {
 				viewJson.put("releasingDate", project.getReleasingDate().toString());
 			}
-			if (project.getClientName() != null ) {
-				
+			if (project.getClientName() != null) {
+
 				client.put("clientId", project.getClientName().getClientId());
 				client.put("clientName", project.getClientName().getClientName());
 				viewJson.put("client", client);
@@ -588,7 +573,7 @@ public class ProjectServiceImpl implements ProjectService {
 				contractobj.put("contractTypeId", contract.getContractTypeId());
 				contractobj.put("contractTypeName", contract.getContractTypeName());
 			}
-			viewJson.put("contractType", contractobj);			
+			viewJson.put("contractType", contractobj);
 			if (eId != null) {
 				employee = userRepository.getNonActiveUser(eId);
 			}
@@ -599,12 +584,160 @@ public class ProjectServiceImpl implements ProjectService {
 				employeeJson.put("lastName", employee.getEmployee().getLastName());
 				employeeJson.put("role", employee.getRole().getRoleId());
 				employeeJson.put("userId", employee.getEmployee().geteId());
-				//employeeJson.put("regionId", employee.getRegion().getId());
+				// employeeJson.put("regionId", employee.getRegion().getId());
 			}
 			viewJson.put("approverLevelOne", employeeJson);
 			viewProjects.add(viewJson);
 		}
 		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), viewProjects);
+		return status;
+	}
+
+	@Override
+	public StatusResponse getSingleProject(@PathVariable Long projectId) {
+		StatusResponse status = new StatusResponse();
+		JSONObject responseData = new JSONObject();
+		JSONObject response = new JSONObject();
+		JSONObject contractobj = new JSONObject();
+		JSONObject clientobj = new JSONObject();
+		JSONObject projectobj = new JSONObject();
+		ArrayList region = new ArrayList();
+		ContractModel contract = null;
+		ClientModel clientmodel = null;
+		Long clientid = null;
+		Long contractId = null;
+		ProjectModel project = projectRepository.getOne(projectId);
+		if (project.equals(null)) {
+			status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), "Data Not Availabale");
+		} else {
+			responseData.put("projectId", project.getProjectId());
+			responseData.put("projectName", project.getProjectName());
+			responseData.put("projectDetails", project.getProjectDetails());
+			responseData.put("parentProjectId", project.getParentProjectId());
+			responseData.put("estimatedHours", project.getEstimatedHours());
+			responseData.put("startDate", project.getStartDate().toString());
+			responseData.put("endDate", project.getEndDate().toString());
+			responseData.put("isBillable", project.getIsBillable());
+			responseData.put("projectCategory", project.getProjectCategory());
+			responseData.put("projectCode", project.getProjectCode());
+			responseData.put("projectType", project.getProjectType());
+			if (project.getReleasingDate() != null) {
+				responseData.put("releasingDate", project.getReleasingDate().toString());
+			} else {
+				responseData.put("releasingDate", " ");
+			}
+			responseData.put("isPOC", project.getIsPOC());
+			responseData.put("projectStatus", project.getProjectStatus());
+			responseData.put("projectTier", project.getProjectTier());
+			responseData.put("workflowType", project.getWokflowType());
+			if (project.getClientName() != null)
+				clientid = project.getClientName().getClientId();
+
+			if (clientid != null)
+				clientmodel = clientRepository.getClientData(clientid);
+
+			if (clientmodel == null)
+				clientobj = null;
+			else {
+				clientobj.put("clientId", clientmodel.getClientId());
+				clientobj.put("clientName", clientmodel.getClientName());
+			}
+			responseData.put("clientName", clientobj);
+			responseData.put("clientPointOfContact", project.getClientPointOfContact());
+			contractId = project.getContract().getContractTypeId();
+			if (contractId != null) {
+				contract = contractRepository.getContract(contractId);
+			}
+			if (contract == null)
+				contractobj = null;
+			else {
+
+				contractobj.put("contractTypeId", contract.getContractTypeId());
+				contractobj.put("contractTypeName", contract.getContractTypeName());
+			}
+			responseData.put("contractType", contractobj);
+			Long projectowner = project.getProjectOwner().geteId();
+			UserModel ownerData = null;
+			if (projectowner != null) {
+				ownerData = userRepository.findByeId(projectowner);
+			}
+			JSONObject userobj = new JSONObject();
+			if (ownerData == null)
+				userobj = null;
+			else {
+				userobj.put("firstName", ownerData.getEmployee().getFirstName());
+				userobj.put("lastName", ownerData.getEmployee().getLastName());
+				userobj.put("role", ownerData.getRole().getRoleId());
+				userobj.put("userId", ownerData.getEmployee().geteId());
+			}
+			responseData.put("approverLevelOne", userobj);
+			JSONObject onsiteLeads = new JSONObject();
+			if (project.getOnsiteLead() != null) {
+				Long onsiteLead = project.getOnsiteLead().geteId();
+				UserModel leadData = null;
+				if (onsiteLead != null) {
+					leadData = userRepository.findByeId(onsiteLead);
+				}
+				if (leadData == null)
+					onsiteLeads = null;
+				else {
+					onsiteLeads.put("firstName", leadData.getEmployee().getFirstName());
+					onsiteLeads.put("lastName", leadData.getEmployee().getLastName());
+					onsiteLeads.put("role", leadData.getRole().getRoleId());
+					onsiteLeads.put("userId", leadData.getEmployee().geteId());
+				}
+			}
+			responseData.put("approverLevelTwo", onsiteLeads);
+			List<ProjectRegion> regions = projectRegionRepository.getRegionList(project.getProjectId());
+			ArrayList regionsArray = new ArrayList();
+			ArrayList<Integer> regionArraylist = new ArrayList<Integer>();
+			if (regions.isEmpty()) {
+				responseData.put("projectRegion", regionsArray);
+			} else {
+
+				for (ProjectRegion regioneach : regions) {
+					JSONObject resource = new JSONObject();
+					regionsArray.add(regioneach.getRegionId().getId());
+				}
+				responseData.put("projectRegion", regionsArray);
+			}
+
+			List<Resources> resourcelist = resourceRepository.getResourceList(project.getProjectId());
+			ArrayList resourceArray = new ArrayList();
+			if (resourcelist.isEmpty())
+				responseData.put("resource", resourceArray);
+			else {
+				for (Resources resource : resourcelist) {
+					JSONObject resourceobj = new JSONObject();
+					resourceobj.put("resourceId", resource.getResourceId());
+					resourceobj.put("resourceCount", resource.getresourceCount());
+
+					if (project == null)
+						projectobj = null;
+					else {
+						projectobj.put("projectId", project.getProjectId());
+						projectobj.put("projectName", project.getProjectName());
+					}
+					resourceobj.put("project", projectobj);
+					DepartmentModel department = departmentRepository
+							.getOne(resource.getDepartment().getDepartmentId());
+					JSONObject departmentobj = new JSONObject();
+
+					if (department == null)
+						departmentobj = null;
+					else {
+						departmentobj.put("departmentId", department.getDepartmentId());
+						departmentobj.put("departmentName", department.getDepartmentName());
+					}
+					resourceobj.put("department", departmentobj);
+					resourceArray.add(resourceobj);
+				}
+				responseData.put("resource", resourceArray);
+			}
+
+			status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseData);
+		}
+
 		return status;
 	}
 
