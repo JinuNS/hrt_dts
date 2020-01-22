@@ -42,7 +42,8 @@ public class LoginServiceImpl implements LoginService {
 		LoginResponseDto loginResponseDto = null;
 
 		if (requestDto != null) {
-			if (requestDto.getUsername() != null && !requestDto.getUsername().isEmpty()) {
+			if (requestDto.getUsername() != null && !requestDto.getUsername().isEmpty()
+					&& requestDto.getUsername().trim().length() > 0) {
 				user = userRepository.findByuserName(requestDto.getUsername());
 				if (user != null) {
 					if (!user.getIsActive()) {
@@ -84,8 +85,9 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	private List<ParentPageRuleDto> setPageRuleForParentAndChild(List<PageRule> pageRuleList) {
-		List<ParentPageRuleDto> parentPageRuleList = new ArrayList<ParentPageRuleDto>();;
-		if (pageRuleList != null) { 
+		List<ParentPageRuleDto> parentPageRuleList = new ArrayList<ParentPageRuleDto>();
+		;
+		if (pageRuleList != null) {
 			pageRuleList.forEach(parent -> {
 				List<ChildPageRoleDto> childPageRuleList = new ArrayList<ChildPageRoleDto>();
 				ParentPageRuleDto parentItem = new ParentPageRuleDto();
@@ -112,7 +114,7 @@ public class LoginServiceImpl implements LoginService {
 				parentPageRuleList.add(parentItem);
 			});
 		}
-		
+
 		return parentPageRuleList;
 	}
 
