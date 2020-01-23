@@ -33,4 +33,13 @@ public interface ProjectRepository extends JpaRepository<ProjectModel, Long>{
 
 	@Query("SELECT p FROM ProjectModel p WHERE p.projectId=?1")
 	ProjectModel getProjectdata(Long projectName);
+	
+	@Query("SELECT p from ProjectModel  p where p.projectStatus=1 order by p.projectName Asc")
+	List<ProjectModel> getAllActiveProjectList();
+
+	@Query("SELECT p from ProjectModel p where p.projectOwner.eId =?1 AND p.projectStatus=1 order by p.projectName Asc")
+	List<ProjectModel> getProjectListByLevel1(Long userId);
+
+	@Query("SELECT p from ProjectModel p where p.onsiteLead.eId =?1 AND p.projectStatus=1 order by p.projectName Asc")
+	List<ProjectModel> getProjectListByLevel2(Long userId);
 }

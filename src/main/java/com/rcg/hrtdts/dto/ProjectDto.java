@@ -3,6 +3,10 @@ package com.rcg.hrtdts.dto;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ManyToOne;
+
+import com.rcg.hrtdts.model.RegionModel;
+
 public class ProjectDto {
 	
 	private Long  approverLevel1;
@@ -28,7 +32,14 @@ public class ProjectDto {
 	private Date startDate;
 	private Integer workflowType;
 	private Long projectId;
-
+	public Long getRegionId() {
+		return regionId;
+	}
+	public void setRegionId(Long regionId) {
+		this.regionId = regionId;
+	}
+	private Long regionId;
+		
 	
 	public Long getProjectId() {
 		return projectId;

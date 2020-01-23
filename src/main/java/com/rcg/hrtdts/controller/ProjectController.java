@@ -7,7 +7,6 @@ package com.rcg.hrtdts.controller;
 
 import java.text.ParseException;
 import java.util.Date;
-
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,12 +33,12 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectservice;
 
-	
 	/**
 	 * To create new project
-	 * @author  Jinu Shaji
+	 * 
+	 * @author Jinu Shaji
 	 * @version 1.0
-	 * @since   2020-01-16 
+	 * @since 2020-01-16
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/create")
@@ -47,91 +46,123 @@ public class ProjectController {
 
 		StatusResponse response = new StatusResponse();
 		JSONObject projectDetails = new JSONObject();
-		try {		
+		try {
 			projectDetails = projectservice.createNewProject(projectDto);
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), projectDetails);
-		}
-		catch (HRTDTSException e) {
+		} catch (HRTDTSException e) {
 			throw new HRTDTSException(e.getErrorMessage());
 		} catch (ParseException e) {
 			throw new HRTDTSDateFormatException(e.getMessage());
 		} catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					exceptionResponse);
 		}
 		return response;
 	}
-	
+
 	/**
 	 * To edit project
-	 * @author  Jinu Shaji
+	 * 
+	 * @author Jinu Shaji
 	 * @version 1.0
-	 * @since   2020-01-17
+	 * @since 2020-01-17
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PutMapping("/edit")
 	public StatusResponse updateProject(@RequestBody ProjectDto projectDto) {
 		StatusResponse response = new StatusResponse();
-		try {		
+		try {
 			projectservice.updateProject(projectDto);
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), "Project updated successfully");
-		}
-		catch (HRTDTSException e) {
+		} catch (HRTDTSException e) {
 			throw new HRTDTSException("Updation Failed");
 		} catch (ParseException e) {
 			throw new HRTDTSDateFormatException("Updation Failed due to invalid date format");
 		} catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
-			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(), exceptionResponse);
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					exceptionResponse);
 		}
 		return response;
 	}
-	
+
+	/**
+	 * To get single project ID
+	 * 
+	 * @author Bala
+	 * @version 1.0
+	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/getSingleProject/{projectId}")
+	@GetMapping("/singleProject/{projectId}")
 	public StatusResponse getSingleProject(@PathVariable("projectId") Long projectId) throws ParseException {
 		StatusResponse response = new StatusResponse();
 		try {
-
-			response = projectservice.getSingleProject(projectId);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
+					projectservice.getSingleProject(projectId));
 		} catch (HRTDTSException e) {
-			throw new HRTDTSException("Updation Failed");
+			throw new HRTDTSException(e.getErrorCode(), e.getErrorMessage());
+		} catch (Exception e) {
+			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					exceptionResponse);
 		}
 		return response;
 	}
-	
-	@GetMapping(value = { "/listOfProjects" })
+
+	/**
+	 * To get multiple lists 
+	 * 
+	 * @author Bala
+	 * @version 1.0
+	 **/
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping(value = { "/list" })
 	public StatusResponse projectListDataForAdmin() throws Exception {
-		StatusResponse status = new StatusResponse();
+		StatusResponse response = new StatusResponse();
 
 		try {
-			status = projectservice.projectListDataForAdmin(new ProjectDto());
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
+					projectservice.projectListDataForAdmin(new ProjectDto()));
 		} catch (HRTDTSNotFoundException e) {
-			throw new HRTDTSNotFoundException(e.getErrorMessage());
-		}
-		catch (HRTDTSException e) {
-			throw new HRTDTSException(e.getErrorMessage());
+			throw new HRTDTSNotFoundException(e.getErrorCode(), e.getErrorMessage());
+		} catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorCode(), e.getErrorMessage());
 		} catch (ParseException e) {
 			throw new HRTDTSDateFormatException(e.getMessage());
+		} catch (Exception e) {
+			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					exceptionResponse);
 		}
-		return status;
+		return response;
 	}
-	
-	@PostMapping(value = { "/viewAllProjects" })
+
+	/**
+	 * View All Projects
+	 * 
+	 * @author Bala
+	 * @version 1.0
+	 * 
+	 **/
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping(value = { "/viewAll" })
 	public StatusResponse viewAllProjects(@RequestBody ProjectDto projectHrtDto) throws Exception {
-		StatusResponse status = new StatusResponse();
+		StatusResponse response = new StatusResponse();
 
 		try {
-			status = projectservice.viewAllProjects(projectHrtDto);
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
+					projectservice.viewAllProjects(projectHrtDto));
 		} catch (HRTDTSNotFoundException e) {
-			throw new HRTDTSNotFoundException(e.getErrorMessage());
+			throw new HRTDTSNotFoundException(e.getErrorCode(), e.getErrorMessage());
+		} catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorCode(), e.getErrorMessage());
+		}catch (Exception e) {
+			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					exceptionResponse);
 		}
-		catch (HRTDTSException e) {
-			throw new HRTDTSException(e.getErrorMessage());
-		}
-		return status;
+		return response;
 	}
 
-
-	
 }

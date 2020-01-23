@@ -1,7 +1,5 @@
 package com.rcg.hrtdts.repository;
 
-
-
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -9,9 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
+import com.rcg.hrtdts.model.ProjectModel;
 import com.rcg.hrtdts.model.ProjectRegion;
-
 
 public interface ProjectRegionRepository extends JpaRepository<ProjectRegion, Long> {
 
@@ -22,5 +19,8 @@ public interface ProjectRegionRepository extends JpaRepository<ProjectRegion, Lo
 	@Transactional
 	@Query("delete from ProjectRegion p where p.projectId.projectId = ?1")
 	int deleteByProjectId(Long projectId);
-	
+
+	@Query("SELECT r.projectId  FROM ProjectRegion r WHERE r.region.id=?1  AND r.projectId.projectStatus=1 AND r.projectId.parentProjectId !=0 group by 1 order by r.projectId.projectName Asc ")
+	List<ProjectModel> getProjectsByRegionId(Long regionId);
+
 }

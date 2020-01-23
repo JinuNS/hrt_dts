@@ -6,24 +6,20 @@
 package com.rcg.hrtdts.service;
 
 import java.text.ParseException;
-
+import java.util.ArrayList;
 import org.json.simple.JSONObject;
-
 import com.rcg.hrtdts.dto.ProjectDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
-import com.rcg.hrtdts.model.StatusResponse;
 
 public interface ProjectService {
 
-	JSONObject createNewProject(ProjectDto projectDto) throws ParseException,HRTDTSException,Exception;
+	JSONObject createNewProject(ProjectDto projectDto) throws ParseException, HRTDTSException, Exception;
 
-	JSONObject updateProject(ProjectDto projectDto) throws ParseException,HRTDTSException,Exception;
-	
-	StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception;
+	JSONObject updateProject(ProjectDto projectDto) throws ParseException, HRTDTSException, Exception;
 
-	StatusResponse viewAllProjects(ProjectDto projectHrtDto);
+	JSONObject projectListDataForAdmin(ProjectDto projectDto) throws Exception;
 
-	StatusResponse getSingleProject(Long projectId);
+	ArrayList viewAllProjects(ProjectDto projectHrtDto);
+
+	JSONObject getSingleProject(Long projectId) throws Exception, HRTDTSException;
 }
-
-

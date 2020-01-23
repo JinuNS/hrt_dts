@@ -18,7 +18,7 @@ public class ProjectRegion {
 	private ProjectModel projectId;
 	
 	@ManyToOne
-	private RegionModel regionId;
+	private RegionModel region;
 
 	public long getProjectRegionId() {
 		return projectRegionId;
@@ -36,12 +36,12 @@ public class ProjectRegion {
 		this.projectId = projectId;
 	}
 
-	public RegionModel getRegionId() {
-		return regionId;
+	public RegionModel getRegion() {
+		return region;
 	}
 
-	public void setRegionId(RegionModel regionId) {
-		this.regionId = regionId;
+	public void setRegionId(RegionModel region) {
+		this.region = region;
 	}
 
 

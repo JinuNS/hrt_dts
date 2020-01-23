@@ -14,7 +14,7 @@ public class UserModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 
-    @ManyToOne
+	@ManyToOne
 	private EmployeeModel employee;
 
 	private String userName, password, email;
@@ -22,6 +22,28 @@ public class UserModel {
 
 	@ManyToOne
 	private RoleModel role;
+
+	@ManyToOne
+	private RegionModel region;
+
+	@ManyToOne
+	private DepartmentModel department;
+
+	public DepartmentModel getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(DepartmentModel department) {
+		this.department = department;
+	}
+
+	public RegionModel getRegion() {
+		return region;
+	}
+
+	public void setRegion(RegionModel region) {
+		this.region = region;
+	}
 
 	public Long getUserId() {
 		return userId;

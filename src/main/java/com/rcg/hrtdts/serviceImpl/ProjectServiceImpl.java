@@ -6,7 +6,6 @@
 
 package com.rcg.hrtdts.serviceImpl;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,10 +16,8 @@ import java.util.TimeZone;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import com.rcg.hrtdts.dto.ProjectDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.ClientModel;
@@ -33,7 +30,6 @@ import com.rcg.hrtdts.model.ProjectRegion;
 import com.rcg.hrtdts.model.RegionModel;
 import com.rcg.hrtdts.model.Resources;
 import com.rcg.hrtdts.model.RoleModel;
-import com.rcg.hrtdts.model.StatusResponse;
 import com.rcg.hrtdts.model.TimeZoneModel;
 import com.rcg.hrtdts.model.UserModel;
 import com.rcg.hrtdts.repository.ClientRepository;
@@ -51,7 +47,6 @@ import com.rcg.hrtdts.repository.UserRepository;
 import com.rcg.hrtdts.service.EmployeeService;
 import com.rcg.hrtdts.service.ProjectService;
 import com.rcg.hrtdts.service.RegionService;
-import com.rcg.hrtdts.utility.Constants;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -229,7 +224,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setIsBillable(projectDto.getIsBillable());
 		project.setProjectCode(projectDto.getProjectCode());
 		project.setProjectStatus(projectDto.getProjectStatus());
-		//project.setWokflowType(projectDto.getWorkflowType());
+		project.setWokflowType(projectDto.getWorkflowType());
 		project.setIsPOC(projectDto.getIsPOC());
 		project.setProjectTier(0);
 		Long userid = null;
@@ -315,9 +310,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public StatusResponse projectListDataForAdmin(ProjectDto projectDto) throws Exception {
+	public JSONObject projectListDataForAdmin(ProjectDto projectDto) throws Exception {
 
-		StatusResponse<Serializable> status = new StatusResponse();
 		List<ClientModel> clients = clientRepository.getAll();
 		List<ProjectModel> projectlist = projectRepository.getProjectsOnly();
 		ArrayList<ContractModel> contract = (ArrayList<ContractModel>) contractRepository.findAll();
@@ -462,9 +456,8 @@ public class ProjectServiceImpl implements ProjectService {
 				jsonArrayProjectsRole.add(rolejson);
 			}
 			responseData.put("roleList", jsonArrayProjectsRole);
-		}
-		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseData);
-		return status;
+		};
+		return responseData;
 	}
 
 	public ProjectModel saveProjectRecord(ProjectModel projectmodel) {
@@ -514,15 +507,14 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public StatusResponse viewAllProjects(ProjectDto projectHrtDto) {
+	public ArrayList viewAllProjects(ProjectDto projectHrtDto) {
 		ArrayList viewProjects = new ArrayList();
 		ArrayList<ProjectModel> projectlist = projectRepository.getAllNonParentProjects();
-		StatusResponse status = new StatusResponse();
 		Long contractId = null;
 		ArrayList regionsArray = new ArrayList();
 		ArrayList<Integer> regionArraylist = new ArrayList<Integer>();
 		if (projectlist.isEmpty()) {
-			status = new StatusResponse(Constants.FAILURE, HttpStatus.OK.value(), "Empty List");
+			throw new HRTDTSException("Empty List");
 		}
 		for (ProjectModel project : projectlist) {
 			JSONObject client = new JSONObject();
@@ -547,7 +539,7 @@ public class ProjectServiceImpl implements ProjectService {
 			} else {
 				for (ProjectRegion regioneach : regionList) {
 					JSONObject resource = new JSONObject();
-					regionsArray.add(regioneach.getRegionId().getId());
+					regionsArray.add(regioneach.getRegion().getId());
 				}
 				viewJson.put("projectRegion", regionsArray);
 			}
@@ -589,13 +581,11 @@ public class ProjectServiceImpl implements ProjectService {
 			viewJson.put("approverLevelOne", employeeJson);
 			viewProjects.add(viewJson);
 		}
-		status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), viewProjects);
-		return status;
+		return viewProjects;
 	}
 
 	@Override
-	public StatusResponse getSingleProject(@PathVariable Long projectId) {
-		StatusResponse status = new StatusResponse();
+	public JSONObject getSingleProject(@PathVariable Long projectId) throws Exception,HRTDTSException {
 		JSONObject responseData = new JSONObject();
 		JSONObject response = new JSONObject();
 		JSONObject contractobj = new JSONObject();
@@ -608,7 +598,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Long contractId = null;
 		ProjectModel project = projectRepository.getOne(projectId);
 		if (project.equals(null)) {
-			status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), "Data Not Availabale");
+			throw new HRTDTSException("Data Not Availabale");
 		} else {
 			responseData.put("projectId", project.getProjectId());
 			responseData.put("projectName", project.getProjectName());
@@ -697,7 +687,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 				for (ProjectRegion regioneach : regions) {
 					JSONObject resource = new JSONObject();
-					regionsArray.add(regioneach.getRegionId().getId());
+					regionsArray.add(regioneach.getRegion().getId());
 				}
 				responseData.put("projectRegion", regionsArray);
 			}
@@ -735,10 +725,9 @@ public class ProjectServiceImpl implements ProjectService {
 				responseData.put("resource", resourceArray);
 			}
 
-			status = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), responseData);
 		}
 
-		return status;
+		return responseData;
 	}
 
 }
