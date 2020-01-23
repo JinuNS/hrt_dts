@@ -18,15 +18,15 @@ import com.rcg.hrtdts.model.EmployeeTechnologyModel;
  **/
 public interface EmployeeTechnologyRepository extends JpaRepository<EmployeeTechnologyModel, Long>{
     
-	@Query("select s from EmployeeTechnologyModel s where s.userHrtModel.eId = ?1")
+	@Query("select s from EmployeeTechnologyModel s where s.employeeModel.eId = ?1")
 	List<EmployeeTechnologyModel> findByEId(Long eId);
 
-	@Query("select count(*) > 0 from EmployeeTechnologyModel e where e.userHrtModel.eId = ?1") 
+	@Query("select count(*) > 0 from EmployeeTechnologyModel e where e.employeeModel.eId = ?1") 
 	Boolean existsByEId(Long geteId);
 
 	@Modifying
 	@Transactional
-	@Query("delete from EmployeeTechnologyModel e where e.userHrtModel.eId = ?1")
+	@Query("delete from EmployeeTechnologyModel e where e.employeeModel.eId = ?1")
 	int deleteByUserHrtModelEId(Long eId);
 
 }

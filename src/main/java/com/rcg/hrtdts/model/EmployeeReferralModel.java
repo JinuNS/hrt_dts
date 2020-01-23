@@ -28,7 +28,7 @@ public class EmployeeReferralModel {
 	private Double ratePerDay;
 	private Double ratePerHour;
 	@ManyToOne
-	private EmployeeModel userHrtModel;
+	private EmployeeModel employeeModel;
 	@ManyToOne
 	private ReferralsModel referralsModel;
 
@@ -88,14 +88,6 @@ public class EmployeeReferralModel {
 		this.ratePerHour = ratePerHour;
 	}
 
-	public EmployeeModel getUserHrtModel() {
-		return userHrtModel;
-	}
-
-	public void setUserHrtModel(EmployeeModel userHrtModel) {
-		this.userHrtModel = userHrtModel;
-	}
-
 	public ReferralsModel getReferralsModel() {
 		return referralsModel;
 	}
@@ -104,4 +96,13 @@ public class EmployeeReferralModel {
 		this.referralsModel = referralsModel;
 	}
 
+	public EmployeeModel getEmployeeModel() {
+		return employeeModel;
+	}
+
+	public void setEmployeeModel(EmployeeModel employeeModel) {
+		this.employeeModel = employeeModel;
+	}
+
+	
 }

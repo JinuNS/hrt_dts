@@ -20,7 +20,7 @@ public class EmployeeTechnologyModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-	private EmployeeModel userHrtModel;
+	private EmployeeModel employeeModel;
 	@ManyToOne
 	private TechnologyModel skills;
 	private Integer skillLevel;
@@ -35,12 +35,12 @@ public class EmployeeTechnologyModel {
 		this.id = id;
 	}
 
-	public EmployeeModel getUserHrtModel() {
-		return userHrtModel;
+	public EmployeeModel getEmployeeModel() {
+		return employeeModel;
 	}
 
-	public void setUserHrtModel(EmployeeModel userHrtModel) {
-		this.userHrtModel = userHrtModel;
+	public void setEmployeeModel(EmployeeModel employeeModel) {
+		this.employeeModel = employeeModel;
 	}
 
 	public TechnologyModel getSkills() {

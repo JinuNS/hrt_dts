@@ -16,15 +16,15 @@ import com.rcg.hrtdts.model.EmployeeReferralModel;
  **/
 public interface EmployeeReferralsRepository extends JpaRepository<EmployeeReferralModel, Long>{
 
-	@Query("select e from EmployeeReferralModel e where e.userHrtModel.eId = ?1")
+	@Query("select e from EmployeeReferralModel e where e.employeeModel.eId = ?1")
 	EmployeeReferralModel findByEId(long id);
 	
-	@Query("select count(*) > 0 from EmployeeReferralModel e where e.userHrtModel.eId = ?1") 
+	@Query("select count(*) > 0 from EmployeeReferralModel e where e.employeeModel.eId = ?1") 
 	Boolean existsByEId(long geteId);
 
 	@Modifying
 	@Transactional
-	@Query("delete from EmployeeReferralModel e where e.userHrtModel.eId = ?1")
+	@Query("delete from EmployeeReferralModel e where e.employeeModel.eId = ?1")
 	void deleteByUserHrtModelEId(long geteId);
 
 }
