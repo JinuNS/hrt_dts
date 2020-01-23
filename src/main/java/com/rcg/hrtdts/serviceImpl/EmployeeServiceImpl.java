@@ -416,7 +416,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			responseDto.setDob(employeeModel.getDob());
 			responseDto.setHireCodes(employeeModel.getHireCodes());
 			responseDto.setHomeBranch(employeeModel.getHomeBranch());
-			responseDto.setCPPCareerLevel(employeeModel.getCPPCareerLevel());
+			responseDto.setCppLevel(employeeModel.getCPPCareerLevel());
 			responseDto.setEmployeeType(
 					(employeeModel.getEmployeeType() != null) ? employeeModel.getEmployeeType().getValue() : null);
 			responseDto.setGender((employeeModel.getGender() != null) ? employeeModel.getGender().getValue() : null);

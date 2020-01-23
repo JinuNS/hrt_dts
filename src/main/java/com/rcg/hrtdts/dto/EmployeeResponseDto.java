@@ -57,7 +57,7 @@ public class EmployeeResponseDto {
 	private Date dob;
 	private String hireCodes;
 	private String homeBranch;
-	private String CPPCareerLevel;
+	private String cppLevel;
 	private List<UserSkillResponseDto> userSkills;
 
 	private String type;
@@ -450,12 +450,12 @@ public class EmployeeResponseDto {
 		this.homeBranch = homeBranch;
 	}
 
-	public String getCPPCareerLevel() {
-		return CPPCareerLevel;
+	public String getCppLevel() {
+		return cppLevel;
 	}
 
-	public void setCPPCareerLevel(String cPPCareerLevel) {
-		CPPCareerLevel = cPPCareerLevel;
+	public void setCppLevel(String cppLevel) {
+		this.cppLevel = cppLevel;
 	}
 
 	public List<UserSkillResponseDto> getUserSkills() {
