@@ -50,7 +50,7 @@ public class ProjectController {
 			projectDetails = projectservice.createNewProject(projectDto);
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), projectDetails);
 		} catch (HRTDTSException e) {
-			throw new HRTDTSException(e.getErrorMessage());
+			throw new HRTDTSException(e.getErrorCode(), e.getErrorMessage());
 		} catch (ParseException e) {
 			throw new HRTDTSDateFormatException(e.getMessage());
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class ProjectController {
 			projectservice.updateProject(projectDto);
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), "Project updated successfully");
 		} catch (HRTDTSException e) {
-			throw new HRTDTSException("Updation Failed");
+			throw new HRTDTSException(e.getErrorCode(), e.getErrorMessage());
 		} catch (ParseException e) {
 			throw new HRTDTSDateFormatException("Updation Failed due to invalid date format");
 		} catch (Exception e) {
@@ -111,7 +111,7 @@ public class ProjectController {
 	}
 
 	/**
-	 * To get multiple lists 
+	 * To get multiple lists
 	 * 
 	 * @author Bala
 	 * @version 1.0
@@ -123,7 +123,7 @@ public class ProjectController {
 
 		try {
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
-					projectservice.projectListDataForAdmin(new ProjectDto()));
+					projectservice.projectListDataForAdmin());
 		} catch (HRTDTSNotFoundException e) {
 			throw new HRTDTSNotFoundException(e.getErrorCode(), e.getErrorMessage());
 		} catch (HRTDTSException e) {
@@ -151,13 +151,12 @@ public class ProjectController {
 		StatusResponse response = new StatusResponse();
 
 		try {
-			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
-					projectservice.viewAllProjects(projectHrtDto));
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(), projectservice.viewAllProjects());
 		} catch (HRTDTSNotFoundException e) {
 			throw new HRTDTSNotFoundException(e.getErrorCode(), e.getErrorMessage());
 		} catch (HRTDTSException e) {
 			throw new HRTDTSException(e.getErrorCode(), e.getErrorMessage());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
 			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
 					exceptionResponse);
