@@ -334,114 +334,120 @@ public class ProjectServiceImpl implements ProjectService {
         ArrayList projectsUserOwnerList = new ArrayList();
         ArrayList projectsOnsiteLeadList = new ArrayList();
         List<ClientResponseDto> clientResponseDtoList = new ArrayList<ClientResponseDto>();
-        if (clients != null) {
-            for (ClientModel client : clients) {
-                ClientResponseDto clientDto = new ClientResponseDto();
-                clientDto.setClientId(client.getClientId());
-                clientDto.setClientName(client.getClientName());
-                clientResponseDtoList.add(clientDto);
-            }
-        }
+		if (clients != null) {
+			clients.forEach(client -> {
+				ClientResponseDto clientDto = new ClientResponseDto();
+				clientDto.setClientId(client.getClientId());
+				clientDto.setClientName(client.getClientName());
+				clientResponseDtoList.add(clientDto);
+
+			});
+		}
         adminProjectListDto.setClientResponseDtoList(clientResponseDtoList);
         List<ProjectResponseDto> projectResponseDtoList = new ArrayList<ProjectResponseDto>();
         if (projectlist != null && projectlist.size() > 0) {
             ProjectResponseDto projectResponseDto = new ProjectResponseDto();
-            for (ProjectModel project : projectlist) {
+            projectlist.forEach(project -> {
                 projectResponseDto.setProjectId(project.getProjectId());
                 projectResponseDto.setProjectName(project.getProjectName());
                 projectResponseDtoList.add(projectResponseDto);
-            }
+            
+            });
         }
         adminProjectListDto.setProjectResponseDtoList(projectResponseDtoList);
         List<ContractTypeResponseDto> contractResponseDtoList = new ArrayList<ContractTypeResponseDto>();
-        if (contract != null && contract.size() > 0) {
-            ContractTypeResponseDto contractResponseDto = new ContractTypeResponseDto();
-            for (ContractModel contracts : contract) {
-                contractResponseDto.setContractTypeId(contracts.getContractTypeId());
-                contractResponseDto.setContractTypeName(contracts.getContractTypeName());
-                contractResponseDtoList.add(contractResponseDto);
-            }
-        }
+		if (contract != null && contract.size() > 0) {
+			ContractTypeResponseDto contractResponseDto = new ContractTypeResponseDto();
+			contract.forEach(contracts -> {
+				contractResponseDto.setContractTypeId(contracts.getContractTypeId());
+				contractResponseDto.setContractTypeName(contracts.getContractTypeName());
+				contractResponseDtoList.add(contractResponseDto);
+
+			});
+		}
         adminProjectListDto.setContractResponseDtoList(contractResponseDtoList);
         List<ProjectRegionResponseDto> projectRegionResponseDtoList = new ArrayList<ProjectRegionResponseDto>();
-        if (region != null && region.size() > 0) {
-            for (RegionModel regions : region) {
-                ProjectRegionResponseDto projectRegionResponseDto = new ProjectRegionResponseDto();
-                projectRegionResponseDto.setRegionId(regions.getId());
-                projectRegionResponseDto.setRegionName(regions.getRegionName());
-                projectRegionResponseDto.setRegionCode(regions.getRegionCode());
-                projectRegionResponseDtoList.add(projectRegionResponseDto);
-            }
-        }
+		if (region != null && region.size() > 0) {
+			region.forEach(regions -> {
+				ProjectRegionResponseDto projectRegionResponseDto = new ProjectRegionResponseDto();
+				projectRegionResponseDto.setRegionId(regions.getId());
+				projectRegionResponseDto.setRegionName(regions.getRegionName());
+				projectRegionResponseDto.setRegionCode(regions.getRegionCode());
+				projectRegionResponseDtoList.add(projectRegionResponseDto);
+
+			});
+		}
         adminProjectListDto.setProjectRegionResponseDtoList(projectRegionResponseDtoList);
         List<TimeZoneModel> timeZoneModelList = new ArrayList<TimeZoneModel>();
-        if (timezone != null && timezone.size() > 0) {
-            for (TimeZoneModel timeZones : timezone) {
-                TimeZoneModel timeZoneModel = new TimeZoneModel();
-                timeZoneModel.setId(timeZones.getId());
-                timeZoneModel.setTimezoneName(timeZones.getTimezoneName());
-                timeZones.setTimezoneCode(timeZones.getTimezoneCode());
-                timeZoneModelList.add(timeZones);
-            }
-        }
+		if (timezone != null && timezone.size() > 0) {
+			timezone.forEach(timeZones -> {
+				TimeZoneModel timeZoneModel = new TimeZoneModel();
+				timeZoneModel.setId(timeZones.getId());
+				timeZoneModel.setTimezoneName(timeZones.getTimezoneName());
+				timeZones.setTimezoneCode(timeZones.getTimezoneCode());
+				timeZoneModelList.add(timeZones);
+
+			});
+		}
         adminProjectListDto.setTimeZoneModelList(timeZoneModelList);
-        if (userOwnerList != null && userOwnerList.size() > 0) {
-            for (UserModel userOwners : userOwnerList) {
-                JSONObject userOwnersjson = new JSONObject();
-                userOwnersjson.put("firstName",
-                        (userOwners.getEmployee() != null) ? userOwners.getEmployee().getFirstName() : null);
-                userOwnersjson.put("id", (userOwners.getEmployee() != null) ? userOwners.getEmployee().geteId() : null);
-                userOwnersjson.put("lastName",
-                        (userOwners.getEmployee() != null) ? userOwners.getEmployee().getLastName() : null);
-                userOwnersjson.put("role", (userOwners.getRole() != null) ? userOwners.getRole().getRoleId() : null);
-                userOwnersjson.put("status", userOwners.getIsActive());
-                projectsUserOwnerList.add(userOwnersjson);
-            }
-        }
+		if (userOwnerList != null && userOwnerList.size() > 0) {
+			userOwnerList.forEach(userOwners -> {
+				JSONObject userOwnersjson = new JSONObject();
+				userOwnersjson.put("firstName",
+						(userOwners.getEmployee() != null) ? userOwners.getEmployee().getFirstName() : null);
+				userOwnersjson.put("id", (userOwners.getEmployee() != null) ? userOwners.getEmployee().geteId() : null);
+				userOwnersjson.put("lastName",
+						(userOwners.getEmployee() != null) ? userOwners.getEmployee().getLastName() : null);
+				userOwnersjson.put("role", (userOwners.getRole() != null) ? userOwners.getRole().getRoleId() : null);
+				userOwnersjson.put("status", userOwners.getIsActive());
+				projectsUserOwnerList.add(userOwnersjson);
+
+			});
+		}
         adminProjectListDto.setProjectsUserOwnerList(projectsUserOwnerList);
-        if (onsiteLeadList != null && onsiteLeadList.size() > 0) {
-            for (UserModel onsiteLeads : onsiteLeadList) {
-                JSONObject onsiteLeadsjson = new JSONObject();
-                onsiteLeadsjson.put("firstName", onsiteLeads.getUserName());
-                onsiteLeadsjson.put("id",
-                        (onsiteLeads.getEmployee() != null) ? onsiteLeads.getEmployee().geteId() : null);
-                onsiteLeadsjson.put("lastName",
-                        (onsiteLeads.getEmployee() != null) ? onsiteLeads.getEmployee().getLastName() : null);
-                onsiteLeadsjson.put("role", (onsiteLeads.getRole() != null) ? onsiteLeads.getRole().getRoleId() : null);
-                onsiteLeadsjson.put("status", onsiteLeads.getIsActive());
-                projectsOnsiteLeadList.add(onsiteLeadsjson);
-            }
-        }
+		if (onsiteLeadList != null && onsiteLeadList.size() > 0) {
+			onsiteLeadList.forEach(onsiteLeads -> {
+				JSONObject onsiteLeadsjson = new JSONObject();
+				onsiteLeadsjson.put("firstName", onsiteLeads.getUserName());
+				onsiteLeadsjson.put("id",
+						(onsiteLeads.getEmployee() != null) ? onsiteLeads.getEmployee().geteId() : null);
+				onsiteLeadsjson.put("lastName",
+						(onsiteLeads.getEmployee() != null) ? onsiteLeads.getEmployee().getLastName() : null);
+				onsiteLeadsjson.put("role", (onsiteLeads.getRole() != null) ? onsiteLeads.getRole().getRoleId() : null);
+				onsiteLeadsjson.put("status", onsiteLeads.getIsActive());
+				projectsOnsiteLeadList.add(onsiteLeadsjson);
+			});
+		}
         adminProjectListDto.setProjectsOnsiteLeadList(projectsOnsiteLeadList);
         List<DepartmentModel> departmentModelList = new ArrayList<DepartmentModel>();
-        if (department != null) {
-            for (DepartmentModel dept : department) {
-                DepartmentModel departmentModel = new DepartmentModel();
-                departmentModel.setDepartmentId(dept.getDepartmentId());
-                departmentModel.setDepartmentName(dept.getDepartmentName());
-                departmentModelList.add(departmentModel);
-            }
-        }
+		if (department != null) {
+			department.forEach(dept -> {
+				DepartmentModel departmentModel = new DepartmentModel();
+				departmentModel.setDepartmentId(dept.getDepartmentId());
+				departmentModel.setDepartmentName(dept.getDepartmentName());
+				departmentModelList.add(departmentModel);
+			});
+		}
         adminProjectListDto.setDepartmentModelList(departmentModelList);
         List<EmployeeContractorsModel> employeeContractorsList = new ArrayList<EmployeeContractorsModel>();
-        if (employeeContractors != null) {
-            for (EmployeeContractorsModel contractors : employeeContractors) {
-                EmployeeContractorsModel employeeContractorsModel = new EmployeeContractorsModel();
-                employeeContractorsModel.setContractorId(contractors.getContractorId());
-                employeeContractorsModel.setContractorName(contractors.getContractorName());
-                employeeContractorsList.add(employeeContractorsModel);
-            }
-        }
+		if (employeeContractors != null) {
+			employeeContractors.forEach(contractors -> {
+				EmployeeContractorsModel employeeContractorsModel = new EmployeeContractorsModel();
+				employeeContractorsModel.setContractorId(contractors.getContractorId());
+				employeeContractorsModel.setContractorName(contractors.getContractorName());
+				employeeContractorsList.add(employeeContractorsModel);
+			});
+		}
         adminProjectListDto.setEmployeeContractorsList(employeeContractorsList);
         List<RoleModel> roleModelList = new ArrayList<RoleModel>();
-        if (rolelist != null) {
-            for (RoleModel role : rolelist) {
-                RoleModel roleModel = new RoleModel();
-                roleModel.setRoleId(role.getRoleId());
-                roleModel.setRoleName(role.getRoleName());
-                roleModelList.add(roleModel);
-            }
-        }
+		if (rolelist != null) {
+			rolelist.forEach(role -> {
+				RoleModel roleModel = new RoleModel();
+				roleModel.setRoleId(role.getRoleId());
+				roleModel.setRoleName(role.getRoleName());
+				roleModelList.add(roleModel);
+			});
+		}
         adminProjectListDto.setRoleModelList(roleModelList);
         return adminProjectListDto;
     }
@@ -579,6 +585,7 @@ public class ProjectServiceImpl implements ProjectService {
 		return finalProjectList;
 	}
 
+	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
 	public SingleProjectResposneDto getSingleProject(@PathVariable Long projectId) {
 		SingleProjectResposneDto singleResponseDto = new SingleProjectResposneDto();
@@ -673,25 +680,26 @@ public class ProjectServiceImpl implements ProjectService {
 			// Setting the Project Region
 
 			List<ProjectRegion> regionsList = projectRegionRepository.getRegionList(project.getProjectId());
-			ArrayList regionsArray = new ArrayList();
+			ArrayList<Long> regionsArray = new ArrayList<Long>();
 			if (regionsList.isEmpty()) {
-				singleResponseDto.setProjectRegion(new ArrayList());
+				singleResponseDto.setProjectRegion(new ArrayList<Long>());
 			} else {
-				for (ProjectRegion region : regionsList) {
-					regionsArray.add(region.getRegion().getId() !=null?region.getRegion().getId():null);
-				}
+				regionsList.forEach(region -> {
+					regionsArray.add(region.getRegion().getId() != null ? region.getRegion().getId() : null);
+
+				});
 				singleResponseDto.setProjectRegion(regionsArray);
 			}
 			
 			// Setting the Project Resource
 			
 			List<Resources> resourcelist = resourceRepository.getResourceList(project.getProjectId());
-			ArrayList resourceArray = new ArrayList();
+			ArrayList<JSONObject> resourceArray = new ArrayList<JSONObject>();
 			if (resourcelist.isEmpty())
-				singleResponseDto.setResource(new ArrayList());
-			else {
-				JSONObject projectobj = new JSONObject();
-				for (Resources resource : resourcelist) {
+				singleResponseDto.setResource(new ArrayList<JSONObject>());
+			else {	
+				resourcelist.forEach(resource -> {
+					JSONObject projectobj = new JSONObject();
 					JSONObject resourceobj = new JSONObject();
 					resourceobj.put("resourceId", resource.getResourceId());
 					resourceobj.put("resourceCount", resource.getresourceCount());
@@ -703,8 +711,7 @@ public class ProjectServiceImpl implements ProjectService {
 						projectobj.put("projectName", project.getProjectName());
 					}
 					resourceobj.put("project", projectobj);
-					DepartmentModel department = departmentRepository
-							.getOne(resource.getDepartment().getDepartmentId());
+					DepartmentModel department = departmentRepository.getOne(resource.getDepartment().getDepartmentId());
 					JSONObject departmentobj = new JSONObject();
 
 					if (department == null)
@@ -715,7 +722,7 @@ public class ProjectServiceImpl implements ProjectService {
 					}
 					resourceobj.put("department", departmentobj);
 					resourceArray.add(resourceobj);
-				}
+				});
 				singleResponseDto.setResource(resourceArray);
 			}
 		}
