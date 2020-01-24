@@ -9,4 +9,6 @@ public interface ContractRepository extends JpaRepository<ContractModel, Long> {
 	@Query("select s from ContractModel s where contractTypeId=?1")
 	ContractModel getContract(Long contractId);
 
+	ContractModel findBycontractTypeId(Long contractTypeId);
+
 }

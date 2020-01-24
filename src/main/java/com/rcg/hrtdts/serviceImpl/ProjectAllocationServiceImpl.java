@@ -1,5 +1,6 @@
 package com.rcg.hrtdts.serviceImpl;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,14 +9,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rcg.hrtdts.dto.PojectAllocationListDto;
 import com.rcg.hrtdts.dto.ProjectAllocationUserListDto;
 import com.rcg.hrtdts.dto.ProjectDto;
+import com.rcg.hrtdts.dto.SaveAllocationDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.AllocationModel;
 import com.rcg.hrtdts.model.DepartmentModel;
@@ -361,5 +367,66 @@ public class ProjectAllocationServiceImpl implements ProjectAllocationService {
 			jsonData.put("resourceList", jsonArray);
 		}
 		return jsonData;
+	}
+
+	@Override
+	public JSONObject saveAllocation(SaveAllocationDto saveAllocationDto) {
+		JSONObject responseData = new JSONObject();
+		Date startDate = saveAllocationDto.getStartDate();
+		Date endDate = saveAllocationDto.getEndDate();
+		Double allocatedPercentage = saveAllocationDto.getAllocatedPercentage();
+		Long projectId = saveAllocationDto.getProjectId();
+		Long userId = saveAllocationDto.getUserId();
+		Boolean isBillable = saveAllocationDto.getIsBillable();
+		AllocationModel allocation = new AllocationModel();
+
+		ProjectModel project = projectRepository.getOne(projectId);
+		UserModel user = userRepository.getNonActiveUser(userId);
+
+		allocation.setproject(project);
+		allocation.setuser(user);
+		allocation.setStartDate(startDate);
+		allocation.setEndDate(endDate);
+		allocation.setAllocatedPerce(allocatedPercentage);
+		allocation.setIsBillable(isBillable);
+		BigInteger allocationID = allocationRepository.getAllocationContinousDateRange(projectId, userId, startDate,
+				endDate);
+		Long prim_id = null;
+		if (allocationID != null) {
+			if (allocationID.compareTo(BigInteger.ZERO) > 0) {
+				prim_id = allocationID.longValue();
+				AllocationModel allocationmodelupdate = allocationRepository.getOne(prim_id);
+				long difference = startDate.getTime() - allocationmodelupdate.getEndDate().getTime();
+				long diff = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
+				if (diff == 1) {
+					allocationmodelupdate.setEndDate(endDate);
+					allocationmodelupdate.setAllocatedPerce(allocatedPercentage);
+					allocationRepository.save(allocationmodelupdate);
+
+				} else {
+					allocationRepository.save(allocation);
+				}
+			}
+		} else {
+			allocationRepository.save(allocation);
+		}
+		return responseData;
+	}
+
+	@Override
+	public JSONObject editAllocation(SaveAllocationDto saveAllocationDto) {
+		JSONObject jsonDataRes = new JSONObject();
+		Long id = saveAllocationDto.getUserId();
+		Double allocatedVal = saveAllocationDto.getAllocatedPercentage();
+		Boolean isBillable = saveAllocationDto.getIsBillable();
+		Boolean isActive = true;
+		AllocationModel allocationModel = allocationRepository.getOne(id);
+		if (allocationModel != null) {
+			allocationModel.setAllocatedPerce(allocatedVal);
+			allocationModel.setIsBillable(isBillable);
+			allocationModel.setActive(isActive);
+			allocationRepository.save(allocationModel);
+		}
+		return jsonDataRes;
 	}
 }

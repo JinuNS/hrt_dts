@@ -18,7 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import com.rcg.hrtdts.dto.ClientResponseDto;
 import com.rcg.hrtdts.dto.ProjectDto;
+import com.rcg.hrtdts.dto.ProjectUserSingleDto;
+import com.rcg.hrtdts.dto.SingleProjectResposneDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.model.ClientModel;
 import com.rcg.hrtdts.model.ContractModel;
@@ -585,118 +589,117 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public JSONObject getSingleProject(@PathVariable Long projectId) throws Exception,HRTDTSException {
-		JSONObject responseData = new JSONObject();
-		JSONObject response = new JSONObject();
-		JSONObject contractobj = new JSONObject();
-		JSONObject clientobj = new JSONObject();
-		JSONObject projectobj = new JSONObject();
-		ArrayList region = new ArrayList();
-		ContractModel contract = null;
-		ClientModel clientmodel = null;
-		Long clientid = null;
-		Long contractId = null;
-		ProjectModel project = projectRepository.getOne(projectId);
+	public SingleProjectResposneDto getSingleProject(@PathVariable Long projectId) {
+		SingleProjectResposneDto singleResponseDto = new SingleProjectResposneDto();
+		ProjectModel project = projectRepository.findById(projectId).orElse(null);
 		if (project.equals(null)) {
 			throw new HRTDTSException("Data Not Availabale");
 		} else {
-			responseData.put("projectId", project.getProjectId());
-			responseData.put("projectName", project.getProjectName());
-			responseData.put("projectDetails", project.getProjectDetails());
-			responseData.put("parentProjectId", project.getParentProjectId());
-			responseData.put("estimatedHours", project.getEstimatedHours());
-			responseData.put("startDate", project.getStartDate().toString());
-			responseData.put("endDate", project.getEndDate().toString());
-			responseData.put("isBillable", project.getIsBillable());
-			responseData.put("projectCategory", project.getProjectCategory());
-			responseData.put("projectCode", project.getProjectCode());
-			responseData.put("projectType", project.getProjectType());
-			if (project.getReleasingDate() != null) {
-				responseData.put("releasingDate", project.getReleasingDate().toString());
-			} else {
-				responseData.put("releasingDate", " ");
-			}
-			responseData.put("isPOC", project.getIsPOC());
-			responseData.put("projectStatus", project.getProjectStatus());
-			responseData.put("projectTier", project.getProjectTier());
-			responseData.put("workflowType", project.getWokflowType());
-			if (project.getClientName() != null)
-				clientid = project.getClientName().getClientId();
-
-			if (clientid != null)
-				clientmodel = clientRepository.getClientData(clientid);
-
-			if (clientmodel == null)
-				clientobj = null;
-			else {
-				clientobj.put("clientId", clientmodel.getClientId());
-				clientobj.put("clientName", clientmodel.getClientName());
-			}
-			responseData.put("clientName", clientobj);
-			responseData.put("clientPointOfContact", project.getClientPointOfContact());
-			contractId = project.getContract().getContractTypeId();
-			if (contractId != null) {
-				contract = contractRepository.getContract(contractId);
-			}
-			if (contract == null)
-				contractobj = null;
-			else {
-
-				contractobj.put("contractTypeId", contract.getContractTypeId());
-				contractobj.put("contractTypeName", contract.getContractTypeName());
-			}
-			responseData.put("contractType", contractobj);
-			Long projectowner = project.getProjectOwner().geteId();
-			UserModel ownerData = null;
-			if (projectowner != null) {
-				ownerData = userRepository.findByeId(projectowner);
-			}
-			JSONObject userobj = new JSONObject();
-			if (ownerData == null)
-				userobj = null;
-			else {
-				userobj.put("firstName", ownerData.getEmployee().getFirstName());
-				userobj.put("lastName", ownerData.getEmployee().getLastName());
-				userobj.put("role", ownerData.getRole().getRoleId());
-				userobj.put("userId", ownerData.getEmployee().geteId());
-			}
-			responseData.put("approverLevelOne", userobj);
-			JSONObject onsiteLeads = new JSONObject();
-			if (project.getOnsiteLead() != null) {
-				Long onsiteLead = project.getOnsiteLead().geteId();
-				UserModel leadData = null;
-				if (onsiteLead != null) {
-					leadData = userRepository.findByeId(onsiteLead);
-				}
-				if (leadData == null)
-					onsiteLeads = null;
+			singleResponseDto.setProjectId(project.getProjectId());
+			singleResponseDto.setProjectName(project.getProjectName());
+			singleResponseDto.setProjectDetails(project.getProjectDetails());
+			singleResponseDto.setParentProjectId(project.getParentProjectId());
+			singleResponseDto.setEstimatedHours(project.getEstimatedHours());
+			singleResponseDto.setStartDate(project.getStartDate()!=null ?project.getStartDate().toString():null);
+			singleResponseDto.setEndDate(project.getEndDate() !=null?project.getEndDate().toString():null);
+			singleResponseDto.setIsBillable(project.getIsBillable());
+			singleResponseDto.setProjectCategory(project.getProjectCategory());
+			singleResponseDto.setProjectCode(project.getProjectCode());
+			singleResponseDto.setProjectType(project.getProjectType());
+			singleResponseDto.setReleasingDate(project.getReleasingDate() !=null ?project.getReleasingDate().toString():null);
+			singleResponseDto.setIsPOC(project.getIsPOC());
+			singleResponseDto.setProjectStatus(project.getProjectStatus());
+			singleResponseDto.setProjectTier(project.getProjectTier());
+			singleResponseDto.setWorkflowType(project.getWokflowType());
+			singleResponseDto.setClientPointOfContact(project.getClientPointOfContact());
+				
+			// Setting the Client Name
+			if (project.getClientName() != null) {
+				ClientModel clientmodel = clientRepository.findByclientId(project.getClientName().getClientId());
+				if (clientmodel == null)
+					singleResponseDto.setClientName(null);
 				else {
-					onsiteLeads.put("firstName", leadData.getEmployee().getFirstName());
-					onsiteLeads.put("lastName", leadData.getEmployee().getLastName());
-					onsiteLeads.put("role", leadData.getRole().getRoleId());
-					onsiteLeads.put("userId", leadData.getEmployee().geteId());
+					ClientResponseDto client = new ClientResponseDto();
+					client.setClientId(clientmodel.getClientId());
+					client.setClientName(clientmodel.getClientName());
+					singleResponseDto.setClientName(client);
 				}
-			}
-			responseData.put("approverLevelTwo", onsiteLeads);
-			List<ProjectRegion> regions = projectRegionRepository.getRegionList(project.getProjectId());
-			ArrayList regionsArray = new ArrayList();
-			ArrayList<Integer> regionArraylist = new ArrayList<Integer>();
-			if (regions.isEmpty()) {
-				responseData.put("projectRegion", regionsArray);
 			} else {
+				singleResponseDto.setClientName(null);
+			}
+			// Setting the Contract Type
 
-				for (ProjectRegion regioneach : regions) {
-					JSONObject resource = new JSONObject();
-					regionsArray.add(regioneach.getRegion().getId());
+			if (project.getContract() != null) {
+				ContractModel contractModel = contractRepository.findBycontractTypeId(project.getContract().getContractTypeId());
+				if (contractModel == null)
+					singleResponseDto.setContractType(null);
+				else {
+					ContractModel contract = new ContractModel();
+					contract.setContractTypeId(contractModel.getContractTypeId());
+					contract.setContractTypeName(contractModel.getContractTypeName());
+					singleResponseDto.setContractType(contract);
 				}
-				responseData.put("projectRegion", regionsArray);
+			} else {
+				singleResponseDto.setContractType(null);
 			}
 
+			// Setting the Approver Level One
+
+			if (project.getProjectOwner() != null) {
+				UserModel userModel = userRepository.findByeId(project.getProjectOwner().geteId());
+				if (userModel == null)
+					singleResponseDto.setApproverLevelOne(null);
+				else {
+					ProjectUserSingleDto approver1Dto = new ProjectUserSingleDto();
+					approver1Dto.setFirstName(userModel.getEmployee() != null ? userModel.getEmployee().getFirstName() : null);
+					approver1Dto.setLastName(userModel.getEmployee() != null ? userModel.getEmployee().getLastName() : null);
+					approver1Dto.setRole(userModel.getRole() != null ? userModel.getRole().getRoleId() : null);
+					approver1Dto.setUserId(userModel.getEmployee() != null ? userModel.getEmployee().geteId() : null);
+					singleResponseDto.setApproverLevelOne(approver1Dto);
+				}
+			} else {
+				singleResponseDto.setApproverLevelOne(null);
+			}
+			
+			// Setting the Approver Level Two
+
+			if (project.getOnsiteLead() != null) {
+				UserModel leadData = userRepository.findByeId(project.getOnsiteLead().geteId());
+				if (leadData == null)
+					singleResponseDto.setApproverLevelTwo(null);
+				else {
+					ProjectUserSingleDto approver2Dto = new ProjectUserSingleDto();
+					approver2Dto.setFirstName(leadData.getEmployee() != null ? leadData.getEmployee().getFirstName() : null);
+					approver2Dto.setLastName(leadData.getEmployee() != null ? leadData.getEmployee().getLastName() : null);
+					approver2Dto.setRole(leadData.getRole() != null ? leadData.getRole().getRoleId() : null);
+					approver2Dto.setUserId(leadData.getEmployee() != null ? leadData.getEmployee().geteId() : null);
+					singleResponseDto.setApproverLevelOne(approver2Dto);
+				}
+			} else {
+				singleResponseDto.setApproverLevelTwo(null);
+			}
+			
+			// Setting the Project Region
+
+			List<ProjectRegion> regionsList = projectRegionRepository.getRegionList(project.getProjectId());
+			ArrayList regionsArray = new ArrayList();
+			if (regionsList.isEmpty()) {
+				singleResponseDto.setProjectRegion(new ArrayList());
+			} else {
+				for (ProjectRegion region : regionsList) {
+					regionsArray.add(region.getRegion().getId() !=null?region.getRegion().getId():null);
+				}
+				singleResponseDto.setProjectRegion(regionsArray);
+			}
+			
+			// Setting the Project Resource
+			
 			List<Resources> resourcelist = resourceRepository.getResourceList(project.getProjectId());
 			ArrayList resourceArray = new ArrayList();
 			if (resourcelist.isEmpty())
-				responseData.put("resource", resourceArray);
+				singleResponseDto.setResource(new ArrayList());
 			else {
+				JSONObject projectobj = new JSONObject();
 				for (Resources resource : resourcelist) {
 					JSONObject resourceobj = new JSONObject();
 					resourceobj.put("resourceId", resource.getResourceId());
@@ -722,12 +725,11 @@ public class ProjectServiceImpl implements ProjectService {
 					resourceobj.put("department", departmentobj);
 					resourceArray.add(resourceobj);
 				}
-				responseData.put("resource", resourceArray);
+				singleResponseDto.setResource(resourceArray);
 			}
-
 		}
-
-		return responseData;
+		return singleResponseDto;
 	}
+
 
 }

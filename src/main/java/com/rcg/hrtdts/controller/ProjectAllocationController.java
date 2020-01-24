@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.rcg.hrtdts.dto.PojectAllocationListDto;
 import com.rcg.hrtdts.dto.ProjectAllocationUserListDto;
 import com.rcg.hrtdts.dto.ProjectDto;
+import com.rcg.hrtdts.dto.SaveAllocationDto;
 import com.rcg.hrtdts.exception.HRTDTSDateFormatException;
 import com.rcg.hrtdts.exception.HRTDTSException;
 import com.rcg.hrtdts.exception.HRTDTSNotFoundException;
@@ -115,6 +117,54 @@ public class ProjectAllocationController {
 		try {
 			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
 					projectAllocationService.getResourceListByProjects(projectDto));
+		} catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorMessage());
+		} catch (Exception e) {
+			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					exceptionResponse);
+		}
+		return response;
+	}
+	
+	/**
+	 * save project allocation
+	 * 
+	 * @author Bala
+	 * @version 1.0
+	 **/	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping("/save")
+	public StatusResponse saveAllocation(@RequestBody SaveAllocationDto saveAllocationDto)
+	throws HRTDTSException{
+		StatusResponse response = new StatusResponse();
+		try {
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
+					projectAllocationService.saveAllocation(saveAllocationDto));
+		} catch (HRTDTSException e) {
+			throw new HRTDTSException(e.getErrorMessage());
+		} catch (Exception e) {
+			ExceptionResponse exceptionResponse = new ExceptionResponse(500, e.getMessage(), new Date());
+			response = new StatusResponse(Constants.FAILURE, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+					exceptionResponse);
+		}
+		return response;
+	}
+	
+	/**
+	 * edit project allocation
+	 * 
+	 * @author Bala
+	 * @version 1.0
+	 **/	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PutMapping("/edit")
+	public StatusResponse editAllocation(@RequestBody SaveAllocationDto saveAllocationDto)
+	throws HRTDTSException{
+		StatusResponse response = new StatusResponse();
+		try {
+			response = new StatusResponse(Constants.SUCCESS, HttpStatus.OK.value(),
+					projectAllocationService.editAllocation(saveAllocationDto));
 		} catch (HRTDTSException e) {
 			throw new HRTDTSException(e.getErrorMessage());
 		} catch (Exception e) {

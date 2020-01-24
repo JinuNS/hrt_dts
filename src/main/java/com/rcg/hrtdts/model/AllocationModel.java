@@ -1,6 +1,7 @@
 package com.rcg.hrtdts.model;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,8 +47,8 @@ public class AllocationModel {
 		return project;
 	}
 
-	public void setproject(ProjectModel project) {
-		this.project = project;
+	public void setproject(ProjectModel project2) {
+		this.project = project2;
 	}
 
 	public Double getAllocatedPerce() {

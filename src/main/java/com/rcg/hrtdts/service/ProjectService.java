@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import com.rcg.hrtdts.dto.ProjectDto;
+import com.rcg.hrtdts.dto.SingleProjectResposneDto;
 import com.rcg.hrtdts.exception.HRTDTSException;
 
 public interface ProjectService {
@@ -21,5 +22,5 @@ public interface ProjectService {
 
 	ArrayList viewAllProjects(ProjectDto projectHrtDto);
 
-	JSONObject getSingleProject(Long projectId) throws Exception, HRTDTSException;
+	SingleProjectResposneDto getSingleProject(Long projectId) throws Exception, HRTDTSException;
 }

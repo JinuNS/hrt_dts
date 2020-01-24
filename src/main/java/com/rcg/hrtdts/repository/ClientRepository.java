@@ -16,5 +16,7 @@ public interface ClientRepository extends JpaRepository<ClientModel, Long> {
 	@Query("Select s From ClientModel s where clientId=?1")
 	ClientModel getClientData(Long clientName);
 
+	ClientModel findByclientId(Long clientId);
+
 
 }

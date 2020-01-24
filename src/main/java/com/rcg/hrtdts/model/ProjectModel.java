@@ -15,7 +15,6 @@ import org.hibernate.annotations.CascadeType;
 public class ProjectModel {
 
 	@Id
-	@Column(name = "projectId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Cascade(CascadeType.ALL)
 	private Long projectId;
