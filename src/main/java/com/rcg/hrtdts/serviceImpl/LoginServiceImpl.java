@@ -2,6 +2,8 @@ package com.rcg.hrtdts.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,13 +74,11 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	private LoginResponseDto createLoginResponse(UserModel user, List<PageRule> pageRule) {
-		LoginResponseDto loginResponseDto = new LoginResponseDto();
+		
+		ModelMapper loginResponseMapper = new ModelMapper();
+		LoginResponseDto loginResponseDto = loginResponseMapper.map(user, LoginResponseDto.class);
 		if (user.getEmployee() != null)
 			loginResponseDto.seteId(user.getEmployee().geteId());
-		loginResponseDto.setUserId(user.getUserId());
-		loginResponseDto.setEmail(user.getEmail());
-		loginResponseDto.setRole(user.getRole());
-		loginResponseDto.setUserName(user.getUserName());
 		loginResponseDto.setPageRule(setPageRuleForParentAndChild(pageRule));
 		loginResponseDto.setMessage("Valid user");
 		return loginResponseDto;
@@ -90,27 +90,16 @@ public class LoginServiceImpl implements LoginService {
 		if (pageRuleList != null) {
 			pageRuleList.forEach(parent -> {
 				List<ChildPageRoleDto> childPageRuleList = new ArrayList<ChildPageRoleDto>();
-				ParentPageRuleDto parentItem = new ParentPageRuleDto();
 				List<PageRule> childsList = pageRuleRepository.findByparentIdOrderBySortAsc(parent.getPageId());
 				childsList.forEach(child -> {
-					ChildPageRoleDto childItem = new ChildPageRoleDto();
-					childItem.setIcon(child.getIcon());
-					childItem.setKey(child.getPageKey());
-					childItem.setLabel(child.getLabel());
-					childItem.setLevel(child.getLevelId());
-					childItem.setMenu(child.getMenu());
-					childItem.setPageId(child.getPageId());
-					childItem.setPath(child.getPath());
+					ModelMapper childModelMapper = new ModelMapper();
+					ChildPageRoleDto childItem = childModelMapper.map(child, ChildPageRoleDto.class);
 					childPageRuleList.add(childItem);
 				});
+				
+				ModelMapper parentModelMapper = new ModelMapper();
+				ParentPageRuleDto parentItem = parentModelMapper.map(parent, ParentPageRuleDto.class);
 				parentItem.setChilds(childPageRuleList);
-				parentItem.setIcon(parent.getIcon());
-				parentItem.setKey(parent.getPageKey());
-				parentItem.setLabel(parent.getLabel());
-				parentItem.setLevel(parent.getLevelId());
-				parentItem.setMenu(parent.getMenu());
-				parentItem.setPageId(parent.getPageId());
-				parentItem.setPath(parent.getPath());
 				parentPageRuleList.add(parentItem);
 			});
 		}
